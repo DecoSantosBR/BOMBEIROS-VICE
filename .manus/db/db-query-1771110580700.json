@@ -1,0 +1,30 @@
+{
+  "query": "SELECT id, nome FROM courses LIMIT 5;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 44TTARZqZm4zxSK.9ce58a8ab24b --database mpF46NADk5NFevEEQ9e39Y --execute SELECT id, nome FROM courses LIMIT 5;",
+  "rows": [
+    {
+      "id": "0810343b-7691-4950-bd49-1280218ba4d4",
+      "nome": "Resgate Montanha"
+    },
+    {
+      "id": "12b8409a-e7be-4237-83be-1ee303f94564",
+      "nome": "Resgate Montanha Avançado"
+    },
+    {
+      "id": "2dfb39ab-7a4a-410b-be59-586d62bc8fa0",
+      "nome": "Instrutor Águia"
+    },
+    {
+      "id": "6f1ff74b-2dad-4126-83e2-38db3af01fa8",
+      "nome": "Modulação e Conduta"
+    },
+    {
+      "id": "789fbd9e-4da9-40d2-ba35-b368cd708d74",
+      "nome": "Paraquedismo"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\tnome\n0810343b-7691-4950-bd49-1280218ba4d4\tResgate Montanha\n12b8409a-e7be-4237-83be-1ee303f94564\tResgate Montanha Avançado\n2dfb39ab-7a4a-410b-be59-586d62bc8fa0\tInstrutor Águia\n6f1ff74b-2dad-4126-83e2-38db3af01fa8\tModulação e Conduta\n789fbd9e-4da9-40d2-ba35-b368cd708d74\tParaquedismo\n",
+  "stderr": "",
+  "execution_time_ms": 352
+}

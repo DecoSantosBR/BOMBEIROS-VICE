@@ -1,0 +1,62 @@
+{
+  "query": "SELECT id, nome FROM courses ORDER BY nome;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 44TTARZqZm4zxSK.9ce58a8ab24b --database mpF46NADk5NFevEEQ9e39Y --execute SELECT id, nome FROM courses ORDER BY nome;",
+  "rows": [
+    {
+      "id": "b44bb5a7-05b6-4835-9ca0-2c1484e92ea3",
+      "nome": "Aerovidas"
+    },
+    {
+      "id": "a28d3c01-8ba9-4cce-af72-34afee87e5cb",
+      "nome": "Águia Avançado"
+    },
+    {
+      "id": "bca19a55-ff80-43eb-91a4-ff7270028527",
+      "nome": "Formação de Oficiais"
+    },
+    {
+      "id": "2dfb39ab-7a4a-410b-be59-586d62bc8fa0",
+      "nome": "Instrutor Águia"
+    },
+    {
+      "id": "fab4abf5-3f3e-46af-9b57-e04d438ea904",
+      "nome": "Instrutor MOB"
+    },
+    {
+      "id": "bafe7d35-c5a9-4463-9664-1be3456bc3dd",
+      "nome": "Mergulho"
+    },
+    {
+      "id": "fdc8685f-d9b6-45b0-8932-3b9c96cf1fcf",
+      "nome": "MOB"
+    },
+    {
+      "id": "6f1ff74b-2dad-4126-83e2-38db3af01fa8",
+      "nome": "Modulação e Conduta"
+    },
+    {
+      "id": "789fbd9e-4da9-40d2-ba35-b368cd708d74",
+      "nome": "Paraquedismo"
+    },
+    {
+      "id": "9b69103c-81bc-45ea-89e2-e9d98f880320",
+      "nome": "Paraquedismo Avançado"
+    },
+    {
+      "id": "0810343b-7691-4950-bd49-1280218ba4d4",
+      "nome": "Resgate Montanha"
+    },
+    {
+      "id": "12b8409a-e7be-4237-83be-1ee303f94564",
+      "nome": "Resgate Montanha Avançado"
+    },
+    {
+      "id": "de82e289-986f-41e4-a37a-91480f9b0b96",
+      "nome": "TAF"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\tnome\nb44bb5a7-05b6-4835-9ca0-2c1484e92ea3\tAerovidas\na28d3c01-8ba9-4cce-af72-34afee87e5cb\tÁguia Avançado\nbca19a55-ff80-43eb-91a4-ff7270028527\tFormação de Oficiais\n2dfb39ab-7a4a-410b-be59-586d62bc8fa0\tInstrutor Águia\nfab4abf5-3f3e-46af-9b57-e04d438ea904\tInstrutor MOB\nbafe7d35-c5a9-4463-9664-1be3456bc3dd\tMergulho\nfdc8685f-d9b6-45b0-8932-3b9c96cf1fcf\tMOB\n6f1ff74b-2dad-4126-83e2-38db3af01fa8\tModulação e Conduta\n789fbd9e-4da9-40d2-ba35-b368cd708d74\tParaquedismo\n9b69103c-81bc-45ea-89e2-e9d98f880320\tParaquedismo Avançado\n0810343b-7691-4950-bd49-1280218ba4d4\tResgate Montanha\n12b8409a-e7be-4237-83be-1ee303f94564\tResgate Montanha Avançado\nde82e289-986f-41e4-a37a-91480f9b0b96\tTAF\n",
+  "stderr": "",
+  "execution_time_ms": 355
+}

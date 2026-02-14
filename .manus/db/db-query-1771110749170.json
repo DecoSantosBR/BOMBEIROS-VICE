@@ -1,0 +1,38 @@
+{
+  "query": "SELECT ce.id, ce.courseId, ce.title, c.id as course_real_id, c.nome \nFROM course_events ce \nLEFT JOIN courses c ON ce.courseId = c.id \nLIMIT 10;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 44TTARZqZm4zxSK.9ce58a8ab24b --database mpF46NADk5NFevEEQ9e39Y --execute SELECT ce.id, ce.courseId, ce.title, c.id as course_real_id, c.nome \nFROM course_events ce \nLEFT JOIN courses c ON ce.courseId = c.id \nLIMIT 10;",
+  "rows": [
+    {
+      "id": "30005",
+      "courseId": "b44bb5a7-05b6-4835-9ca0-2c1484e92ea3",
+      "title": "Aguia",
+      "course_real_id": "b44bb5a7-05b6-4835-9ca0-2c1484e92ea3",
+      "nome": "Aerovidas"
+    },
+    {
+      "id": "2",
+      "courseId": "ff55bd5e-0907-11f1-95af-a2aa941d82f2",
+      "title": "Piloto MOB",
+      "course_real_id": "NULL",
+      "nome": "NULL"
+    },
+    {
+      "id": "3",
+      "courseId": "ff55bdfe-0907-11f1-95af-a2aa941d82f2",
+      "title": "PQD",
+      "course_real_id": "NULL",
+      "nome": "NULL"
+    },
+    {
+      "id": "4",
+      "courseId": "ff55bd97-0907-11f1-95af-a2aa941d82f2",
+      "title": "Aerovidas",
+      "course_real_id": "NULL",
+      "nome": "NULL"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\tcourseId\ttitle\tcourse_real_id\tnome\n30005\tb44bb5a7-05b6-4835-9ca0-2c1484e92ea3\tAguia\tb44bb5a7-05b6-4835-9ca0-2c1484e92ea3\tAerovidas\n2\tff55bd5e-0907-11f1-95af-a2aa941d82f2\tPiloto MOB\tNULL\tNULL\n3\tff55bdfe-0907-11f1-95af-a2aa941d82f2\tPQD\tNULL\tNULL\n4\tff55bd97-0907-11f1-95af-a2aa941d82f2\tAerovidas\tNULL\tNULL\n",
+  "stderr": "",
+  "execution_time_ms": 347
+}

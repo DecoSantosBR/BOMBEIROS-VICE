@@ -127,6 +127,8 @@ export const courseEvents = mysqlTable("course_events", {
   instructorId: int("instructorId").notNull(),
   location: varchar("location", { length: 255 }),
   maxParticipants: int("maxParticipants"),
+  auxiliar: varchar("auxiliar", { length: 255 }), // Nome do auxiliar
+  ID_auxiliar: varchar("ID_auxiliar", { length: 100 }), // Matrícula do auxiliar
   createdBy: int("createdBy").notNull(),
   createdAt: timestamp("createdAt").defaultNow().notNull(),
   updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
@@ -163,6 +165,8 @@ export const certificates = mysqlTable("certificates", {
   courseName: varchar("courseName", { length: 255 }).notNull(),
   instructorName: varchar("instructorName", { length: 255 }).notNull(),
   instructorRank: varchar("instructorRank", { length: 100 }).notNull(),
+  auxiliar: varchar("auxiliar", { length: 255 }), // Nome do auxiliar
+  ID_auxiliar: varchar("ID_auxiliar", { length: 100 }), // Matrícula do auxiliar
   issuedAt: timestamp("issuedAt").defaultNow().notNull(),
   issuedBy: int("issuedBy").notNull(), // ID do usuário que emitiu o certificado
   certificateUrl: text("certificateUrl"), // URL da imagem do certificado no S3 (opcional)

@@ -316,6 +316,14 @@ export const appRouter = router({
           throw new TRPCError({ code: "FORBIDDEN", message: "Apenas instrutores e administradores podem criar eventos" });
         }
 
+        console.log("[Event Create] Input:", JSON.stringify(input, null, 2));
+        
+        // Validar se o curso existe
+        const course = await db.getCourseById(input.courseId);
+        if (!course) {
+          throw new TRPCError({ code: "NOT_FOUND", message: "Curso não encontrado" });
+        }
+        
         const eventId = await db.createCourseEvent({
           ...input,
           startDate: new Date(input.startDate),

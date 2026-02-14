@@ -1,0 +1,30 @@
+{
+  "query": "SELECT id, courseId, title FROM course_events;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 44TTARZqZm4zxSK.9ce58a8ab24b --database mpF46NADk5NFevEEQ9e39Y --execute SELECT id, courseId, title FROM course_events;",
+  "rows": [
+    {
+      "id": "2",
+      "courseId": "ff55bd5e-0907-11f1-95af-a2aa941d82f2",
+      "title": "Piloto MOB"
+    },
+    {
+      "id": "3",
+      "courseId": "ff55bdfe-0907-11f1-95af-a2aa941d82f2",
+      "title": "PQD"
+    },
+    {
+      "id": "4",
+      "courseId": "ff55bd97-0907-11f1-95af-a2aa941d82f2",
+      "title": "Aerovidas"
+    },
+    {
+      "id": "30005",
+      "courseId": "b44bb5a7-05b6-4835-9ca0-2c1484e92ea3",
+      "title": "Aguia"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\tcourseId\ttitle\n2\tff55bd5e-0907-11f1-95af-a2aa941d82f2\tPiloto MOB\n3\tff55bdfe-0907-11f1-95af-a2aa941d82f2\tPQD\n4\tff55bd97-0907-11f1-95af-a2aa941d82f2\tAerovidas\n30005\tb44bb5a7-05b6-4835-9ca0-2c1484e92ea3\tAguia\n",
+  "stderr": "",
+  "execution_time_ms": 344
+}

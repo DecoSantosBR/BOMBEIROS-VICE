@@ -403,3 +403,16 @@ export async function getEnrollmentCountByEvent(eventId: number): Promise<number
   
   return result?.count || 0;
 }
+
+// Buscar usuário por matrícula (studentId)
+export async function getUserByStudentId(studentId: string) {
+  const db = await getDb();
+  if (!db) return null;
+  
+  const result = await db.select()
+    .from(users)
+    .where(eq(users.studentId, studentId))
+    .limit(1);
+  
+  return result.length > 0 ? result[0] : null;
+}

@@ -1002,3 +1002,50 @@
 - [x] Testar fluxo completo de inscrições
 - [x] Testar geração de certificados individual e em lote
 - [x] Validar todas as funcionalidades antes de reportar
+
+## Correção de Erro ao Emitir Certificados
+- [x] Identificar que o erro ocorre ao emitir certificados, não ao criar eventos
+- [x] Verificar dados de courseId em course_events vs courses
+- [x] Adicionar validação de courseId ao criar eventos
+- [x] Deletar eventos e inscrições com courseId inválidos
+- [ ] Testar criação de eventos com validação
+- [ ] Testar emissão de certificados
+
+## Implementação Completa Conforme Documentação
+
+### Fase 1: Schema do Banco de Dados
+- [x] Adicionar campos `auxiliar` (VARCHAR) e `ID_auxiliar` (VARCHAR) na tabela `courseEvents`
+- [x] Adicionar campos `auxiliar` (VARCHAR) e `ID_auxiliar` (VARCHAR) na tabela `certificates`
+- [x] Executar migração SQL para adicionar campos
+
+### Fase 2: Backend - Funções de Suporte
+- [x] Implementar função `getUserByStudentId(studentId)` para buscar usuário por matrícula
+- [x] Implementar função `generateCertificateImage()` para gerar imagem do certificado (HTML Canvas)
+- [x] Implementar função `uploadCertificateToS3()` para upload de certificados
+- [x] Implementar função `sendCertificateToDiscord()` para enviar certificado ao Discord
+
+### Fase 3: Frontend - Formulários
+- [ ] Criar formulário "Gerador de Certificados" na Home
+- [ ] Criar formulário "Registrar Resultados de Curso" na Home
+- [ ] Adicionar campo "Matrícula do Auxiliar" no formulário de criação de eventos
+- [ ] Implementar busca automática de nome do auxiliar ao digitar matrícula
+
+### Fase 4: Bot Discord - Comandos
+- [ ] Implementar comando `/cursos` - Listar todos os cursos disponíveis
+- [ ] Implementar comando `/inscrever` - Inscrever-se em um evento
+- [ ] Implementar comando `/agenda` - Ver próximos eventos (30 dias)
+- [ ] Implementar comando `/meusstatus` - Ver status das inscrições
+- [ ] Implementar comando `/meuscertificados` - Ver todos os certificados
+- [ ] Implementar comando `/ranking` - Ver ranking de instrutores
+- [ ] Implementar comando `/consulta-apoio` - Consultar cursos auxiliados
+- [ ] Implementar comando `/ajuda` - Exibir lista de comandos
+- [ ] Implementar parser de nickname Discord (extrair matrícula)
+- [ ] Implementar lógica de agrupamento de cursos (janela de 20 minutos)
+
+### Fase 5: Testes e Validação
+- [ ] Testar fluxo completo de criação de evento com auxiliar
+- [ ] Testar fluxo completo de inscrição via Discord
+- [ ] Testar fluxo completo de emissão de certificados individual
+- [ ] Testar fluxo completo de emissão de certificados em lote
+- [ ] Testar todos os comandos do Discord
+- [ ] Validar tratamento de fuso horário (UTC-3 Brasília)
