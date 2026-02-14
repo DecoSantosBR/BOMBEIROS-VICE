@@ -70,19 +70,19 @@ export const appRouter = router({
       return await db.getAllCourses();
     }),
     getById: publicProcedure
-      .input(z.object({ id: z.string() }))
+      .input(z.object({ id: z.number() }))
       .query(async ({ input }) => {
         return await db.getCourseById(input.id);
       }),
     getMaterial: publicProcedure
-      .input(z.object({ courseId: z.string() }))
+      .input(z.object({ courseId: z.number() }))
       .query(async ({ input }) => {
         return await db.getCourseMaterial(input.courseId);
       }),
     updateMaterial: protectedProcedure
       .input(z.object({
         id: z.number().optional(),
-        courseId: z.string(),
+        courseId: z.number(),
         instructions: z.string(),
         video1Title: z.string().optional(),
         video1Url: z.string().optional(),
@@ -100,7 +100,7 @@ export const appRouter = router({
     // Course Images
     uploadImage: protectedProcedure
       .input(z.object({
-        courseId: z.string(),
+        courseId: z.number(),
         imageUrl: z.string(),
         caption: z.string().optional(),
       }))
@@ -113,7 +113,7 @@ export const appRouter = router({
         return { success: true };
       }),
     getImages: publicProcedure
-      .input(z.object({ courseId: z.string() }))
+      .input(z.object({ courseId: z.number() }))
       .query(async ({ input }) => {
         return await db.getCourseImages(input.courseId);
       }),
@@ -130,7 +130,7 @@ export const appRouter = router({
     // Course Files
     uploadFile: protectedProcedure
       .input(z.object({
-        courseId: z.string(),
+        courseId: z.number(),
         fileName: z.string(),
         fileUrl: z.string(),
         fileKey: z.string(),
@@ -149,7 +149,7 @@ export const appRouter = router({
         return { success: true, fileId };
       }),
     getFiles: publicProcedure
-      .input(z.object({ courseId: z.string() }))
+      .input(z.object({ courseId: z.number() }))
       .query(async ({ input }) => {
         return await db.getCourseFiles(input.courseId);
       }),
@@ -246,7 +246,7 @@ export const appRouter = router({
   applications: router({
     create: publicProcedure
       .input(z.object({
-        courseId: z.string(),
+        courseId: z.number(),
         nomeCompleto: z.string(),
         idJogador: z.string(),
         telefone: z.string(),
@@ -301,7 +301,7 @@ export const appRouter = router({
       }),
     create: protectedProcedure
       .input(z.object({
-        courseId: z.string(),
+        courseId: z.number(),
         title: z.string(),
         description: z.string().optional(),
         startDate: z.string(),
@@ -358,7 +358,7 @@ export const appRouter = router({
     update: protectedProcedure
       .input(z.object({
         id: z.number(),
-        courseId: z.string().optional(),
+        courseId: z.number().optional(),
         title: z.string().optional(),
         description: z.string().optional(),
         startDate: z.string().optional(),
@@ -789,68 +789,27 @@ export const appRouter = router({
         }
 
         const { sendCertificateNotification } = await import("./_core/discord");
-        const { storagePut } = await import("./storage");
-        const dbInstance = await db.getDb();
-        const { certificates: certificatesTable, users, courses } = await import("../drizzle/schema");
-        const { eq } = await import("drizzle-orm");
-        
         let successCount = 0;
         let failCount = 0;
 
         for (const cert of input.certificates) {
-          try {
-            let certificateUrl: string | undefined;
-            
-            // Se imagem foi fornecida, fazer upload para S3
-            if (cert.imageBase64) {
-              const base64Data = cert.imageBase64.replace(/^data:image\/png;base64,/, "");
-              const imageBuffer = Buffer.from(base64Data, "base64");
-              
-              // Upload para S3
-              const timestamp = Date.now();
-              const randomHash = Math.random().toString(36).substring(2, 10);
-              const fileName = `certificado-${cert.studentId}-${cert.courseName.replace(/\s+/g, "-")}-${timestamp}-${randomHash}.png`;
-              const s3Key = `certificates/${fileName}`;
-              console.log("[PublishBatch] Uploading certificate to S3:", s3Key);
-              const { url } = await storagePut(s3Key, imageBuffer, "image/png");
-              certificateUrl = url;
-              console.log("[PublishBatch] Certificate uploaded to S3:", certificateUrl);
-            }
-            
-            // Publicar no Discord com URL da imagem
-            const success = await sendCertificateNotification({
-              userName: cert.studentName,
-              userStudentId: cert.studentId,
-              courseName: cert.courseName,
-              certificateUrl, // Enviar URL ao invés do buffer
-            });
+          // Converter base64 para Buffer se imagem foi fornecida
+          let imageBuffer: Buffer | undefined;
+          if (cert.imageBase64) {
+            const base64Data = cert.imageBase64.replace(/^data:image\/png;base64,/, "");
+            imageBuffer = Buffer.from(base64Data, "base64");
+          }
+          
+          const success = await sendCertificateNotification({
+            userName: cert.studentName,
+            userStudentId: cert.studentId,
+            courseName: cert.courseName,
+            imageBuffer,
+          });
 
-            if (success) {
-              successCount++;
-              
-              // Salvar certificado no banco de dados com URL
-              if (dbInstance && certificateUrl) {
-                const [user] = await dbInstance.select().from(users).where(eq(users.studentId, cert.studentId));
-                const [course] = await dbInstance.select().from(courses).where(eq(courses.nome, cert.courseName));
-                
-                await dbInstance.insert(certificatesTable).values({
-                  userId: user?.id || 0,
-                  discordId: user?.discordId || null,
-                  studentName: cert.studentName,
-                  studentId: cert.studentId,
-                  courseId: course?.id || null,
-                  courseName: cert.courseName,
-                  instructorName: ctx.user.name || "Instrutor",
-                  instructorRank: ctx.user.rank || "Tenente-Coronel",
-                  issuedBy: ctx.user.id,
-                  certificateUrl: certificateUrl,
-                });
-              }
-            } else {
-              failCount++;
-            }
-          } catch (error) {
-            console.error("[PublishBatch] Error processing certificate:", error);
+          if (success) {
+            successCount++;
+          } else {
             failCount++;
           }
 

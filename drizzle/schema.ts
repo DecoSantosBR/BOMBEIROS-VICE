@@ -44,7 +44,7 @@ export type InsertUser = typeof users.$inferInsert;
 
 // Tabela de cursos
 export const courses = mysqlTable("courses", {
-  id: varchar("id", { length: 36 }).primaryKey(),
+  id: int("id").autoincrement().primaryKey(),
   nome: varchar("nome", { length: 255 }).notNull(),
   descricao: text("descricao"),
   valor: varchar("valor", { length: 50 }),
@@ -60,7 +60,7 @@ export type InsertCourse = typeof courses.$inferInsert;
 // Tabela de materiais de curso (instruções + vídeos)
 export const courseMaterials = mysqlTable("course_materials", {
   id: int("id").autoincrement().primaryKey(),
-  courseId: varchar("courseId", { length: 36 }).notNull(),
+  courseId: int("courseId").notNull(),
   instructions: text("instructions"),
   video1Title: varchar("video1Title", { length: 255 }),
   video1Url: text("video1Url"),
@@ -76,7 +76,7 @@ export type InsertCourseMaterial = typeof courseMaterials.$inferInsert;
 // Tabela de imagens do curso
 export const courseImages = mysqlTable("course_images", {
   id: int("id").autoincrement().primaryKey(),
-  courseId: varchar("courseId", { length: 36 }).notNull(),
+  courseId: int("courseId").notNull(),
   imageUrl: text("imageUrl").notNull(),
   caption: varchar("caption", { length: 255 }),
   createdAt: timestamp("createdAt").defaultNow().notNull(),
@@ -88,7 +88,7 @@ export type InsertCourseImage = typeof courseImages.$inferInsert;
 // Tabela de solicitações de inscrição
 export const courseApplications = mysqlTable("course_applications", {
   id: int("id").autoincrement().primaryKey(),
-  courseId: varchar("courseId", { length: 36 }).notNull(),
+  courseId: int("courseId").notNull(),
   nomeCompleto: varchar("nomeCompleto", { length: 255 }).notNull(),
   idJogador: varchar("idJogador", { length: 100 }).notNull(),
   telefone: varchar("telefone", { length: 50 }).notNull(),
@@ -104,7 +104,7 @@ export type InsertCourseApplication = typeof courseApplications.$inferInsert;
 // Tabela de arquivos anexados aos cursos
 export const courseFiles = mysqlTable("course_files", {
   id: int("id").autoincrement().primaryKey(),
-  courseId: varchar("courseId", { length: 36 }).notNull(),
+  courseId: int("courseId").notNull(),
   fileName: varchar("fileName", { length: 255 }).notNull(),
   fileUrl: text("fileUrl").notNull(),
   fileKey: varchar("fileKey", { length: 500 }).notNull(),
@@ -119,7 +119,7 @@ export type InsertCourseFile = typeof courseFiles.$inferInsert;
 // Tabela de eventos/agendamentos de cursos
 export const courseEvents = mysqlTable("course_events", {
   id: int("id").autoincrement().primaryKey(),
-  courseId: varchar("courseId", { length: 36 }).notNull(),
+  courseId: int("courseId").notNull(),
   title: varchar("title", { length: 255 }).notNull(),
   description: text("description"),
   startDate: timestamp("startDate").notNull(),

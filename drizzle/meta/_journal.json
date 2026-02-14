@@ -113,20 +113,6 @@
       "when": 1770936307653,
       "tag": "0015_wooden_stature",
       "breakpoints": true
-    },
-    {
-      "idx": 16,
-      "version": "5",
-      "when": 1771092373480,
-      "tag": "0016_sharp_lady_deathstrike",
-      "breakpoints": true
-    },
-    {
-      "idx": 17,
-      "version": "5",
-      "when": 1771092491514,
-      "tag": "0017_amusing_talkback",
-      "breakpoints": true
     }
   ]
 }
