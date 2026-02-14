@@ -987,3 +987,18 @@
 - [x] Recriar cursos com UUIDs válidos
 - [x] Validar que todos os cursos têm IDs válidos
 - [x] Testar navegação para páginas de curso
+
+## Restauração de Funcionalidades Faltantes
+- [x] Investigar por que /admin/inscricoes retorna 404
+- [x] Investigar por que /calendario retorna 404
+- [x] Verificar rotas no App.tsx
+- [x] Corrigir rotas no App.tsx
+- [x] Restaurar página de inscrições (ManageApplications)
+- [x] Restaurar página de calendário (CalendarPage)
+- [x] Corrigir todos os erros TypeScript (24 erros corrigidos)
+- [x] Corrigir tipos de ID em routers.ts e db.ts
+- [x] Verificar se painel administrativo está acessível
+- [x] Verificar se gerador de certificados está presente
+- [x] Testar fluxo completo de inscrições
+- [x] Testar geração de certificados individual e em lote
+- [x] Validar todas as funcionalidades antes de reportar

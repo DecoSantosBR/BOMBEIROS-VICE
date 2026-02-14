@@ -81,7 +81,7 @@ export const appRouter = router({
       }),
     updateMaterial: protectedProcedure
       .input(z.object({
-        id: z.string().optional(),
+        id: z.number().optional(),
         courseId: z.string(),
         instructions: z.string(),
         video1Title: z.string().optional(),
@@ -118,7 +118,7 @@ export const appRouter = router({
         return await db.getCourseImages(input.courseId);
       }),
     deleteImage: protectedProcedure
-      .input(z.object({ id: z.string() }))
+      .input(z.object({ id: z.number() }))
       .mutation(async ({ input, ctx }) => {
         // Only admin can delete images
         if (ctx.user.role !== "admin") {
@@ -154,7 +154,7 @@ export const appRouter = router({
         return await db.getCourseFiles(input.courseId);
       }),
     deleteFile: protectedProcedure
-      .input(z.object({ id: z.string() }))
+      .input(z.object({ id: z.number() }))
       .mutation(async ({ input, ctx }) => {
         // Only admin and instructors can delete files
         if (ctx.user.role === "member") {
@@ -265,7 +265,7 @@ export const appRouter = router({
     }),
     updateStatus: protectedProcedure
       .input(z.object({
-        id: z.string(),
+        id: z.number(),
         status: z.enum(["pending", "accepted", "rejected"]),
       }))
       .mutation(async ({ input, ctx }) => {
@@ -357,7 +357,7 @@ export const appRouter = router({
       }),
     update: protectedProcedure
       .input(z.object({
-        id: z.string(),
+        id: z.number(),
         courseId: z.string().optional(),
         title: z.string().optional(),
         description: z.string().optional(),
@@ -383,7 +383,7 @@ export const appRouter = router({
         return { success: true };
       }),
     delete: protectedProcedure
-      .input(z.object({ id: z.string() }))
+      .input(z.object({ id: z.number() }))
       .mutation(async ({ input, ctx }) => {
         // Apenas instrutores e admins podem deletar eventos
         if (ctx.user.role !== "instructor" && ctx.user.role !== "admin") {
