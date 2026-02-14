@@ -44,7 +44,7 @@ export type InsertUser = typeof users.$inferInsert;
 
 // Tabela de cursos
 export const courses = mysqlTable("courses", {
-  id: int("id").autoincrement().primaryKey(),
+  id: varchar("id", { length: 36 }).primaryKey(),
   nome: varchar("nome", { length: 255 }).notNull(),
   descricao: text("descricao"),
   valor: varchar("valor", { length: 50 }),

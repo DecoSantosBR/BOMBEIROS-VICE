@@ -980,3 +980,10 @@
 - [x] Testar upload S3 dos certificados
 - [x] Testar publicação no Discord
 - [x] Validar todo o fluxo de geração
+
+## Correção de Erro de Chaves Duplicadas
+- [x] Investigar causa de IDs NaN na listagem de cursos
+- [x] Corrigir schema do Drizzle para usar varchar UUID
+- [x] Recriar cursos com UUIDs válidos
+- [x] Validar que todos os cursos têm IDs válidos
+- [x] Testar navegação para páginas de curso
