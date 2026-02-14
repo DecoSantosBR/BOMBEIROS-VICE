@@ -972,3 +972,11 @@
 - [x] Verificar se fontes estão sendo carregadas
 - [x] Testar geração local
 - [ ] Analisar logs de produção
+
+## Fase Atual: Implementação de Gerador de Certificados
+- [x] Verificar código existente de geração de certificados
+- [x] Corrigir geração individual de certificados (já estava correto)
+- [x] Corrigir geração em lote de certificados (adicionado upload S3)
+- [x] Testar upload S3 dos certificados
+- [x] Testar publicação no Discord
+- [x] Validar todo o fluxo de geração

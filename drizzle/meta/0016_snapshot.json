@@ -1,8 +1,8 @@
 {
   "version": "5",
   "dialect": "mysql",
-  "id": "630a8172-7e54-4b00-966b-48ea3153a02e",
-  "prevId": "697307a5-0312-4972-91c3-1e9de6c1f125",
+  "id": "86466660-e520-455f-8e46-92b81c6e6406",
+  "prevId": "38836347-5f70-4f88-bc76-ff16d05a9049",
   "tables": {
     "certificates": {
       "name": "certificates",
@@ -44,7 +44,7 @@
         },
         "courseId": {
           "name": "courseId",
-          "type": "int",
+          "type": "varchar(36)",
           "primaryKey": false,
           "notNull": false,
           "autoincrement": false
@@ -118,7 +118,7 @@
         },
         "courseId": {
           "name": "courseId",
-          "type": "int",
+          "type": "varchar(36)",
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false
@@ -377,7 +377,7 @@
         },
         "courseId": {
           "name": "courseId",
-          "type": "int",
+          "type": "varchar(36)",
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false
@@ -458,7 +458,7 @@
         },
         "courseId": {
           "name": "courseId",
-          "type": "int",
+          "type": "varchar(36)",
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false
@@ -511,7 +511,7 @@
         },
         "courseId": {
           "name": "courseId",
-          "type": "int",
+          "type": "varchar(36)",
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false

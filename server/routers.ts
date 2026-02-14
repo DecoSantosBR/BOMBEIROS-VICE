@@ -70,19 +70,19 @@ export const appRouter = router({
       return await db.getAllCourses();
     }),
     getById: publicProcedure
-      .input(z.object({ id: z.number() }))
+      .input(z.object({ id: z.string() }))
       .query(async ({ input }) => {
         return await db.getCourseById(input.id);
       }),
     getMaterial: publicProcedure
-      .input(z.object({ courseId: z.number() }))
+      .input(z.object({ courseId: z.string() }))
       .query(async ({ input }) => {
         return await db.getCourseMaterial(input.courseId);
       }),
     updateMaterial: protectedProcedure
       .input(z.object({
-        id: z.number().optional(),
-        courseId: z.number(),
+        id: z.string().optional(),
+        courseId: z.string(),
         instructions: z.string(),
         video1Title: z.string().optional(),
         video1Url: z.string().optional(),
@@ -100,7 +100,7 @@ export const appRouter = router({
     // Course Images
     uploadImage: protectedProcedure
       .input(z.object({
-        courseId: z.number(),
+        courseId: z.string(),
         imageUrl: z.string(),
         caption: z.string().optional(),
       }))
@@ -113,12 +113,12 @@ export const appRouter = router({
         return { success: true };
       }),
     getImages: publicProcedure
-      .input(z.object({ courseId: z.number() }))
+      .input(z.object({ courseId: z.string() }))
       .query(async ({ input }) => {
         return await db.getCourseImages(input.courseId);
       }),
     deleteImage: protectedProcedure
-      .input(z.object({ id: z.number() }))
+      .input(z.object({ id: z.string() }))
       .mutation(async ({ input, ctx }) => {
         // Only admin can delete images
         if (ctx.user.role !== "admin") {
@@ -130,7 +130,7 @@ export const appRouter = router({
     // Course Files
     uploadFile: protectedProcedure
       .input(z.object({
-        courseId: z.number(),
+        courseId: z.string(),
         fileName: z.string(),
         fileUrl: z.string(),
         fileKey: z.string(),
@@ -149,12 +149,12 @@ export const appRouter = router({
         return { success: true, fileId };
       }),
     getFiles: publicProcedure
-      .input(z.object({ courseId: z.number() }))
+      .input(z.object({ courseId: z.string() }))
       .query(async ({ input }) => {
         return await db.getCourseFiles(input.courseId);
       }),
     deleteFile: protectedProcedure
-      .input(z.object({ id: z.number() }))
+      .input(z.object({ id: z.string() }))
       .mutation(async ({ input, ctx }) => {
         // Only admin and instructors can delete files
         if (ctx.user.role === "member") {
@@ -246,7 +246,7 @@ export const appRouter = router({
   applications: router({
     create: publicProcedure
       .input(z.object({
-        courseId: z.number(),
+        courseId: z.string(),
         nomeCompleto: z.string(),
         idJogador: z.string(),
         telefone: z.string(),
@@ -265,7 +265,7 @@ export const appRouter = router({
     }),
     updateStatus: protectedProcedure
       .input(z.object({
-        id: z.number(),
+        id: z.string(),
         status: z.enum(["pending", "accepted", "rejected"]),
       }))
       .mutation(async ({ input, ctx }) => {
@@ -301,7 +301,7 @@ export const appRouter = router({
       }),
     create: protectedProcedure
       .input(z.object({
-        courseId: z.number(),
+        courseId: z.string(),
         title: z.string(),
         description: z.string().optional(),
         startDate: z.string(),
@@ -357,8 +357,8 @@ export const appRouter = router({
       }),
     update: protectedProcedure
       .input(z.object({
-        id: z.number(),
-        courseId: z.number().optional(),
+        id: z.string(),
+        courseId: z.string().optional(),
         title: z.string().optional(),
         description: z.string().optional(),
         startDate: z.string().optional(),
@@ -383,7 +383,7 @@ export const appRouter = router({
         return { success: true };
       }),
     delete: protectedProcedure
-      .input(z.object({ id: z.number() }))
+      .input(z.object({ id: z.string() }))
       .mutation(async ({ input, ctx }) => {
         // Apenas instrutores e admins podem deletar eventos
         if (ctx.user.role !== "instructor" && ctx.user.role !== "admin") {
@@ -789,27 +789,68 @@ export const appRouter = router({
         }
 
         const { sendCertificateNotification } = await import("./_core/discord");
+        const { storagePut } = await import("./storage");
+        const { certificates } = await import("../drizzle/schema");
+        const dbInstance = await db.getDb();
+        
         let successCount = 0;
         let failCount = 0;
 
         for (const cert of input.certificates) {
-          // Converter base64 para Buffer se imagem foi fornecida
-          let imageBuffer: Buffer | undefined;
-          if (cert.imageBase64) {
-            const base64Data = cert.imageBase64.replace(/^data:image\/png;base64,/, "");
-            imageBuffer = Buffer.from(base64Data, "base64");
-          }
-          
-          const success = await sendCertificateNotification({
-            userName: cert.studentName,
-            userStudentId: cert.studentId,
-            courseName: cert.courseName,
-            imageBuffer,
-          });
+          try {
+            // Converter base64 para Buffer
+            let certificateBuffer: Buffer | undefined;
+            if (cert.imageBase64) {
+              const base64Data = cert.imageBase64.replace(/^data:image\/png;base64,/, "");
+              certificateBuffer = Buffer.from(base64Data, "base64");
+            }
 
-          if (success) {
-            successCount++;
-          } else {
+            if (!certificateBuffer) {
+              console.error("[PublishBatch] No certificate buffer for", cert.studentName);
+              failCount++;
+              continue;
+            }
+
+            // Fazer upload para S3
+            const timestamp = Date.now();
+            const randomHash = Math.random().toString(36).substring(2, 10);
+            const fileName = `certificado-${cert.studentId}-${cert.courseName.replace(/\s+/g, "-")}-${timestamp}-${randomHash}.png`;
+            const s3Key = `certificates/${fileName}`;
+            console.log("[PublishBatch] Uploading certificate to S3:", s3Key);
+            const { url: certificateUrl } = await storagePut(s3Key, certificateBuffer, "image/png");
+            console.log("[PublishBatch] Certificate uploaded:", certificateUrl);
+
+            // Publicar no Discord com URL
+            const success = await sendCertificateNotification({
+              userName: cert.studentName,
+              userStudentId: cert.studentId,
+              courseName: cert.courseName,
+              certificateUrl: certificateUrl,
+            });
+
+            if (success) {
+              successCount++;
+              
+              // Salvar no banco de dados
+              if (dbInstance) {
+                await dbInstance.insert(certificates).values({
+                  userId: ctx.user.id, // Usar ID do usuário que está gerando
+                  discordId: null,
+                  studentName: cert.studentName,
+                  studentId: cert.studentId,
+                  courseId: "", // Não temos courseId aqui
+                  courseName: cert.courseName,
+                  instructorName: ctx.user.name || "Instrutor",
+                  instructorRank: ctx.user.rank || "Tenente-Coronel",
+                  issuedBy: ctx.user.id,
+                  certificateUrl: certificateUrl,
+                });
+              }
+            } else {
+              failCount++;
+            }
+          } catch (error) {
+            console.error("[PublishBatch] Error processing certificate:", error);
             failCount++;
           }
 

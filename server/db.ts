@@ -172,7 +172,7 @@ export async function getAllCourses() {
   return await db.select().from(courses);
 }
 
-export async function getCourseById(id: number) {
+export async function getCourseById(id: string) {
   const db = await getDb();
   if (!db) return undefined;
   const result = await db.select().from(courses).where(eq(courses.id, id)).limit(1);
@@ -187,7 +187,7 @@ export async function createCourse(course: InsertCourse): Promise<number> {
 }
 
 // Course Materials
-export async function getCourseMaterial(courseId: number) {
+export async function getCourseMaterial(courseId: string) {
   const db = await getDb();
   if (!db) return undefined;
   const result = await db.select().from(courseMaterials).where(eq(courseMaterials.courseId, courseId)).limit(1);
@@ -227,7 +227,7 @@ export async function getAllCourseApplications() {
   return await db.select().from(courseApplications);
 }
 
-export async function updateApplicationStatus(id: number, status: "pending" | "accepted" | "rejected") {
+export async function updateApplicationStatus(id: string, status: "pending" | "accepted" | "rejected") {
   const db = await getDb();
   if (!db) throw new Error("Database not available");
   await db.update(courseApplications)
@@ -250,13 +250,13 @@ export async function createCourseImage(image: InsertCourseImage) {
   return result;
 }
 
-export async function getCourseImages(courseId: number) {
+export async function getCourseImages(courseId: string) {
   const db = await getDb();
   if (!db) throw new Error("Database not available");
   return await db.select().from(courseImages).where(eq(courseImages.courseId, courseId));
 }
 
-export async function deleteCourseImage(id: number) {
+export async function deleteCourseImage(id: string) {
   const db = await getDb();
   if (!db) throw new Error("Database not available");
   await db.delete(courseImages).where(eq(courseImages.id, id));
@@ -270,13 +270,13 @@ export async function createCourseFile(file: InsertCourseFile) {
   return result.insertId;
 }
 
-export async function getCourseFiles(courseId: number) {
+export async function getCourseFiles(courseId: string) {
   const db = await getDb();
   if (!db) return [];
   return await db.select().from(courseFiles).where(eq(courseFiles.courseId, courseId));
 }
 
-export async function deleteCourseFile(id: number) {
+export async function deleteCourseFile(id: string) {
   const db = await getDb();
   if (!db) throw new Error("Database not available");
   const [file] = await db.select().from(courseFiles).where(eq(courseFiles.id, id));
@@ -309,14 +309,14 @@ export async function getCourseEventsByDateRange(startDate: Date, endDate: Date)
   );
 }
 
-export async function getCourseEventById(id: number) {
+export async function getCourseEventById(id: string) {
   const db = await getDb();
   if (!db) return undefined;
   const [result] = await db.select().from(courseEvents).where(eq(courseEvents.id, id));
   return result;
 }
 
-export async function updateCourseEvent(id: number, data: Partial<InsertCourseEvent>) {
+export async function updateCourseEvent(id: string, data: Partial<InsertCourseEvent>) {
   const db = await getDb();
   if (!db) throw new Error("Database not available");
   await db.update(courseEvents)
@@ -324,7 +324,7 @@ export async function updateCourseEvent(id: number, data: Partial<InsertCourseEv
     .where(eq(courseEvents.id, id));
 }
 
-export async function deleteCourseEvent(id: number) {
+export async function deleteCourseEvent(id: string) {
   const db = await getDb();
   if (!db) throw new Error("Database not available");
   await db.delete(courseEvents).where(eq(courseEvents.id, id));
