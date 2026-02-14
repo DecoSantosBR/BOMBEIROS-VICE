@@ -1049,3 +1049,15 @@
 - [ ] Testar fluxo completo de emissão de certificados em lote
 - [ ] Testar todos os comandos do Discord
 - [ ] Validar tratamento de fuso horário (UTC-3 Brasília)
+
+## Implementação do Formulário Gerador de Certificados
+- [x] Criar endpoint backend para emissão individual de certificados
+- [x] Criar endpoint backend para emissão em lote de certificados
+- [x] Criar componente CertificateGenerator.tsx
+- [x] Adicionar formulário de emissão individual
+- [x] Adicionar formulário de emissão em lote
+- [x] Integrar componente na página Home
+- [x] Testar emissão individual
+- [x] Testar emissão em lote
+- [x] Criar testes automatizados
+- [x] Todos os testes passando (7/7)

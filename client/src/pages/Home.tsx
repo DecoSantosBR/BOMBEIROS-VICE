@@ -6,6 +6,7 @@ import { getLoginUrl } from "@/const";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Calendar, Users, Award, LogOut } from "lucide-react";
+import { CertificateGenerator } from "@/components/CertificateGenerator";
 
 export default function Home() {
   const [, setLocation] = useLocation();
@@ -89,6 +90,11 @@ export default function Home() {
 
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        {/* Gerador de Certificados - Apenas para Instrutores e Admins */}
+        {(user?.role === "instructor" || user?.role === "admin") && (
+          <CertificateGenerator />
+        )}
+
         <div className="text-center mb-12">
           <h2 className="text-5xl font-bold text-white mb-4">
             Cursos Disponíveis

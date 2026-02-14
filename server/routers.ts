@@ -873,6 +873,179 @@ export const appRouter = router({
           failCount,
         };
       }),
+
+    // Emissão individual de certificado (novo)
+    // Emissão individual de certificado
+    issueIndividual: protectedProcedure
+      .input(z.object({
+        studentName: z.string(),
+        studentId: z.string(), // Matrícula do aluno
+        courseName: z.string(),
+        instructorName: z.string(),
+        instructorRank: z.string(),
+        auxiliarMatricula: z.string().optional(), // Matrícula do auxiliar (opcional)
+      }))
+      .mutation(async ({ input, ctx }) => {
+        // Apenas instrutores e admins podem emitir certificados
+        if (ctx.user.role !== "instructor" && ctx.user.role !== "admin") {
+          throw new TRPCError({ code: "FORBIDDEN", message: "Apenas instrutores e administradores podem emitir certificados" });
+        }
+
+        const { issueCertificate } = await import("./certificates");
+        const { getUserByStudentId } = await import("./db");
+        const { certificates } = await import("../drizzle/schema");
+        const dbInstance = await db.getDb();
+
+        // Buscar nome do auxiliar se matrícula foi fornecida
+        let auxiliarNome: string | undefined;
+        if (input.auxiliarMatricula) {
+          const auxiliar = await getUserByStudentId(input.auxiliarMatricula);
+          if (auxiliar) {
+            auxiliarNome = auxiliar.name || undefined;
+          }
+        }
+
+        // Emitir certificado (gera imagem, faz upload S3, envia Discord)
+        const certificateUrl = await issueCertificate({
+          studentName: input.studentName,
+          studentId: input.studentId,
+          courseName: input.courseName,
+          instructorName: input.instructorName,
+          instructorRank: input.instructorRank,
+          auxiliar: auxiliarNome,
+          ID_auxiliar: input.auxiliarMatricula,
+          issuedAt: new Date(),
+        });
+
+        // Salvar no banco de dados
+        if (dbInstance) {
+          await dbInstance.insert(certificates).values({
+            userId: ctx.user.id,
+            discordId: null, // Não temos discordId do aluno aqui
+            studentName: input.studentName,
+            studentId: input.studentId,
+            courseId: null,
+            courseName: input.courseName,
+            instructorName: input.instructorName,
+            instructorRank: input.instructorRank,
+            auxiliar: auxiliarNome,
+            ID_auxiliar: input.auxiliarMatricula,
+            issuedBy: ctx.user.id,
+            certificateUrl: certificateUrl,
+          });
+        }
+
+        return {
+          success: true,
+          message: "Certificado emitido e publicado no Discord com sucesso!",
+          certificateUrl,
+        };
+      }),
+
+    // Emissão em lote de certificados
+    issueBatch: protectedProcedure
+      .input(z.object({
+        courseId: z.string(), // ID do curso
+        instructorName: z.string(),
+        auxiliarMatricula: z.string().optional(),
+        approvedList: z.string(), // Lista de aprovados: "nome | matrícula" (um por linha)
+      }))
+      .mutation(async ({ input, ctx }) => {
+        // Apenas instrutores e admins podem emitir certificados
+        if (ctx.user.role !== "instructor" && ctx.user.role !== "admin") {
+          throw new TRPCError({ code: "FORBIDDEN", message: "Apenas instrutores e administradores podem emitir certificados" });
+        }
+
+        const { issueCertificate } = await import("./certificates");
+        const { getUserByStudentId } = await import("./db");
+        const { certificates } = await import("../drizzle/schema");
+        const dbInstance = await db.getDb();
+
+        // Buscar curso
+        const course = await db.getCourseById(input.courseId);
+        if (!course) {
+          throw new TRPCError({ code: "NOT_FOUND", message: "Curso não encontrado" });
+        }
+
+        // Buscar nome do auxiliar se matrícula foi fornecida
+        let auxiliarNome: string | undefined;
+        if (input.auxiliarMatricula) {
+          const auxiliar = await getUserByStudentId(input.auxiliarMatricula);
+          if (auxiliar) {
+            auxiliarNome = auxiliar.name || undefined;
+          }
+        }
+
+        // Parsear lista de aprovados
+        const lines = input.approvedList.split("\n").filter(line => line.trim());
+        const students: Array<{ name: string; studentId: string }> = [];
+
+        for (const line of lines) {
+          const parts = line.split("|").map(p => p.trim());
+          if (parts.length >= 2) {
+            students.push({
+              name: parts[0],
+              studentId: parts[1],
+            });
+          }
+        }
+
+        if (students.length === 0) {
+          throw new TRPCError({ code: "BAD_REQUEST", message: "Nenhum aluno válido encontrado na lista" });
+        }
+
+        // Emitir certificados para cada aluno
+        let successCount = 0;
+        let failCount = 0;
+
+        for (const student of students) {
+          try {
+            const certificateUrl = await issueCertificate({
+              studentName: student.name,
+              studentId: student.studentId,
+              courseName: course.nome,
+              instructorName: input.instructorName,
+              instructorRank: ctx.user.rank || "Instrutor",
+              auxiliar: auxiliarNome,
+              ID_auxiliar: input.auxiliarMatricula,
+              issuedAt: new Date(),
+            });
+
+            // Salvar no banco de dados
+            if (dbInstance) {
+              await dbInstance.insert(certificates).values({
+                userId: ctx.user.id,
+                discordId: null,
+                studentName: student.name,
+                studentId: student.studentId,
+                courseId: course.id,
+                courseName: course.nome,
+                instructorName: input.instructorName,
+                instructorRank: ctx.user.rank || "Instrutor",
+                auxiliar: auxiliarNome,
+                ID_auxiliar: input.auxiliarMatricula,
+                issuedBy: ctx.user.id,
+                certificateUrl: certificateUrl,
+              });
+            }
+
+            successCount++;
+            
+            // Delay entre emissões para evitar rate limit
+            await new Promise(resolve => setTimeout(resolve, 1000));
+          } catch (error) {
+            console.error("[IssueBatch] Error issuing certificate for", student.name, error);
+            failCount++;
+          }
+        }
+
+        return {
+          success: true,
+          message: `${successCount} certificado(s) emitido(s) com sucesso. ${failCount > 0 ? `${failCount} falharam.` : ""}`,
+          successCount,
+          failCount,
+        };
+      }),
   }),
 });
 
