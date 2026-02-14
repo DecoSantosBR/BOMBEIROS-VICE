@@ -1,0 +1,8 @@
+{
+  "query": "ALTER TABLE `course_events` MODIFY COLUMN `courseId` varchar(36) NOT NULL;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 44TTARZqZm4zxSK.9ce58a8ab24b --database mpF46NADk5NFevEEQ9e39Y --execute ALTER TABLE `course_events` MODIFY COLUMN `courseId` varchar(36) NOT NULL;",
+  "returncode": 1,
+  "logs": [
+    "ERROR 1146 (42S02) at line 1: Table 'mpf46nadk5nfeveeq9e39y.course_events' doesn't exist"
+  ]
+}
