@@ -1085,3 +1085,11 @@
 - [x] Atualizar assinatura do instrutor para usar nova fonte
 - [x] Testar certificado com fonte personalizada
 - [x] Fonte Optimistral Graff aplicada com sucesso na assinatura
+
+## Alteração Campo Nome do Curso
+- [x] Alterar campo "Nome do Curso" de input text para select dropdown
+- [x] Buscar lista de cursos disponíveis
+- [x] Adicionar fundo branco ao select
+- [x] Testar seleção de curso no formulário
+- [x] Campo Nome do Curso agora é select dropdown com fundo branco
+- [x] Lista todos os 13 cursos disponíveis
