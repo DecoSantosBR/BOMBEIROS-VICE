@@ -21,7 +21,19 @@ export interface CertificateData {
  * Retorna buffer da imagem PNG
  */
 export async function generateCertificateImage(data: CertificateData): Promise<Buffer> {
-  const { createCanvas, loadImage } = await import('canvas');
+  const { createCanvas, loadImage, registerFont } = await import('canvas');
+  
+  // Registrar fonte personalizada para assinatura
+  try {
+    const { fileURLToPath } = await import('url');
+    const { dirname, join } = await import('path');
+    const __filename = fileURLToPath(import.meta.url);
+    const __dirname = dirname(__filename);
+    const fontPath = join(__dirname, 'assets', 'fonts', 'optimistral-graff.otf');
+    registerFont(fontPath, { family: 'Optimistral' });
+  } catch (error) {
+    console.error('[Certificate] Failed to register font:', error);
+  }
   
   // Dimensões do certificado (1200x680 pixels)
   const width = 1200;
@@ -145,9 +157,9 @@ export async function generateCertificateImage(data: CertificateData): Promise<B
   ctx.lineTo(width - 60, 490);
   ctx.stroke();
   
-  // 14. ASSINATURA DO INSTRUTOR (cursiva)
+  // 14. ASSINATURA DO INSTRUTOR (fonte personalizada Optimistral)
   ctx.fillStyle = darkRed;
-  ctx.font = 'italic 36px Georgia';
+  ctx.font = '36px Optimistral, Georgia';
   ctx.fillText(data.instructorName, width / 2, 545);
   
   // 15. LINHA DA ASSINATURA

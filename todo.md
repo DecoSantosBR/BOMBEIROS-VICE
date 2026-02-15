@@ -1078,3 +1078,10 @@
 - [x] Testar geração do certificado
 - [x] Logo do CBM Lotus carregado com sucesso
 - [x] Design 100% idêntico ao modelo
+
+## Fonte Personalizada para Assinatura
+- [x] Copiar fonte Optimistral Graff para pasta de assets
+- [x] Registrar fonte no canvas
+- [x] Atualizar assinatura do instrutor para usar nova fonte
+- [x] Testar certificado com fonte personalizada
+- [x] Fonte Optimistral Graff aplicada com sucesso na assinatura
