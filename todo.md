@@ -1061,3 +1061,9 @@
 - [x] Testar emissão em lote
 - [x] Criar testes automatizados
 - [x] Todos os testes passando (7/7)
+
+## Correção do Módulo Canvas
+- [x] Instalar dependências do sistema (build-essential, libcairo2-dev, libpango1.0-dev, libjpeg-dev, libgif-dev, librsvg2-dev)
+- [x] Recompilar biblioteca canvas
+- [x] Testar geração de certificados
+- [x] Canvas funcionando corretamente
