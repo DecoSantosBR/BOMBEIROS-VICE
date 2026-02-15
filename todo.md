@@ -1205,3 +1205,11 @@
 - [x] Conexão funciona em produção (restrições de sandbox impedem teste local)
 - [ ] Publicar site para ambiente de produção
 - [ ] Validar que site e bot Discord estão sincronizados após publicação
+
+## Bug: OAuth Callback Failed
+- [x] Investigar logs do servidor para identificar causa do erro
+- [x] Causa: Tentativa de conectar ao Railway em desenvolvimento (proxy.rlwy.net inacessível)
+- [x] Ajustar db.ts para usar Railway apenas em produção (NODE_ENV=production)
+- [x] Desenvolvimento usará DATABASE_URL local
+- [x] Reiniciar servidor e testar login completo
+- [x] Site carregando corretamente com banco local
