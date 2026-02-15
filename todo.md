@@ -1143,3 +1143,11 @@
 - [x] Ajustar captura do Puppeteer para capturar apenas elemento .certificate
 - [x] Testar certificado sem borda branca
 - [x] Borda branca completamente eliminada (160KB, 680x750px)
+
+## Remover Texto "1º CBM Lotus" do Certificado
+- [x] Localizar texto "1º CBM Lotus" no HTML do certificado (linhas 267-270)
+- [x] Remover elemento de texto mantendo apenas o logo
+- [x] Remover CSS da classe header-text não utilizada
+- [x] Testar geração de certificado sem o texto
+- [x] Verificar que logo permanece visível
+- [x] Certificado gerado com sucesso (157KB) - logo visível, texto removido

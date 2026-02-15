@@ -119,28 +119,6 @@ export async function generateCertificateImage(data: CertificateData): Promise<B
           font-weight: bold;
         }
         
-        .header-text {
-          position: absolute;
-          top: 100px;
-          left: 60px;
-          text-align: left;
-        }
-        
-        .header-text h3 {
-          font-size: 28px;
-          color: #8B1A1A;
-          font-weight: bold;
-          margin: 0;
-          line-height: 1.2;
-        }
-        
-        .header-text h4 {
-          font-size: 32px;
-          color: #8B1A1A;
-          font-weight: bold;
-          margin: 0;
-          line-height: 1.2;
-        }
         
         .title {
           text-align: center;
@@ -264,10 +242,6 @@ export async function generateCertificateImage(data: CertificateData): Promise<B
           <div class="check-inner"></div>
         </div>
         
-        <div class="header-text">
-          <h3>1º CBM</h3>
-          <h4>Lotus</h4>
-        </div>
         
         <div class="title">
           <h1>CERTIFICADO</h1>
