@@ -1272,3 +1272,17 @@
 - [x] Converter logo para base64 e atualizar logoBase64.ts
 - [x] Testar site com novo branding (cabeçalho exibindo "1º CBM Vice City")
 - [ ] Atualizar VITE_APP_TITLE manualmente (Settings → General no painel)
+
+## Criar Projeto Railway para Site
+- [x] Criar guia passo a passo para Railway (GUIA_RAILWAY_COMPLETO.md)
+- [x] Criar ZIP atualizado com código Vice City (cbm-vice-city-railway.zip)
+- [ ] Usuário: Fazer upload do código no GitHub
+- [ ] Usuário: Criar novo projeto no Railway
+- [ ] Usuário: Conectar repositório GitHub ao Railway
+- [ ] Usuário: Configurar variáveis de ambiente
+- [ ] Usuário: Fazer deploy e validar
+
+## Upload Código para GitHub BOMBEIROS-VICE
+- [ ] Configurar repositório remoto
+- [ ] Fazer push do código
+- [ ] Validar upload no GitHub
