@@ -1254,3 +1254,14 @@
 - [ ] Conectar repositório ao Railway
 - [ ] Configurar variáveis de ambiente no Railway
 - [ ] Fazer deploy e validar
+
+## Configurar Novo Bot Discord e Servidor
+- [x] Obter credenciais do novo bot (Token, Client ID, Client Secret)
+- [x] Obter IDs do novo servidor e canais
+- [x] Atualizar variáveis de ambiente do projeto
+- [x] Habilitar Privileged Gateway Intents no Discord Developer Portal
+- [x] Reiniciar servidor para aplicar novas credenciais
+- [x] Bot conectado com sucesso (Bombeiros Vice City#6549)
+- [x] Adicionar DISCORD_APPLICATION_ID para registro de comandos
+- [x] Comandos slash registrados com sucesso
+- [x] Bot respondendo a comandos no novo servidor
