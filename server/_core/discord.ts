@@ -90,7 +90,19 @@ async function registerCommands() {
     
     new SlashCommandBuilder()
       .setName("ranking")
-      .setDescription("Ver ranking de alunos por número de certificados"),
+      .setDescription("Ver ranking de instrutores por cursos aplicados")
+      .addStringOption(option =>
+        option
+          .setName("data_inicial")
+          .setDescription("Data inicial no formato DD/MM/AAAA")
+          .setRequired(true)
+      )
+      .addStringOption(option =>
+        option
+          .setName("data_final")
+          .setDescription("Data final no formato DD/MM/AAAA")
+          .setRequired(true)
+      ),
     
     new SlashCommandBuilder()
       .setName("ajuda")
@@ -314,43 +326,143 @@ async function handleCommand(interaction: ChatInputCommandInteraction) {
         // Defer reply porque este comando pode demorar
         await interaction.deferReply();
         
-        // Buscar ranking de instrutores por quantidade de cursos aplicados
-        const dbInstRank = await db.getDb();
-        if (!dbInstRank) {
-          await interaction.editReply("❌ Erro ao conectar com o banco de dados.");
-          break;
-        }
-
-        // Buscar todos os eventos e agrupar por instrutor
-        const { courseEvents } = await import("../../drizzle/schema");
-        const allEvents = await dbInstRank.select().from(courseEvents);
-        const eventCounts = new Map<number, number>();
-        allEvents.forEach(event => {
-          if (event.instructorId) {
-            eventCounts.set(event.instructorId, (eventCounts.get(event.instructorId) || 0) + 1);
+        try {
+          // Obter parâmetros de data
+          const dataInicialStr = interaction.options.getString("data_inicial", true);
+          const dataFinalStr = interaction.options.getString("data_final", true);
+          
+          // Validar formato DD/MM/AAAA
+          const dateRegex = /^(\d{2})\/(\d{2})\/(\d{4})$/;
+          const matchInicial = dataInicialStr.match(dateRegex);
+          const matchFinal = dataFinalStr.match(dateRegex);
+          
+          if (!matchInicial || !matchFinal) {
+            await interaction.editReply("❌ Formato de data inválido. Use DD/MM/AAAA (exemplo: 01/01/2024)");
+            break;
           }
-        });
-
-        // Buscar informações dos instrutores
-        const topInstructors = await Promise.all(
-          Array.from(eventCounts.entries())
-            .sort((a, b) => b[1] - a[1])
-            .slice(0, 10)
-            .map(async ([instructorId, count]) => {
-              const instructorResults = await dbInstRank.select().from(users).where(eq(users.id, instructorId));
-              const instructor = instructorResults[0];
-              return { name: instructor?.name || "Desconhecido", rank: instructor?.rank || "N/A", count };
-            })
-        );
-
-        if (topInstructors.length === 0) {
-          await interaction.reply("🏆 **Ranking de Instrutores**\n\nNenhum curso aplicado ainda.");
-        } else {
+          
+          // Converter para Date em UTC-3 (Brasília)
+          const [, diaIni, mesIni, anoIni] = matchInicial;
+          const [, diaFim, mesFim, anoFim] = matchFinal;
+          
+          // Criar datas no início e fim do dia em UTC-3
+          const dataInicial = new Date(`${anoIni}-${mesIni}-${diaIni}T00:00:00-03:00`);
+          const dataFinal = new Date(`${anoFim}-${mesFim}-${diaFim}T23:59:59-03:00`);
+          
+          if (isNaN(dataInicial.getTime()) || isNaN(dataFinal.getTime())) {
+            await interaction.editReply("❌ Data inválida. Verifique os valores informados.");
+            break;
+          }
+          
+          if (dataInicial > dataFinal) {
+            await interaction.editReply("❌ Data inicial deve ser anterior à data final.");
+            break;
+          }
+          
+          // Buscar certificados no período
+          const dbRanking = await db.getDb();
+          if (!dbRanking) {
+            await interaction.editReply("❌ Erro ao conectar com o banco de dados.");
+            break;
+          }
+          
+          const { certificates: certsTable } = await import("../../drizzle/schema");
+          const { gte, lte, and } = await import("drizzle-orm");
+          
+          const certificatesInPeriod = await dbRanking
+            .select()
+            .from(certsTable)
+            .where(
+              and(
+                gte(certsTable.issuedAt, dataInicial),
+                lte(certsTable.issuedAt, dataFinal)
+              )
+            );
+          
+          if (certificatesInPeriod.length === 0) {
+            await interaction.editReply(
+              `🏆 **RANKING DE INSTRUTORES**\n` +
+              `Período: ${dataInicialStr} - ${dataFinalStr}\n\n` +
+              `Nenhum certificado emitido neste período.`
+            );
+            break;
+          }
+          
+          // Agrupar certificados por instrutor e curso, ordenados por data
+          interface CertGroup {
+            instructorName: string;
+            instructorRank: string;
+            courseName: string;
+            issuedAt: Date;
+          }
+          
+          const certsByInstructor = new Map<string, CertGroup[]>();
+          
+          certificatesInPeriod.forEach(cert => {
+            if (cert.instructorName && cert.courseName) {
+              const key = cert.instructorName;
+              if (!certsByInstructor.has(key)) {
+                certsByInstructor.set(key, []);
+              }
+              certsByInstructor.get(key)!.push({
+                instructorName: cert.instructorName,
+                instructorRank: cert.instructorRank || "N/A",
+                courseName: cert.courseName,
+                issuedAt: new Date(cert.issuedAt)
+              });
+            }
+          });
+          
+          // Contar cursos aplicados usando janela de 20 minutos
+          const instructorCounts = new Map<string, { name: string; rank: string; count: number }>();
+          
+          certsByInstructor.forEach((certs, instructorName) => {
+            // Ordenar por data
+            certs.sort((a, b) => a.issuedAt.getTime() - b.issuedAt.getTime());
+            
+            let coursesApplied = 0;
+            let lastCourseEnd: Date | null = null;
+            let lastCourseName: string | null = null;
+            
+            certs.forEach(cert => {
+              // Se é o primeiro certificado ou:
+              // - Curso diferente, OU
+              // - Mesmo curso mas intervalo > 20 minutos
+              if (!lastCourseEnd || 
+                  cert.courseName !== lastCourseName ||
+                  (cert.issuedAt.getTime() - lastCourseEnd.getTime()) > 20 * 60 * 1000) {
+                coursesApplied++;
+                lastCourseName = cert.courseName;
+              }
+              lastCourseEnd = cert.issuedAt;
+            });
+            
+            instructorCounts.set(instructorName, {
+              name: instructorName,
+              rank: certs[0].instructorRank,
+              count: coursesApplied
+            });
+          });
+          
+          // Ordenar por quantidade de cursos aplicados
+          const topInstructors = Array.from(instructorCounts.values())
+            .sort((a, b) => b.count - a.count)
+            .slice(0, 10);
+          
+          // Formatar resposta
           const rankingList = topInstructors.map((inst, idx) => {
             const medal = idx === 0 ? "🥇" : idx === 1 ? "🥈" : idx === 2 ? "🥉" : `${idx + 1}.`;
-            return `${medal} **${inst.name}** (${inst.rank}) - ${inst.count} curso${inst.count > 1 ? 's' : ''} aplicado${inst.count > 1 ? 's' : ''}`;
+            return `${medal} ${inst.rank} ${inst.name} - ${inst.count} curso${inst.count > 1 ? 's' : ''} aplicado${inst.count > 1 ? 's' : ''}`;
           }).join("\n");
-          await interaction.reply(`🏆 **Ranking de Instrutores**\n\n${rankingList}`);
+          
+          await interaction.editReply(
+            `🏆 **RANKING DE INSTRUTORES**\n` +
+            `Período: ${dataInicialStr} - ${dataFinalStr}\n\n` +
+            `${rankingList}`
+          );
+        } catch (error) {
+          console.error("[Discord] Error in ranking command:", error);
+          await interaction.editReply("❌ Erro ao processar ranking. Tente novamente.");
         }
         break;
       
@@ -362,7 +474,7 @@ async function handleCommand(interaction: ChatInputCommandInteraction) {
           `• \`/inscrever <evento_id>\` - Inscrever-se em um evento\n` +
           `• \`/meusstatus\` - Ver status das suas inscrições\n` +
           `• \`/meuscertificados\` - Ver seus certificados emitidos\n` +
-          `• \`/ranking\` - Ver ranking de instrutores\n` +
+          `• \`/ranking <data_inicial> <data_final>\` - Ver ranking de instrutores\n` +
           `• \`/ajuda\` - Exibir esta mensagem\n\n` +
           `**Comandos de Instrutor:**\n` +
           `• \`/emitircertificado\` - Emitir certificado para um aluno\n` +

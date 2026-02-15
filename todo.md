@@ -1151,3 +1151,22 @@
 - [x] Testar geração de certificado sem o texto
 - [x] Verificar que logo permanece visível
 - [x] Certificado gerado com sucesso (157KB) - logo visível, texto removido
+
+## Implementar Comandos do Bot Discord
+- [x] Ler documentação CBM_Lotus_Logica_de_Funcionamento.docx
+- [x] Criar sistema de registro de comandos slash
+- [x] Implementar /cursos - Listar todos os cursos disponíveis
+- [x] Implementar /inscrever - Solicitar inscrição em curso
+- [x] Implementar /agenda - Visualizar eventos do calendário
+- [x] Implementar /meusstatus - Ver status das inscrições
+- [x] Implementar /meuscertificados - Listar certificados do usuário
+- [x] Implementar /ranking - Mostrar ranking de instrutores por cursos aplicados
+- [x] Implementar /ajuda - Lista de comandos disponíveis
+- [x] Adicionar tratamento de erros e mensagens de feedback
+- [ ] Testar todos os comandos no Discord
+- [x] Implementar /ranking com filtro de período (data_inicial, data_final)
+- [x] Implementar agrupamento por janela de 20 minutos para contar cursos aplicados
+- [x] Mostrar top 10 instrutores com medalhas
+- [x] Validar formato de data DD/MM/AAAA
+- [x] Converter datas para UTC-3 (Brasília)
+- [x] Agrupar certificados do mesmo curso pelo mesmo instrutor com intervalo ≤ 20min
