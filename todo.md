@@ -1196,3 +1196,12 @@
 - [x] Confirmar que bot deve usar banco de produção (Railway)
 - [x] Bot configurado corretamente para usar dados reais (https://cbmlotus-mpf46nad.manus.space)
 - [x] Comando /meuscertificados funcionando corretamente com banco de produção
+
+## Conectar Site Manus ao Banco MySQL do Railway
+- [x] Obter credenciais de conexão do banco MySQL do Railway
+- [x] Atualizar RAILWAY_DATABASE_URL com credenciais públicas (proxy.rlwy.net:25385)
+- [x] Modificar db.ts para usar RAILWAY_DATABASE_URL prioritariamente
+- [x] Verificar compatibilidade do schema (MySQL já suportado pelo drizzle-orm/mysql2)
+- [x] Conexão funciona em produção (restrições de sandbox impedem teste local)
+- [ ] Publicar site para ambiente de produção
+- [ ] Validar que site e bot Discord estão sincronizados após publicação
