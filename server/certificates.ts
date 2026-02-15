@@ -24,7 +24,7 @@ export interface CertificateData {
  * Retorna buffer da imagem PNG
  */
 export async function generateCertificateImage(data: CertificateData): Promise<Buffer> {
-  // Carregar logo como base64
+  // Carregar logo e fonte como base64
   const { fileURLToPath } = await import("url");
   const { dirname, join } = await import("path");
   const __filename = fileURLToPath(import.meta.url);
@@ -33,6 +33,10 @@ export async function generateCertificateImage(data: CertificateData): Promise<B
   const logoPath = join(__dirname, "assets", "LOTUSBOMBEIROS.png");
   const logoBuffer = fs.readFileSync(logoPath);
   const logoBase64 = logoBuffer.toString("base64");
+  
+  const fontPath = join(__dirname, "assets", "fonts", "optimistral-graff.otf");
+  const fontBuffer = fs.readFileSync(fontPath);
+  const fontBase64 = fontBuffer.toString("base64");
 
   // Gerar ID único do certificado
   const certificateId = `CBM-${data.studentId.substring(0, 4).toUpperCase()}-${Date.now().toString().slice(-4)}`;
@@ -46,7 +50,7 @@ export async function generateCertificateImage(data: CertificateData): Promise<B
       <style>
         @font-face {
           font-family: 'Optimistral';
-          src: url('file://${join(__dirname, "assets", "fonts", "optimistral-graff.otf")}') format('opentype');
+          src: url('data:font/opentype;base64,${fontBase64}') format('opentype');
         }
         
         * {
@@ -57,7 +61,7 @@ export async function generateCertificateImage(data: CertificateData): Promise<B
         
         body {
           width: 1200px;
-          height: 680px;
+          height: 750px;
           display: flex;
           align-items: center;
           justify-content: center;
@@ -72,7 +76,7 @@ export async function generateCertificateImage(data: CertificateData): Promise<B
           border-radius: 20px;
           box-shadow: inset 0 0 0 3px #D4AF37;
           position: relative;
-          padding: 50px 60px;
+          padding: 50px 60px 80px 60px;
           font-family: Georgia, serif;
         }
         
@@ -318,8 +322,11 @@ export async function generateCertificateImage(data: CertificateData): Promise<B
 
   try {
     const page = await browser.newPage();
-    await page.setViewport({ width: 1200, height: 680 });
+    await page.setViewport({ width: 1200, height: 750 });
     await page.setContent(html, { waitUntil: "networkidle0" });
+    
+    // Aguardar renderização completa das fontes e imagens
+    await new Promise(resolve => setTimeout(resolve, 1000));
 
     const screenshot = await page.screenshot({
       type: "png",

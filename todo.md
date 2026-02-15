@@ -1118,3 +1118,13 @@
 - [x] Select de curso agora salva courseId (UUID) e courseName
 - [x] Testar emissão de certificados com courseId
 - [x] Testes automatizados criados e passando (2/2)
+
+## Correção Texto Cortado e Fonte da Assinatura
+- [x] Aumentar altura do viewport do Puppeteer (680px → 750px)
+- [x] Adicionar delay para garantir renderização completa (1000ms)
+- [x] Ajustar padding inferior do HTML do certificado (60px → 80px)
+- [x] Corrigir carregamento da fonte Optimistral Graff na assinatura (convertida para base64)
+- [x] Testar geração de certificado com texto completo e fonte correta
+- [x] Certificado gerado com sucesso (160KB)
+- [x] Texto "Subcomandante Geral" agora visível completo
+- [x] Fonte Optimistral Graff funcionando na assinatura
