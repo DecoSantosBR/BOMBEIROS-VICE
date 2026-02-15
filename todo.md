@@ -1109,3 +1109,12 @@
 - [x] Certificado gerado com sucesso (158KB)
 - [x] Design 100% idêntico ao modelo oficial
 - [x] Puppeteer funciona em ambientes serverless
+
+## Correção courseId em Certificates
+- [x] Verificar schema da tabela certificates
+- [x] Adicionar courseId ao salvamento de certificados
+- [x] Atualizar endpoints de emissão para receber courseId
+- [x] Atualizar formulário para enviar courseId
+- [x] Select de curso agora salva courseId (UUID) e courseName
+- [x] Testar emissão de certificados com courseId
+- [x] Testes automatizados criados e passando (2/2)

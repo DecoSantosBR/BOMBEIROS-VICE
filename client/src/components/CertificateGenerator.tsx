@@ -7,6 +7,7 @@ export function CertificateGenerator() {
   // Estado para emissão individual
   const [studentName, setStudentName] = useState("");
   const [studentId, setStudentId] = useState("");
+  const [individualCourseId, setIndividualCourseId] = useState("");
   const [courseName, setCourseName] = useState("");
   const [instructorName, setInstructorName] = useState("");
   const [instructorRank, setInstructorRank] = useState("");
@@ -29,6 +30,7 @@ export function CertificateGenerator() {
       const result = await issueIndividualMutation.mutateAsync({
         studentName,
         studentId,
+        courseId: individualCourseId,
         courseName,
         instructorName,
         instructorRank,
@@ -40,6 +42,7 @@ export function CertificateGenerator() {
       // Limpar formulário
       setStudentName("");
       setStudentId("");
+      setIndividualCourseId("");
       setCourseName("");
       setInstructorName("");
       setInstructorRank("");
@@ -149,14 +152,18 @@ export function CertificateGenerator() {
                 Nome do Curso *
               </label>
               <select
-                value={courseName}
-                onChange={(e) => setCourseName(e.target.value)}
+                value={individualCourseId}
+                onChange={(e) => {
+                  const selectedCourse = courses?.find(c => c.id === e.target.value);
+                  setIndividualCourseId(e.target.value);
+                  setCourseName(selectedCourse?.nome || "");
+                }}
                 required
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent bg-white"
               >
                 <option value="">Selecione...</option>
                 {courses?.map((course) => (
-                  <option key={course.id} value={course.nome}>
+                  <option key={course.id} value={course.id}>
                     {course.nome}
                   </option>
                 ))}

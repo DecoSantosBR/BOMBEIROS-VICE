@@ -880,6 +880,7 @@ export const appRouter = router({
       .input(z.object({
         studentName: z.string(),
         studentId: z.string(), // Matrícula do aluno
+        courseId: z.string(), // ID do curso (UUID)
         courseName: z.string(),
         instructorName: z.string(),
         instructorRank: z.string(),
@@ -924,7 +925,7 @@ export const appRouter = router({
             discordId: null, // Não temos discordId do aluno aqui
             studentName: input.studentName,
             studentId: input.studentId,
-            courseId: null,
+            courseId: input.courseId,
             courseName: input.courseName,
             instructorName: input.instructorName,
             instructorRank: input.instructorRank,
