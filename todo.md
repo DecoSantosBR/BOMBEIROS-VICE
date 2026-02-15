@@ -1232,3 +1232,14 @@
 - [x] Reiniciar servidor e testar login em desenvolvimento
 - [x] Banco local conectado corretamente em sandbox
 - [ ] Republicar site para aplicar mudanças em produção
+
+## Migrar Dados do Banco Local para Railway
+- [ ] Exportar eventos do banco local
+- [ ] Exportar certificados do banco local
+- [ ] Importar dados para o Railway
+- [ ] Validar que bot Discord mostra eventos do site
+
+## Atualizar RAILWAY_DATABASE_URL com URL Correta
+- [x] Atualizar RAILWAY_DATABASE_URL para usar shinkansen.proxy.rlwy.net:25385
+- [ ] Republicar site para aplicar mudanças
+- [ ] Validar que site publicado conecta ao Railway
