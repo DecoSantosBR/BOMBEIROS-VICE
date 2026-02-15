@@ -1219,3 +1219,8 @@
 - [x] Ajustar lógica de seleção do banco (removida dependência de NODE_ENV)
 - [x] Usar RAILWAY_DATABASE_URL como padrão prioritário se disponível
 - [ ] Republicar site e validar sincronização com bot Discord
+
+## Erro de Publicação: Puppeteer Chrome Download
+- [x] Adicionar variável PUPPETEER_SKIP_DOWNLOAD=true
+- [x] Configurar Puppeteer para usar Chrome do sistema
+- [ ] Testar publicação novamente
