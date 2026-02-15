@@ -1213,3 +1213,9 @@
 - [x] Desenvolvimento usará DATABASE_URL local
 - [x] Reiniciar servidor e testar login completo
 - [x] Site carregando corretamente com banco local
+
+## Site Publicado Não Sincroniza com Bot Discord
+- [x] Verificar se RAILWAY_DATABASE_URL está disponível em produção
+- [x] Ajustar lógica de seleção do banco (removida dependência de NODE_ENV)
+- [x] Usar RAILWAY_DATABASE_URL como padrão prioritário se disponível
+- [ ] Republicar site e validar sincronização com bot Discord

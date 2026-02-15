@@ -7,17 +7,15 @@ let _db: ReturnType<typeof drizzle> | null = null;
 
 // Lazily create the drizzle instance so local tooling can run without a DB.
 export async function getDb() {
-  // Use RAILWAY_DATABASE_URL only in production, DATABASE_URL in development
-  const isProduction = process.env.NODE_ENV === 'production';
-  const databaseUrl = isProduction && process.env.RAILWAY_DATABASE_URL 
-    ? process.env.RAILWAY_DATABASE_URL 
-    : process.env.DATABASE_URL;
+  // Always prefer RAILWAY_DATABASE_URL if available (production), fallback to DATABASE_URL (development)
+  const databaseUrl = process.env.RAILWAY_DATABASE_URL || process.env.DATABASE_URL;
   
   if (!_db && databaseUrl) {
     try {
       _db = drizzle(databaseUrl);
-      const dbType = databaseUrl.includes('railway') ? 'Railway MySQL' : 'Local database';
-      console.log(`[Database] Connected to: ${dbType} (${isProduction ? 'production' : 'development'})`);
+      const dbType = databaseUrl?.includes('railway') ? 'Railway MySQL' : 'Local database';
+      const env = process.env.NODE_ENV || 'development';
+      console.log(`[Database] Connected to: ${dbType} (${env})`);
     } catch (error) {
       console.warn("[Database] Failed to connect:", error);
       _db = null;
