@@ -1224,3 +1224,11 @@
 - [x] Adicionar variável PUPPETEER_SKIP_DOWNLOAD=true
 - [x] Configurar Puppeteer para usar Chrome do sistema
 - [ ] Testar publicação novamente
+
+## OAuth Callback Failed (Desenvolvimento)
+- [x] Identificar que site já foi publicado
+- [x] Ajustar db.ts para detectar ambiente sandbox (HOSTNAME check)
+- [x] Usar DATABASE_URL em sandbox, RAILWAY_DATABASE_URL em produção
+- [x] Reiniciar servidor e testar login em desenvolvimento
+- [x] Banco local conectado corretamente em sandbox
+- [ ] Republicar site para aplicar mudanças em produção
