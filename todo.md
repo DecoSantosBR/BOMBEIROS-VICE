@@ -1170,3 +1170,12 @@
 - [x] Validar formato de data DD/MM/AAAA
 - [x] Converter datas para UTC-3 (Brasília)
 - [x] Agrupar certificados do mesmo curso pelo mesmo instrutor com intervalo ≤ 20min
+
+## Modificar Comando /meuscertificados
+- [x] Capturar nickname do servidor Discord do membro
+- [x] Extrair matrícula do nickname (formato: Cargo | Nome | Matrícula ou Cargo • Nome | Matrícula)
+- [x] Buscar certificados por studentId (matrícula) ao invés de discordId
+- [x] Formatar resposta conforme especificação (sem embed, texto simples)
+- [x] Exibir: nome do curso, instrutor e data de emissão
+- [x] Adicionar tratamento de erros para nickname inválido
+- [ ] Testar comando no Discord

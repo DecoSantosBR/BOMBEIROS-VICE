@@ -288,38 +288,74 @@ async function handleCommand(interaction: ChatInputCommandInteraction) {
         break;
       
       case "meuscertificados":
-        // Buscar certificados do usuário pelo Discord ID
-        const discordUserId = interaction.user.id;
-        const dbCerts = await db.getDb();
-        if (!dbCerts) {
-          await interaction.reply("❌ Erro ao conectar com o banco de dados.");
-          break;
+        try {
+          // Capturar nickname do servidor Discord
+          const member = interaction.member;
+          if (!member) {
+            await interaction.reply("❌ Não foi possível identificar você no servidor.");
+            break;
+          }
+          
+          // Buscar membro do servidor para obter nickname
+          const guild = interaction.guild;
+          if (!guild) {
+            await interaction.reply("❌ Este comando só pode ser usado dentro do servidor.");
+            break;
+          }
+          
+          const guildMember = await guild.members.fetch(interaction.user.id);
+          const nickname = guildMember.nickname || interaction.user.username;
+          
+          // Extrair matrícula do nickname (formato: Cargo | Nome | Matrícula ou Cargo • Nome | Matrícula)
+          // A matrícula está após o último | ou •
+          const parts = nickname.split(/[|•]/).map((p: string) => p.trim());
+          
+          if (parts.length < 2) {
+            await interaction.reply("❌ Seu nickname não está no formato correto. Use: `Cargo | Nome | Matrícula` ou `Cargo • Nome | Matrícula`");
+            break;
+          }
+          
+          const matricula = parts[parts.length - 1].trim();
+          
+          if (!matricula) {
+            await interaction.reply("❌ Não foi possível extrair sua matrícula do nickname. Verifique se seu nickname está no formato correto.");
+            break;
+          }
+          
+          // Buscar certificados por studentId (matrícula)
+          const dbCerts = await db.getDb();
+          if (!dbCerts) {
+            await interaction.reply("❌ Erro ao conectar com o banco de dados.");
+            break;
+          }
+          
+          const { certificates: certsTable } = await import("../../drizzle/schema");
+          const userCerts = await dbCerts.select().from(certsTable).where(eq(certsTable.studentId, matricula));
+          
+          if (userCerts.length === 0) {
+            await interaction.reply(
+              `🎓 **Seus Certificados**\n\n` +
+              `Você ainda não possui certificados emitidos.\n\n` +
+              `Quando você concluir um curso, seu certificado aparecerá aqui!`
+            );
+            break;
+          }
+          
+          // Formatar lista de certificados (texto simples, sem embed)
+          const certList = userCerts.map(cert => {
+            const issuedDate = new Date(cert.issuedAt).toLocaleDateString("pt-BR");
+            return `• **${cert.courseName}**\n  Instrutor: ${cert.instructorRank} ${cert.instructorName}\n  Data: ${issuedDate}`;
+          }).join("\n\n");
+          
+          await interaction.reply(
+            `🎓 **Seus Certificados**\n\n` +
+            `Você possui **${userCerts.length}** certificado(s):\n\n` +
+            `${certList}`
+          );
+        } catch (error) {
+          console.error("[Discord] Error in meuscertificados command:", error);
+          await interaction.reply("❌ Erro ao buscar certificados. Tente novamente.");
         }
-
-        const { certificates } = await import("../../drizzle/schema");
-        const userCerts = await dbCerts.select().from(certificates).where(eq(certificates.discordId, discordUserId));
-
-        if (userCerts.length === 0) {
-          await interaction.reply("🎓 **Seus Certificados**\n\nVocê ainda não possui certificados emitidos.\n\nQuando você concluir um curso, seu certificado aparecerá aqui!");
-          break;
-        }
-
-        // Criar embed com lista de certificados
-        const certEmbed = new EmbedBuilder()
-          .setColor(0xfbbf24)
-          .setTitle("🎓 Seus Certificados")
-          .setDescription(`Você possui **${userCerts.length}** certificado(s) emitido(s).`);
-
-        userCerts.forEach((cert, index) => {
-          const issuedDate = new Date(cert.issuedAt).toLocaleDateString("pt-BR");
-          certEmbed.addFields({
-            name: `${index + 1}. ${cert.courseName}`,
-            value: `👤 Aluno: ${cert.studentName} (ID: ${cert.studentId})\n👨‍🏫 Instrutor: ${cert.instructorRank} ${cert.instructorName}\n📅 Emitido em: ${issuedDate}`,
-            inline: false
-          });
-        });
-
-        await interaction.reply({ embeds: [certEmbed] });
         break;
       
       case "ranking":
