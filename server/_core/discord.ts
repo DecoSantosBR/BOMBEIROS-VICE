@@ -306,16 +306,26 @@ async function handleCommand(interaction: ChatInputCommandInteraction) {
           const guildMember = await guild.members.fetch(interaction.user.id);
           const nickname = guildMember.nickname || interaction.user.username;
           
+          console.log(`[Discord] /meuscertificados - Nickname capturado: "${nickname}"`);
+          
           // Extrair matrícula do nickname (formato: Cargo | Nome | Matrícula ou Cargo • Nome | Matrícula)
           // A matrícula está após o último | ou •
           const parts = nickname.split(/[|•]/).map((p: string) => p.trim());
           
+          console.log(`[Discord] /meuscertificados - Parts extraídas:`, parts);
+          
           if (parts.length < 2) {
-            await interaction.reply("❌ Seu nickname não está no formato correto. Use: `Cargo | Nome | Matrícula` ou `Cargo • Nome | Matrícula`");
+            await interaction.reply(
+              `❌ Seu nickname não está no formato correto.\n\n` +
+              `Nickname atual: \`${nickname}\`\n` +
+              `Formato esperado: \`Cargo | Nome | Matrícula\` ou \`Cargo • Nome | Matrícula\``
+            );
             break;
           }
           
           const matricula = parts[parts.length - 1].trim();
+          
+          console.log(`[Discord] /meuscertificados - Matrícula extraída: "${matricula}"`);
           
           if (!matricula) {
             await interaction.reply("❌ Não foi possível extrair sua matrícula do nickname. Verifique se seu nickname está no formato correto.");
@@ -332,6 +342,15 @@ async function handleCommand(interaction: ChatInputCommandInteraction) {
           const { certificates: certsTable } = await import("../../drizzle/schema");
           const userCerts = await dbCerts.select().from(certsTable).where(eq(certsTable.studentId, matricula));
           
+          console.log(`[Discord] /meuscertificados - Certificados encontrados: ${userCerts.length}`);
+          if (userCerts.length > 0) {
+            console.log(`[Discord] /meuscertificados - Primeiro certificado:`, {
+              courseName: userCerts[0].courseName,
+              studentId: userCerts[0].studentId,
+              studentName: userCerts[0].studentName
+            });
+          }
+          
           if (userCerts.length === 0) {
             await interaction.reply(
               `🎓 **Seus Certificados**\n\n` +
@@ -347,14 +366,41 @@ async function handleCommand(interaction: ChatInputCommandInteraction) {
             return `• **${cert.courseName}**\n  Instrutor: ${cert.instructorRank} ${cert.instructorName}\n  Data: ${issuedDate}`;
           }).join("\n\n");
           
-          await interaction.reply(
+          const message = 
             `🎓 **Seus Certificados**\n\n` +
             `Você possui **${userCerts.length}** certificado(s):\n\n` +
-            `${certList}`
-          );
+            `${certList}`;
+          
+          // Discord tem limite de 2000 caracteres por mensagem
+          if (message.length > 2000) {
+            // Se a mensagem for muito longa, limitar a 10 certificados mais recentes
+            const recentCerts = userCerts
+              .sort((a, b) => new Date(b.issuedAt).getTime() - new Date(a.issuedAt).getTime())
+              .slice(0, 10);
+            
+            const limitedCertList = recentCerts.map(cert => {
+              const issuedDate = new Date(cert.issuedAt).toLocaleDateString("pt-BR");
+              return `• **${cert.courseName}**\n  Instrutor: ${cert.instructorRank} ${cert.instructorName}\n  Data: ${issuedDate}`;
+            }).join("\n\n");
+            
+            await interaction.reply(
+              `🎓 **Seus Certificados**\n\n` +
+              `Você possui **${userCerts.length}** certificado(s). Mostrando os 10 mais recentes:\n\n` +
+              `${limitedCertList}`
+            );
+          } else {
+            await interaction.reply(message);
+          }
         } catch (error) {
           console.error("[Discord] Error in meuscertificados command:", error);
-          await interaction.reply("❌ Erro ao buscar certificados. Tente novamente.");
+          // Não tentar responder novamente se a interação já foi reconhecida
+          if (!interaction.replied && !interaction.deferred) {
+            try {
+              await interaction.reply("❌ Erro ao buscar certificados. Tente novamente.");
+            } catch (replyError) {
+              console.error("[Discord] Failed to send error message:", replyError);
+            }
+          }
         }
         break;
       

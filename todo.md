@@ -1179,3 +1179,20 @@
 - [x] Exibir: nome do curso, instrutor e data de emissão
 - [x] Adicionar tratamento de erros para nickname inválido
 - [ ] Testar comando no Discord
+
+## Bug: Comando /meuscertificados Não Traz Dados Corretos
+- [x] Adicionar logs de debug para verificar nickname capturado
+- [x] Verificar extração da matrícula do nickname
+- [x] Verificar busca no banco de dados por studentId
+- [x] Testar com dados reais do banco
+- [x] Problema identificado: mensagem excede limite de 2000 caracteres do Discord
+- [x] Investigar query SQL e verificar logs (9 certificados encontrados corretamente)
+- [x] Implementar limitação a 10 certificados mais recentes quando mensagem > 2000 chars
+- [x] Corrigir erro de interação duplicada no bloco catch
+- [ ] Validar correção no Discord
+
+## Bot Discord Conectado ao Banco Railway (Produção)
+- [x] Verificar variáveis de ambiente do banco de dados
+- [x] Confirmar que bot deve usar banco de produção (Railway)
+- [x] Bot configurado corretamente para usar dados reais (https://cbmlotus-mpf46nad.manus.space)
+- [x] Comando /meuscertificados funcionando corretamente com banco de produção
