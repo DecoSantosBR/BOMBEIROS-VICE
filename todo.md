@@ -1265,3 +1265,10 @@
 - [x] Adicionar DISCORD_APPLICATION_ID para registro de comandos
 - [x] Comandos slash registrados com sucesso
 - [x] Bot respondendo a comandos no novo servidor
+
+## Rebranding: Lotus → Vice City
+- [x] Substituir "Lotus" por "Vice City" em todos os textos do site
+- [x] Atualizar logo para brasão circular do Vice City
+- [x] Converter logo para base64 e atualizar logoBase64.ts
+- [x] Testar site com novo branding (cabeçalho exibindo "1º CBM Vice City")
+- [ ] Atualizar VITE_APP_TITLE manualmente (Settings → General no painel)

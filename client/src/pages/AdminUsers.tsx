@@ -283,7 +283,7 @@ export default function AdminUsers() {
 
       {/* Footer */}
       <footer style={{ backgroundColor: "#7f1d1d", color: "#ffffff", paddingTop: "32px", paddingBottom: "32px", textAlign: "center" }}>
-        <p style={{ fontSize: "14px" }}>© 2026 1º CBM Lotus - Corpo de Bombeiros Militar</p>
+        <p style={{ fontSize: "14px" }}>© 2026 1º CBM Vice City - Corpo de Bombeiros Militar</p>
         <p style={{ fontSize: "12px", marginTop: "8px", color: "#fee2e2" }}>FORÇA & HONRA</p>
       </footer>
     </div>

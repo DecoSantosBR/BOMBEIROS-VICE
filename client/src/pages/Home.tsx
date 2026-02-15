@@ -44,7 +44,7 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex justify-between items-center">
             <div className="flex items-center space-x-4">
-              <h1 className="text-3xl font-bold text-white">1º CBM Lotus</h1>
+              <h1 className="text-3xl font-bold text-white">1º CBM Vice City</h1>
               {user && (
                 <span className="text-red-200">
                   Bem-vindo, {user.name}

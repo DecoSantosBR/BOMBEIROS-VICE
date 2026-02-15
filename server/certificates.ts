@@ -20,7 +20,7 @@ export interface CertificateData {
 
 /**
  * Gera imagem do certificado usando Puppeteer (HTML/CSS)
- * Design idêntico ao modelo oficial do 1º CBM Lotus
+ * Design idêntico ao modelo oficial do 1º CBM Vice City
  * Retorna buffer da imagem PNG
  */
 export async function generateCertificateImage(data: CertificateData): Promise<Buffer> {
@@ -236,7 +236,7 @@ export async function generateCertificateImage(data: CertificateData): Promise<B
     </head>
     <body>
       <div class="certificate">
-        <img src="data:image/png;base64,${logoBase64}" class="logo" alt="CBM Lotus Logo">
+        <img src="data:image/png;base64,${logoBase64}" class="logo" alt="CBM Vice City Logo">
         
         <div class="check-icon">
           <div class="check-inner"></div>

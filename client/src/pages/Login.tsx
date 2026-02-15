@@ -20,7 +20,7 @@ export default function Login() {
               style={{ width: "48px", height: "48px" }} 
             />
             <div>
-              <h1 style={{ fontSize: "30px", fontWeight: "bold" }}>1º CBM Lotus</h1>
+              <h1 style={{ fontSize: "30px", fontWeight: "bold" }}>1º CBM Vice City</h1>
               <p style={{ color: "#fee2e2" }}>Corpo de Bombeiros Militar</p>
             </div>
           </div>
@@ -93,7 +93,7 @@ export default function Login() {
             textAlign: "center"
           }}>
             <p style={{ fontSize: "12px", color: "#999" }}>
-              Ao fazer login, você concorda com os termos de uso do CBM Lotus
+              Ao fazer login, você concorda com os termos de uso do CBM Vice City
             </p>
           </div>
         </Card>
@@ -108,7 +108,7 @@ export default function Login() {
         textAlign: "center",
         marginTop: "auto"
       }}>
-        <p style={{ fontSize: "14px" }}>© 2026 1º CBM Lotus - Corpo de Bombeiros Militar</p>
+        <p style={{ fontSize: "14px" }}>© 2026 1º CBM Vice City - Corpo de Bombeiros Militar</p>
         <p style={{ fontSize: "12px", marginTop: "8px", color: "#fee2e2" }}>FORÇA & HONRA</p>
       </footer>
     </div>
