@@ -1243,3 +1243,14 @@
 - [x] Atualizar RAILWAY_DATABASE_URL para usar shinkansen.proxy.rlwy.net:25385
 - [ ] Republicar site para aplicar mudanças
 - [ ] Validar que site publicado conecta ao Railway
+
+## Deploy do Site no Railway
+- [x] Criar railway.json com configurações de build e deploy
+- [x] Criar .railwayignore para excluir arquivos desnecessários
+- [x] Scripts de start já configurados no package.json
+- [x] Criar arquivo ZIP para upload manual
+- [x] Criar instruções detalhadas de deploy
+- [ ] Usuário fazer upload do código no GitHub
+- [ ] Conectar repositório ao Railway
+- [ ] Configurar variáveis de ambiente no Railway
+- [ ] Fazer deploy e validar
