@@ -1067,3 +1067,14 @@
 - [x] Recompilar biblioteca canvas
 - [x] Testar geração de certificados
 - [x] Canvas funcionando corretamente
+
+## Redesign do Certificado
+- [x] Baixar logo do CBM Lotus
+- [x] Reescrever função generateCertificateImage com design idêntico ao modelo
+- [x] Adicionar borda vermelha e fundo bege
+- [x] Adicionar logo no canto superior esquerdo
+- [x] Adicionar ícone de verificação no canto superior direito
+- [x] Formatar textos conforme modelo
+- [x] Testar geração do certificado
+- [x] Logo do CBM Lotus carregado com sucesso
+- [x] Design 100% idêntico ao modelo
