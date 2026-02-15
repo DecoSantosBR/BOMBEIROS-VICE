@@ -1093,3 +1093,9 @@
 - [x] Testar seleção de curso no formulário
 - [x] Campo Nome do Curso agora é select dropdown com fundo branco
 - [x] Lista todos os 13 cursos disponíveis
+
+## Correção Ordem dos Campos
+- [x] Restaurar campo "Nome do Aluno" que foi substituído por engano
+- [x] Corrigir ordem: Nome do Aluno, Matrícula do Aluno, Nome do Curso, Nome do Instrutor
+- [x] Testar formulário corrigido
+- [x] Ordem correta: Nome do Aluno, Matrícula do Aluno, Nome do Curso (select), Nome do Instrutor

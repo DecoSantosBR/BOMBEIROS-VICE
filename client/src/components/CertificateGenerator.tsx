@@ -118,21 +118,16 @@ export function CertificateGenerator() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
-                Nome do Curso *
+                Nome do Aluno *
               </label>
-              <select
-                value={courseName}
-                onChange={(e) => setCourseName(e.target.value)}
+              <input
+                type="text"
+                value={studentName}
+                onChange={(e) => setStudentName(e.target.value)}
                 required
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent bg-white"
-              >
-                <option value="">Selecione...</option>
-                {courses?.map((course) => (
-                  <option key={course.id} value={course.nome}>
-                    {course.nome}
-                  </option>
-                ))}
-              </select>
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent"
+                placeholder="Ex: João Silva"
+              />
             </div>
             
             <div>
@@ -157,7 +152,7 @@ export function CertificateGenerator() {
                 value={courseName}
                 onChange={(e) => setCourseName(e.target.value)}
                 required
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent"
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent bg-white"
               >
                 <option value="">Selecione...</option>
                 {courses?.map((course) => (
