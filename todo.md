@@ -1137,3 +1137,9 @@
 - [x] Certificado gerado com sucesso (161KB)
 - [x] Texto "Subcomandante Geral" agora completamente visível
 - [x] Todos os elementos dentro da área do certificado
+
+## Remoção de Borda Branca
+- [x] Adicionar overflow: hidden no body
+- [x] Ajustar captura do Puppeteer para capturar apenas elemento .certificate
+- [x] Testar certificado sem borda branca
+- [x] Borda branca completamente eliminada (160KB, 680x750px)

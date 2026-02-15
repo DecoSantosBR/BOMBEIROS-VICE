@@ -328,10 +328,14 @@ export async function generateCertificateImage(data: CertificateData): Promise<B
     // Aguardar renderização completa das fontes e imagens
     await new Promise(resolve => setTimeout(resolve, 1000));
 
-    const screenshot = await page.screenshot({
-      type: "png",
-      fullPage: false,
-    });
+    // Capturar apenas o elemento do certificado, sem bordas brancas
+    const certificateElement = await page.$('.certificate');
+    const screenshot = certificateElement 
+      ? await certificateElement.screenshot({ type: "png" })
+      : await page.screenshot({
+          type: "png",
+          fullPage: false,
+        });
 
     return Buffer.from(screenshot);
   } finally {
