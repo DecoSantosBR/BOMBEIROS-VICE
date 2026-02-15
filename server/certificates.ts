@@ -144,7 +144,7 @@ export async function generateCertificateImage(data: CertificateData): Promise<B
         
         .title {
           text-align: center;
-          margin-top: 130px;
+          margin-top: 100px;
           margin-bottom: 10px;
         }
         
@@ -221,7 +221,7 @@ export async function generateCertificateImage(data: CertificateData): Promise<B
         }
         
         .signature-section {
-          margin-top: 30px;
+          margin-top: 20px;
           text-align: center;
         }
         
@@ -248,7 +248,7 @@ export async function generateCertificateImage(data: CertificateData): Promise<B
         
         .certificate-id {
           position: absolute;
-          bottom: 40px;
+          bottom: 50px;
           right: 60px;
           font-size: 18px;
           color: #8B1A1A;

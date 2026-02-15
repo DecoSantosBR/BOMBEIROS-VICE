@@ -1128,3 +1128,12 @@
 - [x] Certificado gerado com sucesso (160KB)
 - [x] Texto "Subcomandante Geral" agora visível completo
 - [x] Fonte Optimistral Graff funcionando na assinatura
+
+## Correção Final - Texto Subcomandante Geral Cortado
+- [x] Reduzir espaçamento entre elementos do certificado (title: 130px→0px, signature: 30px→20px)
+- [x] Ajustar posição vertical dos textos
+- [x] Aumentar bottom do certificate-id (40px→50px)
+- [x] Testar com diferentes tamanhos de texto
+- [x] Certificado gerado com sucesso (161KB)
+- [x] Texto "Subcomandante Geral" agora completamente visível
+- [x] Todos os elementos dentro da área do certificado
