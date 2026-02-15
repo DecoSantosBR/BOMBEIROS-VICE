@@ -1,5 +1,8 @@
-import { ENV } from './_core/env';
-import { storagePut } from './storage';
+import puppeteer from "puppeteer";
+import { storagePut } from "./storage";
+import { ENV } from "./_core/env";
+import path from "path";
+import fs from "fs";
 
 /**
  * Interface para dados do certificado
@@ -16,191 +19,337 @@ export interface CertificateData {
 }
 
 /**
- * Gera imagem do certificado usando HTML Canvas
+ * Gera imagem do certificado usando Puppeteer (HTML/CSS)
  * Design idêntico ao modelo oficial do 1º CBM Lotus
  * Retorna buffer da imagem PNG
  */
 export async function generateCertificateImage(data: CertificateData): Promise<Buffer> {
-  const { createCanvas, loadImage, registerFont } = await import('canvas');
+  // Carregar logo como base64
+  const { fileURLToPath } = await import("url");
+  const { dirname, join } = await import("path");
+  const __filename = fileURLToPath(import.meta.url);
+  const __dirname = dirname(__filename);
   
-  // Registrar fonte personalizada para assinatura
+  const logoPath = join(__dirname, "assets", "LOTUSBOMBEIROS.png");
+  const logoBuffer = fs.readFileSync(logoPath);
+  const logoBase64 = logoBuffer.toString("base64");
+
+  // Gerar ID único do certificado
+  const certificateId = `CBM-${data.studentId.substring(0, 4).toUpperCase()}-${Date.now().toString().slice(-4)}`;
+
+  // Template HTML do certificado
+  const html = `
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <meta charset="UTF-8">
+      <style>
+        @font-face {
+          font-family: 'Optimistral';
+          src: url('file://${join(__dirname, "assets", "fonts", "optimistral-graff.otf")}') format('opentype');
+        }
+        
+        * {
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+        }
+        
+        body {
+          width: 1200px;
+          height: 680px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background: transparent;
+        }
+        
+        .certificate {
+          width: 1200px;
+          height: 680px;
+          background: linear-gradient(135deg, #F5E6D3 0%, #EDE4D3 100%);
+          border: 16px solid #A52A2A;
+          border-radius: 20px;
+          box-shadow: inset 0 0 0 3px #D4AF37;
+          position: relative;
+          padding: 50px 60px;
+          font-family: Georgia, serif;
+        }
+        
+        .logo {
+          position: absolute;
+          top: 50px;
+          left: 50px;
+          width: 100px;
+          height: 100px;
+        }
+        
+        .check-icon {
+          position: absolute;
+          top: 55px;
+          right: 90px;
+          width: 70px;
+          height: 70px;
+          border: 4px solid #D4AF37;
+          border-radius: 50%;
+          background: transparent;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+        
+        .check-inner {
+          width: 50px;
+          height: 50px;
+          border: 3px solid #8B1A1A;
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+        
+        .check-inner::after {
+          content: '✓';
+          font-size: 32px;
+          color: #8B1A1A;
+          font-weight: bold;
+        }
+        
+        .header-text {
+          position: absolute;
+          top: 100px;
+          left: 60px;
+          text-align: left;
+        }
+        
+        .header-text h3 {
+          font-size: 28px;
+          color: #8B1A1A;
+          font-weight: bold;
+          margin: 0;
+          line-height: 1.2;
+        }
+        
+        .header-text h4 {
+          font-size: 32px;
+          color: #8B1A1A;
+          font-weight: bold;
+          margin: 0;
+          line-height: 1.2;
+        }
+        
+        .title {
+          text-align: center;
+          margin-top: 130px;
+          margin-bottom: 10px;
+        }
+        
+        .title h1 {
+          font-size: 56px;
+          color: #8B1A1A;
+          font-weight: bold;
+          letter-spacing: 8px;
+          margin: 0;
+        }
+        
+        .subtitle {
+          text-align: center;
+          margin-bottom: 20px;
+        }
+        
+        .subtitle p {
+          font-size: 24px;
+          color: #8B1A1A;
+          font-style: italic;
+        }
+        
+        .student-name {
+          text-align: center;
+          margin: 20px 0;
+        }
+        
+        .student-name h2 {
+          font-size: 48px;
+          color: #8B1A1A;
+          font-weight: bold;
+          margin: 0;
+        }
+        
+        .student-id {
+          text-align: center;
+          margin-bottom: 15px;
+        }
+        
+        .student-id p {
+          font-size: 20px;
+          color: #8B1A1A;
+          font-weight: bold;
+        }
+        
+        .divider {
+          width: calc(100% - 120px);
+          height: 2px;
+          background: #8B1A1A;
+          margin: 15px auto;
+        }
+        
+        .course-intro {
+          text-align: center;
+          margin: 15px 0;
+        }
+        
+        .course-intro p {
+          font-size: 22px;
+          color: #8B1A1A;
+          font-style: italic;
+        }
+        
+        .course-name {
+          text-align: center;
+          margin: 20px 0;
+        }
+        
+        .course-name h2 {
+          font-size: 42px;
+          color: #8B1A1A;
+          font-weight: bold;
+          margin: 0;
+        }
+        
+        .signature-section {
+          margin-top: 30px;
+          text-align: center;
+        }
+        
+        .signature {
+          font-family: 'Optimistral', Georgia, cursive;
+          font-size: 36px;
+          color: #8B1A1A;
+          margin-bottom: 5px;
+        }
+        
+        .signature-line {
+          width: 400px;
+          height: 1.5px;
+          background: #8B1A1A;
+          margin: 0 auto 10px auto;
+        }
+        
+        .instructor-rank {
+          font-size: 22px;
+          color: #8B1A1A;
+          font-weight: bold;
+          margin-top: 5px;
+        }
+        
+        .certificate-id {
+          position: absolute;
+          bottom: 40px;
+          right: 60px;
+          font-size: 18px;
+          color: #8B1A1A;
+          font-weight: bold;
+        }
+      </style>
+    </head>
+    <body>
+      <div class="certificate">
+        <img src="data:image/png;base64,${logoBase64}" class="logo" alt="CBM Lotus Logo">
+        
+        <div class="check-icon">
+          <div class="check-inner"></div>
+        </div>
+        
+        <div class="header-text">
+          <h3>1º CBM</h3>
+          <h4>Lotus</h4>
+        </div>
+        
+        <div class="title">
+          <h1>CERTIFICADO</h1>
+        </div>
+        
+        <div class="subtitle">
+          <p>Certificamos que</p>
+        </div>
+        
+        <div class="student-name">
+          <h2>${data.studentName}</h2>
+        </div>
+        
+        <div class="student-id">
+          <p>Matrícula: ${data.studentId}</p>
+        </div>
+        
+        <div class="divider"></div>
+        
+        <div class="course-intro">
+          <p>Concluiu com êxito o curso de</p>
+        </div>
+        
+        <div class="course-name">
+          <h2>${data.courseName}</h2>
+        </div>
+        
+        <div class="divider"></div>
+        
+        <div class="signature-section">
+          <div class="signature">${data.instructorName}</div>
+          <div class="signature-line"></div>
+          <div class="instructor-rank">${data.instructorRank}</div>
+        </div>
+        
+        <div class="certificate-id">ID: ${certificateId}</div>
+      </div>
+    </body>
+    </html>
+  `;
+
+  // Gerar imagem usando Puppeteer
+  const browser = await puppeteer.launch({
+    headless: true,
+    args: [
+      "--no-sandbox",
+      "--disable-setuid-sandbox",
+      "--disable-dev-shm-usage",
+      "--disable-gpu",
+    ],
+  });
+
   try {
-    const { fileURLToPath } = await import('url');
-    const { dirname, join } = await import('path');
-    const __filename = fileURLToPath(import.meta.url);
-    const __dirname = dirname(__filename);
-    const fontPath = join(__dirname, 'assets', 'fonts', 'optimistral-graff.otf');
-    registerFont(fontPath, { family: 'Optimistral' });
-  } catch (error) {
-    console.error('[Certificate] Failed to register font:', error);
+    const page = await browser.newPage();
+    await page.setViewport({ width: 1200, height: 680 });
+    await page.setContent(html, { waitUntil: "networkidle0" });
+
+    const screenshot = await page.screenshot({
+      type: "png",
+      fullPage: false,
+    });
+
+    return Buffer.from(screenshot);
+  } finally {
+    await browser.close();
   }
-  
-  // Dimensões do certificado (1200x680 pixels)
-  const width = 1200;
-  const height = 680;
-  const canvas = createCanvas(width, height);
-  const ctx = canvas.getContext('2d');
-  
-  // Cores do design
-  const darkRed = '#8B1A1A'; // Vermelho escuro
-  const lightBeige = '#F5E6D3'; // Bege claro
-  const borderRed = '#A52A2A'; // Vermelho da borda
-  
-  // 1. FUNDO BEGE CLARO
-  ctx.fillStyle = lightBeige;
-  ctx.fillRect(0, 0, width, height);
-  
-  // 2. BORDA VERMELHA EXTERNA (arredondada)
-  ctx.strokeStyle = borderRed;
-  ctx.lineWidth = 16;
-  ctx.beginPath();
-  ctx.roundRect(8, 8, width - 16, height - 16, 20);
-  ctx.stroke();
-  
-  // 3. BORDA INTERNA BEGE (cria efeito de moldura dupla)
-  ctx.strokeStyle = '#D4AF37'; // Dourado
-  ctx.lineWidth = 3;
-  ctx.beginPath();
-  ctx.roundRect(24, 24, width - 48, height - 48, 15);
-  ctx.stroke();
-  
-  // 4. LOGO DO CBM LOTUS NO CANTO SUPERIOR ESQUERDO
-  try {
-    const { fileURLToPath } = await import('url');
-    const { dirname, join } = await import('path');
-    const __filename = fileURLToPath(import.meta.url);
-    const __dirname = dirname(__filename);
-    const logoPath = join(__dirname, 'assets', 'cbm-lotus-logo.png');
-    const logo = await loadImage(logoPath);
-    // Desenhar logo com tamanho proporcional (100x100 pixels)
-    ctx.drawImage(logo, 50, 50, 100, 100);
-  } catch (error) {
-    console.error('[Certificate] Failed to load logo:', error);
-    // Se falhar ao carregar logo, usar texto como fallback
-    ctx.fillStyle = darkRed;
-    ctx.font = 'bold 28px Arial';
-    ctx.textAlign = 'left';
-    ctx.fillText('1º CBM', 60, 100);
-    ctx.font = 'bold 32px Arial';
-    ctx.fillText('Lotus', 75, 135);
-  }
-  
-  // 5. ÍCONE DE VERIFICAÇÃO NO CANTO SUPERIOR DIREITO
-  // Círculo dourado
-  ctx.strokeStyle = '#D4AF37';
-  ctx.lineWidth = 4;
-  ctx.beginPath();
-  ctx.arc(width - 90, 90, 35, 0, Math.PI * 2);
-  ctx.stroke();
-  
-  // Círculo vermelho interno
-  ctx.strokeStyle = darkRed;
-  ctx.lineWidth = 3;
-  ctx.beginPath();
-  ctx.arc(width - 90, 90, 25, 0, Math.PI * 2);
-  ctx.stroke();
-  
-  // Check mark
-  ctx.strokeStyle = darkRed;
-  ctx.lineWidth = 4;
-  ctx.lineCap = 'round';
-  ctx.beginPath();
-  ctx.moveTo(width - 105, 90);
-  ctx.lineTo(width - 95, 100);
-  ctx.lineTo(width - 75, 80);
-  ctx.stroke();
-  
-  // 6. TÍTULO "CERTIFICADO"
-  ctx.fillStyle = darkRed;
-  ctx.font = 'bold 56px Arial';
-  ctx.textAlign = 'center';
-  ctx.fillText('CERTIFICADO', width / 2, 200);
-  
-  // 7. SUBTÍTULO "Certificamos que"
-  ctx.fillStyle = darkRed;
-  ctx.font = '24px Arial';
-  ctx.fillText('Certificamos que', width / 2, 245);
-  
-  // 8. NOME DO ALUNO (destaque em vermelho escuro)
-  ctx.fillStyle = darkRed;
-  ctx.font = 'bold 48px Georgia';
-  ctx.fillText(data.studentName, width / 2, 310);
-  
-  // 9. MATRÍCULA DO ALUNO
-  ctx.fillStyle = darkRed;
-  ctx.font = '20px Arial';
-  ctx.fillText(`Matrícula: ${data.studentId}`, width / 2, 345);
-  
-  // 10. LINHA DIVISORIA 1
-  ctx.strokeStyle = darkRed;
-  ctx.lineWidth = 2;
-  ctx.beginPath();
-  ctx.moveTo(60, 365);
-  ctx.lineTo(width - 60, 365);
-  ctx.stroke();
-  
-  // 11. TEXTO "Concluiu com êxito o curso de"
-  ctx.fillStyle = darkRed;
-  ctx.font = '22px Arial';
-  ctx.fillText('Concluiu com êxito o curso de', width / 2, 410);
-  
-  // 12. NOME DO CURSO (destaque)
-  ctx.fillStyle = darkRed;
-  ctx.font = 'bold 42px Georgia';
-  ctx.fillText(data.courseName, width / 2, 465);
-  
-  // 13. LINHA DIVISORIA 2
-  ctx.strokeStyle = darkRed;
-  ctx.lineWidth = 2;
-  ctx.beginPath();
-  ctx.moveTo(60, 490);
-  ctx.lineTo(width - 60, 490);
-  ctx.stroke();
-  
-  // 14. ASSINATURA DO INSTRUTOR (fonte personalizada Optimistral)
-  ctx.fillStyle = darkRed;
-  ctx.font = '36px Optimistral, Georgia';
-  ctx.fillText(data.instructorName, width / 2, 545);
-  
-  // 15. LINHA DA ASSINATURA
-  ctx.strokeStyle = darkRed;
-  ctx.lineWidth = 1.5;
-  ctx.beginPath();
-  ctx.moveTo(width / 2 - 200, 555);
-  ctx.lineTo(width / 2 + 200, 555);
-  ctx.stroke();
-  
-  // 16. CARGO DO INSTRUTOR
-  ctx.fillStyle = darkRed;
-  ctx.font = 'bold 22px Arial';
-  ctx.fillText(data.instructorRank, width / 2, 590);
-  
-  // 17. ID DO CERTIFICADO (canto inferior direito)
-  const certId = `CBM-${data.studentId.substring(0, 4).toUpperCase()}`;
-  ctx.fillStyle = darkRed;
-  ctx.font = 'bold 18px Arial';
-  ctx.textAlign = 'right';
-  ctx.fillText(`ID: ${certId}`, width - 60, height - 40);
-  
-  // Converter canvas para buffer PNG
-  return canvas.toBuffer('image/png');
 }
 
 /**
  * Faz upload do certificado para S3 e retorna URL pública
  */
-export async function uploadCertificateToS3(imageBuffer: Buffer, fileName: string): Promise<string> {
+export async function uploadCertificateToS3(
+  imageBuffer: Buffer,
+  fileName: string
+): Promise<string> {
   try {
     const result = await storagePut(
       `certificates/${fileName}`,
       imageBuffer,
-      'image/png'
+      "image/png"
     );
-    
+
     return result.url;
   } catch (error) {
-    console.error('[Certificates] Failed to upload to S3:', error);
-    throw new Error('Falha ao fazer upload do certificado');
+    console.error("[Certificates] Failed to upload to S3:", error);
+    throw new Error("Falha ao fazer upload do certificado");
   }
 }
 
@@ -212,58 +361,70 @@ export async function sendCertificateToDiscord(
   data: CertificateData
 ): Promise<void> {
   try {
-    const { EmbedBuilder } = await import('discord.js');
-    const { getDiscordClient } = await import('./_core/discord');
-    
+    const { EmbedBuilder } = await import("discord.js");
+    const { getDiscordClient } = await import("./_core/discord");
+
     const client = getDiscordClient();
     if (!client) {
-      console.warn('[Certificates] Discord client not available');
+      console.warn("[Certificates] Discord client not available");
       return;
     }
-    
+
     const channelId = ENV.discordChannelCertificates;
     if (!channelId) {
-      console.warn('[Certificates] DISCORD_CHANNEL_CERTIFICATES not configured');
+      console.warn("[Certificates] DISCORD_CHANNEL_CERTIFICATES not configured");
       return;
     }
-    
+
     const channel = await client.channels.fetch(channelId);
     if (!channel || !channel.isTextBased() || channel.isDMBased()) {
-      console.warn('[Certificates] Invalid channel');
+      console.warn("[Certificates] Invalid channel");
       return;
     }
-    
-    const dateStr = data.issuedAt.toLocaleString('pt-BR', {
-      day: '2-digit',
-      month: '2-digit',
-      year: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit',
-      timeZone: 'America/Sao_Paulo'
+
+    const dateStr = data.issuedAt.toLocaleString("pt-BR", {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+      timeZone: "America/Sao_Paulo",
     });
-    
+
     const embed = new EmbedBuilder()
-      .setTitle('🎓 CERTIFICADO EMITIDO')
+      .setTitle("🎓 CERTIFICADO EMITIDO")
       .setColor(0xb91c1c) // Vermelho CBM
       .addFields(
-        { name: 'Aluno', value: `${data.studentName} | ${data.studentId}`, inline: false },
-        { name: 'Curso', value: data.courseName, inline: false },
-        { name: 'Instrutor', value: `${data.instructorName} | ${data.instructorRank}`, inline: false }
+        {
+          name: "Aluno",
+          value: `${data.studentName} | ${data.studentId}`,
+          inline: false,
+        },
+        { name: "Curso", value: data.courseName, inline: false },
+        {
+          name: "Instrutor",
+          value: `${data.instructorName} | ${data.instructorRank}`,
+          inline: false,
+        }
       );
-    
+
     if (data.auxiliar && data.ID_auxiliar) {
-      embed.addFields({ name: 'Auxiliar', value: `${data.auxiliar} | ${data.ID_auxiliar}`, inline: false });
+      embed.addFields({
+        name: "Auxiliar",
+        value: `${data.auxiliar} | ${data.ID_auxiliar}`,
+        inline: false,
+      });
     }
-    
-    embed.addFields({ name: 'Data', value: dateStr, inline: false });
+
+    embed.addFields({ name: "Data", value: dateStr, inline: false });
     embed.setImage(certificateUrl);
     embed.setTimestamp();
-    
+
     await channel.send({ embeds: [embed] });
-    
-    console.log('[Certificates] Certificate sent to Discord');
+
+    console.log("[Certificates] Certificate sent to Discord");
   } catch (error) {
-    console.error('[Certificates] Failed to send to Discord:', error);
+    console.error("[Certificates] Failed to send to Discord:", error);
     // Não lançar erro para não bloquear o fluxo
   }
 }
@@ -274,16 +435,16 @@ export async function sendCertificateToDiscord(
 export async function issueCertificate(data: CertificateData): Promise<string> {
   // Gerar imagem
   const imageBuffer = await generateCertificateImage(data);
-  
+
   // Criar nome único do arquivo
   const timestamp = Date.now();
   const fileName = `${data.studentId}_${timestamp}.png`;
-  
+
   // Upload para S3
   const certificateUrl = await uploadCertificateToS3(imageBuffer, fileName);
-  
+
   // Enviar para Discord
   await sendCertificateToDiscord(certificateUrl, data);
-  
+
   return certificateUrl;
 }

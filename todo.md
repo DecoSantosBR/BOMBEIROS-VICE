@@ -1099,3 +1099,13 @@
 - [x] Corrigir ordem: Nome do Aluno, Matrícula do Aluno, Nome do Curso, Nome do Instrutor
 - [x] Testar formulário corrigido
 - [x] Ordem correta: Nome do Aluno, Matrícula do Aluno, Nome do Curso (select), Nome do Instrutor
+
+## Substituir Canvas por Solução Serverless
+- [x] Remover dependência canvas (não funciona em deploy serverless)
+- [x] Instalar Puppeteer
+- [x] Implementar geração de certificados usando HTML/CSS + Puppeteer
+- [x] Remover arquivo de teste canvas-test.ts
+- [x] Testar geração de certificados localmente
+- [x] Certificado gerado com sucesso (158KB)
+- [x] Design 100% idêntico ao modelo oficial
+- [x] Puppeteer funciona em ambientes serverless
