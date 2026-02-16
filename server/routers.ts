@@ -1078,8 +1078,8 @@ export const appRouter = router({
         // Salvar no banco de dados
         const applicationId = await db.createRecruitmentApplication(input);
 
-        // Enviar webhook para canal do Discord
-        const webhookUrl = process.env.DISCORD_WEBHOOK_ENROLLMENTS;
+        // Enviar webhook para canal do Discord (canal de recrutamento)
+        const webhookUrl = process.env.DISCORD_WEBHOOK_RECRUITMENT;
         if (webhookUrl) {
           try {
             await fetch(webhookUrl, {
@@ -1106,6 +1106,25 @@ export const appRouter = router({
                     ],
                     footer: { text: `ID da Aplicação: ${applicationId}` },
                     timestamp: new Date().toISOString(),
+                  },
+                ],
+                components: [
+                  {
+                    type: 1,
+                    components: [
+                      {
+                        type: 2,
+                        style: 3,
+                        label: "Aprovar",
+                        custom_id: `approve_recruitment_${applicationId}`,
+                      },
+                      {
+                        type: 2,
+                        style: 4,
+                        label: "Reprovar",
+                        custom_id: `reject_recruitment_${applicationId}`,
+                      },
+                    ],
                   },
                 ],
               }),

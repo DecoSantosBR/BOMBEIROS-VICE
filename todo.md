@@ -1502,3 +1502,16 @@
 - [ ] Implementar atribuição automática de roles (Soldado + Bombeiro | Praça)
 - [ ] Implementar mudança automática de nickname (SD | Nome | Matrícula)
 - [ ] Testar fluxo completo de recrutamento
+
+## Sistema de Aprovação/Reprovação de Recrutamento
+- [x] Alterar botão do formulário para "Confirmar e Enviar"
+- [x] Configurar canal de recrutamento (1472632068046454784)
+- [x] Configurar canal de aprovados (1472632147469668711)
+- [x] Configurar canal de reprovados (1472632272724295762)
+- [x] Criar bot listener para botões Aprovar/Reprovar
+- [x] Implementar lógica de aprovação (atribuir roles + mudar nickname + enviar para canal aprovados)
+- [x] Implementar lógica de reprovação (enviar para canal reprovados)
+- [ ] Testar fluxo completo de recrutamento
+
+## Correções
+- [x] Corrigir erro NOW() no MySQL para compatibilidade com banco de dados

@@ -43,8 +43,11 @@ export async function initDiscordBot() {
 
     // Handle slash commands
     client.on("interactionCreate", async (interaction) => {
-      if (!interaction.isChatInputCommand()) return;
-      await handleCommand(interaction);
+      if (interaction.isChatInputCommand()) {
+        await handleCommand(interaction);
+      } else if (interaction.isButton()) {
+        await handleButtonInteraction(interaction);
+      }
     });
 
     await client.login(DISCORD_BOT_TOKEN);
@@ -812,6 +815,184 @@ export async function sendCertificateNotification(data: {
   } catch (error) {
     console.error("[Discord] Failed to send certificate notification:", error);
     return false;
+  }
+}
+
+async function handleButtonInteraction(interaction: any) {
+  try {
+    const customId = interaction.customId;
+    console.log(`[Discord] Button interaction: ${customId}`);
+
+    // Verificar se é botão de aprovação/reprovação de recrutamento
+    if (customId.startsWith("approve_recruitment_")) {
+      await handleRecruitmentApproval(interaction, customId);
+    } else if (customId.startsWith("reject_recruitment_")) {
+      await handleRecruitmentRejection(interaction, customId);
+    }
+  } catch (error) {
+    console.error("[Discord] Error handling button interaction:", error);
+    if (!interaction.replied && !interaction.deferred) {
+      await interaction.reply({ content: "❌ Erro ao processar ação.", ephemeral: true });
+    }
+  }
+}
+
+async function handleRecruitmentApproval(interaction: any, customId: string) {
+  const applicationId = parseInt(customId.replace("approve_recruitment_", ""));
+  
+  await interaction.deferReply({ ephemeral: true });
+
+  try {
+    // Buscar dados da aplicação no banco
+    const dbInstance = await db.getDb();
+    if (!dbInstance) {
+      await interaction.editReply("❌ Erro ao conectar com o banco de dados.");
+      return;
+    }
+
+    const { sql } = await import("drizzle-orm");
+    const applications = await dbInstance.execute(
+      sql`SELECT * FROM recruitment_applications WHERE id = ${applicationId}`
+    );
+
+    if (!applications || (applications as any[]).length === 0) {
+      await interaction.editReply("❌ Aplicação não encontrada.");
+      return;
+    }
+
+    const application = applications[0] as any;
+
+    // Atualizar status no banco
+    await dbInstance.execute(
+      sql`UPDATE recruitment_applications SET status = 'approved' WHERE id = ${applicationId}`
+    );
+
+    // Buscar membro no servidor Discord
+    const guild = await client?.guilds.fetch(DISCORD_SERVER_ID!);
+    if (!guild) {
+      await interaction.editReply("❌ Servidor Discord não encontrado.");
+      return;
+    }
+
+    const member = await guild.members.fetch(application.discord_id);
+    if (!member) {
+      await interaction.editReply("❌ Membro não encontrado no servidor.");
+      return;
+    }
+
+    // Atribuir roles: Soldado (1472645309040431296) e Bombeiro | Praça (1472689134081540116)
+    const soldadoRoleId = "1472645309040431296";
+    const bombeiroRoleId = "1472689134081540116";
+
+    await member.roles.add([soldadoRoleId, bombeiroRoleId]);
+
+    // Mudar nickname para formato: SD | Nome | Matrícula
+    const newNickname = `SD | ${application.nome} | ${application.id_vice_city}`;
+    await member.setNickname(newNickname);
+
+    // Enviar para canal de aprovados
+    const approvedWebhook = process.env.DISCORD_WEBHOOK_APPROVED;
+    if (approvedWebhook) {
+      await fetch(approvedWebhook, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          embeds: [
+            {
+              color: 0x00ff00,
+              title: "✅ Recrutamento Aprovado",
+              description: `**${application.nome}** foi aprovado no recrutamento!`,
+              fields: [
+                { name: "👤 Nome", value: application.nome, inline: true },
+                { name: "🆔 ID Vice City", value: application.id_vice_city, inline: true },
+                { name: "💬 Discord", value: `<@${application.discord_id}>`, inline: true },
+                { name: "🎯 Cargo Atribuído", value: "Soldado", inline: true },
+                { name: "📝 Nickname", value: newNickname, inline: true },
+              ],
+              footer: { text: `Aprovado por ${interaction.user.tag}` },
+              timestamp: new Date().toISOString(),
+            },
+          ],
+        }),
+      });
+    }
+
+    // Desabilitar botões da mensagem original
+    await interaction.message.edit({
+      components: [],
+    });
+
+    await interaction.editReply("✅ Recrutamento aprovado com sucesso! Cargos atribuídos e nickname alterado.");
+  } catch (error) {
+    console.error("[Discord] Error approving recruitment:", error);
+    await interaction.editReply("❌ Erro ao aprovar recrutamento.");
+  }
+}
+
+async function handleRecruitmentRejection(interaction: any, customId: string) {
+  const applicationId = parseInt(customId.replace("reject_recruitment_", ""));
+  
+  await interaction.deferReply({ ephemeral: true });
+
+  try {
+    // Buscar dados da aplicação no banco
+    const dbInstance = await db.getDb();
+    if (!dbInstance) {
+      await interaction.editReply("❌ Erro ao conectar com o banco de dados.");
+      return;
+    }
+
+    const { sql } = await import("drizzle-orm");
+    const applications = await dbInstance.execute(
+      sql`SELECT * FROM recruitment_applications WHERE id = ${applicationId}`
+    );
+
+    if (!applications || (applications as any[]).length === 0) {
+      await interaction.editReply("❌ Aplicação não encontrada.");
+      return;
+    }
+
+    const application = applications[0] as any;
+
+    // Atualizar status no banco
+    await dbInstance.execute(
+      sql`UPDATE recruitment_applications SET status = 'rejected' WHERE id = ${applicationId}`
+    );
+
+    // Enviar para canal de reprovados
+    const rejectedWebhook = process.env.DISCORD_WEBHOOK_REJECTED;
+    if (rejectedWebhook) {
+      await fetch(rejectedWebhook, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          embeds: [
+            {
+              color: 0xff0000,
+              title: "❌ Recrutamento Reprovado",
+              description: `**${application.nome}** foi reprovado no recrutamento.`,
+              fields: [
+                { name: "👤 Nome", value: application.nome, inline: true },
+                { name: "🆔 ID Vice City", value: application.id_vice_city, inline: true },
+                { name: "💬 Discord", value: `<@${application.discord_id}>`, inline: true },
+              ],
+              footer: { text: `Reprovado por ${interaction.user.tag}` },
+              timestamp: new Date().toISOString(),
+            },
+          ],
+        }),
+      });
+    }
+
+    // Desabilitar botões da mensagem original
+    await interaction.message.edit({
+      components: [],
+    });
+
+    await interaction.editReply("✅ Recrutamento reprovado. Candidato não recebeu cargos.");
+  } catch (error) {
+    console.error("[Discord] Error rejecting recruitment:", error);
+    await interaction.editReply("❌ Erro ao reprovar recrutamento.");
   }
 }
 

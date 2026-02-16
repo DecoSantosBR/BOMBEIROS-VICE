@@ -260,7 +260,7 @@ export default function Recrutamento() {
                   disabled={submitMutation.isPending}
                   className="w-full bg-red-700 hover:bg-red-800 text-white"
                 >
-                  {submitMutation.isPending ? "Enviando..." : "Enviar Formulário"}
+                  {submitMutation.isPending ? "Enviando..." : "Confirmar e Enviar"}
                 </Button>
               </div>
             </form>
