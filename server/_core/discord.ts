@@ -18,9 +18,20 @@ export async function initDiscordBot() {
     return null;
   }
 
-  // Se o bot já está inicializado, retornar a instância existente
+  // Se o bot já está inicializado, remover listeners antigos e retornar
   if (client) {
-    console.log("[Discord] Bot already initialized, reusing existing instance");
+    console.log("[Discord] Bot already initialized, removing old listeners");
+    client.removeAllListeners("interactionCreate");
+    
+    // Re-register interaction handler
+    client.on("interactionCreate", async (interaction) => {
+      if (interaction.isChatInputCommand()) {
+        await handleCommand(interaction);
+      } else if (interaction.isButton()) {
+        await handleButtonInteraction(interaction);
+      }
+    });
+    
     return client;
   }
 
@@ -828,7 +839,20 @@ async function handleButtonInteraction(interaction: any) {
   try {
     // Responder imediatamente para evitar timeout
     if (!interaction.deferred && !interaction.replied) {
-      await interaction.deferReply({ ephemeral: true });
+      try {
+        await interaction.deferReply({ ephemeral: true });
+      } catch (deferError: any) {
+        // Se a interação já foi reconhecida, outro listener já está processando
+        if (deferError.code === 40060) {
+          console.log(`[Discord] Interaction already acknowledged by another listener, skipping`);
+          return;
+        }
+        throw deferError;
+      }
+    } else if (interaction.deferred || interaction.replied) {
+      // Se já foi processado, não fazer nada
+      console.log(`[Discord] Interaction already processed, skipping`);
+      return;
     }
 
     // Verificar se é botão de aprovação/reprovação de recrutamento
