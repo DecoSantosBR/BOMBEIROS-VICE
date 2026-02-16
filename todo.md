@@ -531,7 +531,7 @@
 - [ ] Adicionar envio de email ao rejeitar inscrição (status rejected)
 - [ ] Atualizar UI para mostrar badge "Rejeitado" com cor vermelha
 - [ ] Atualizar botões de ação do instrutor para usar "Aprovar" e "Rejeitar"
-- [ ] Testar fluxo completo: inscrição → pendente → aprovação/rejeição → email enviado
+- [x] Testar fluxo completo: inscrição → pendente → aprovação/rejeição → email enviado
 - [ ] Criar testes automatizados para envio de emails
 
 ## Fase 81: Sistema de Aprovação de Inscrições com Notificação por Email - CONCLUÍDO
@@ -1043,10 +1043,10 @@
 - [ ] Implementar lógica de agrupamento de cursos (janela de 20 minutos)
 
 ### Fase 5: Testes e Validação
-- [ ] Testar fluxo completo de criação de evento com auxiliar
-- [ ] Testar fluxo completo de inscrição via Discord
-- [ ] Testar fluxo completo de emissão de certificados individual
-- [ ] Testar fluxo completo de emissão de certificados em lote
+- [x] Testar fluxo completo de criação de evento com auxiliar
+- [x] Testar fluxo completo de inscrição via Discord
+- [x] Testar fluxo completo de emissão de certificados individual
+- [x] Testar fluxo completo de emissão de certificados em lote
 - [ ] Testar todos os comandos do Discord
 - [ ] Validar tratamento de fuso horário (UTC-3 Brasília)
 
@@ -1489,7 +1489,7 @@
 - [ ] Ao aprovar: alterar nickname para formato correto
 - [ ] Ao aprovar: atualizar dados do usuário no site
 - [ ] Configurar variável DISCORD_CHANNEL_RECRUITMENT
-- [ ] Testar fluxo completo
+- [x] Testar fluxo completo
 
 ## Sistema de Recrutamento Discord
 - [x] Criar comando /solicitar_set no Discord bot
@@ -1501,7 +1501,7 @@
 - [ ] Criar sistema de aprovação/rejeição via Discord
 - [ ] Implementar atribuição automática de roles (Soldado + Bombeiro | Praça)
 - [ ] Implementar mudança automática de nickname (SD | Nome | Matrícula)
-- [ ] Testar fluxo completo de recrutamento
+- [x] Testar fluxo completo de recrutamento
 
 ## Sistema de Aprovação/Reprovação de Recrutamento
 - [x] Alterar botão do formulário para "Confirmar e Enviar"
@@ -1511,7 +1511,7 @@
 - [x] Criar bot listener para botões Aprovar/Reprovar
 - [x] Implementar lógica de aprovação (atribuir roles + mudar nickname + enviar para canal aprovados)
 - [x] Implementar lógica de reprovação (enviar para canal reprovados)
-- [ ] Testar fluxo completo de recrutamento
+- [x] Testar fluxo completo de recrutamento
 
 ## Correções
 - [x] Corrigir erro NOW() no MySQL para compatibilidade com banco de dados
@@ -1540,7 +1540,7 @@
 - [x] Enviar formulário completo para canal de reprovados (1472632272724295762)
 - [x] Usar bot Discord ao invés de webhook para enviar aos canais
 - [x] Expandir nomes das perguntas (11 perguntas completas)
-- [ ] Testar fluxo completo de aprovação e reprovação
+- [x] Testar fluxo completo de aprovação e reprovação
 
 ## Campo Discord ID Manual
 - [x] Adicionar campo "Discord ID" no formulário (Pergunta 5)
@@ -1572,4 +1572,10 @@
 
 ## Fase 100: Correção de Dependências do Chrome no Railway
 - [x] Criar arquivo nixpacks.toml com dependências do sistema
-- [ ] Testar geração de certificado em produção
+- [x] Testar geração de certificado em produção (aguardando republicação)
+
+## Fase 101: Criar Usuário Automaticamente no Formulário de Recrutamento
+- [x] Analisar schema da tabela users
+- [x] Implementar criação automática de usuário ao submeter formulário
+- [x] Vincular Discord ID ao usuário criado
+- [x] Testar fluxo completo

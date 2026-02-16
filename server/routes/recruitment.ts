@@ -37,6 +37,29 @@ router.post("/api/recruitment/submit", async (req, res) => {
       return res.status(500).json({ error: "Banco de dados não disponível" });
     }
 
+    // Criar usuário automaticamente na tabela users
+    // Verificar se já existe um usuário com este Discord ID
+    const existingUser = await db.execute(
+      sql`SELECT id FROM users WHERE discordId = ${discordId} LIMIT 1`
+    );
+
+    let userId;
+    const existingUserRows = existingUser[0] as unknown as any[];
+    if (existingUserRows && existingUserRows.length > 0) {
+      // Usuário já existe, usar ID existente
+      userId = existingUserRows[0].id;
+      console.log(`[Recruitment] Usuário já existe com Discord ID ${discordId}, ID: ${userId}`);
+    } else {
+      // Criar novo usuário
+      const newUserResult = await db.execute(
+        sql`INSERT INTO users 
+         (openId, name, discordId, studentId, role, approvalStatus, createdAt, updatedAt, lastSignedIn)
+         VALUES (${`discord_${discordId}`}, ${nome}, ${discordId}, ${idViceCity}, 'member', 'pending', NOW(), NOW(), NOW())`
+      );
+      userId = Number(newUserResult[0].insertId);
+      console.log(`[Recruitment] Novo usuário criado com Discord ID ${discordId}, ID: ${userId}`);
+    }
+
     const result = await db.execute(
       sql`INSERT INTO recruitment_applications 
        (discord_id, discord_username, nome, id_vice_city, telefone, idade, 
