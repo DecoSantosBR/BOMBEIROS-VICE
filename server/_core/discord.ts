@@ -41,6 +41,9 @@ export async function initDiscordBot() {
     // Register slash commands
     await registerCommands();
 
+    // Remove all previous listeners to avoid duplicates on hot reload
+    client.removeAllListeners("interactionCreate");
+
     // Handle slash commands
     client.on("interactionCreate", async (interaction) => {
       if (interaction.isChatInputCommand()) {

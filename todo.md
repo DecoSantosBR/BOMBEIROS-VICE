@@ -1548,3 +1548,9 @@
 - [x] Usar Discord ID manual quando fornecido
 - [x] Atualizar numeração das perguntas (agora 11 perguntas)
 - [ ] Testar menção com Discord ID manual
+
+## Correção de Listener Duplicado
+- [x] Investigar listeners duplicados no bot Discord
+- [x] Remover listeners antigos antes de registrar novos (removeAllListeners)
+- [x] Garantir que interação seja respondida apenas uma vez
+- [ ] Testar botões Aprovar/Reprovar funcionando
