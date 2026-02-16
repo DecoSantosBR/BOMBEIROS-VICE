@@ -14,11 +14,12 @@ export default function Recrutamento() {
   const discordId = searchParams.get("discord_id");
   const discordUsername = searchParams.get("discord_username");
 
-  const [formData, setFormData] = useState({
+const [formData, setFormData] = useState({
     nome: "",
     idViceCity: "",
     telefone: "",
     idade: "",
+    discordIdManual: "",
     interesse: "",
     possuiMicrofone: "sim" as "sim" | "nao",
     regrasIlegais: "",
@@ -64,8 +65,8 @@ export default function Recrutamento() {
       return;
     }
 
-    submitMutation.mutate({
-      discordId: discordId || "MANUAL_ENTRY",
+submitMutation.mutate({
+      discordId: formData.discordIdManual || discordId || "MANUAL_ENTRY",
       discordUsername: discordUsername || "manual_user",
       ...formData,
     });
@@ -147,10 +148,30 @@ export default function Recrutamento() {
                 />
               </div>
 
-              {/* Pergunta 5 */}
+              {/* Pergunta 5 - Discord ID */}
+              <div>
+                <Label htmlFor="discordIdManual" className="text-base font-semibold">
+                  5. Seu Discord ID *
+                </Label>
+                <p className="text-sm text-gray-600 mt-1 mb-2">
+                  Para obter seu Discord ID: Ative o Modo Desenvolvedor (Configurações → Avançado → Modo Desenvolvedor), depois clique com botão direito no seu nome e selecione "Copiar ID".
+                </p>
+                <Input
+                  id="discordIdManual"
+                  value={formData.discordIdManual}
+                  onChange={(e) => handleChange("discordIdManual", e.target.value)}
+                  placeholder="Ex: 123456789012345678"
+                  required
+                  pattern="[0-9]{17,19}"
+                  title="Digite um Discord ID válido (17-19 dígitos)"
+                  className="mt-2"
+                />
+              </div>
+
+              {/* Pergunta 6 */}
               <div>
                 <Label htmlFor="interesse" className="text-base font-semibold">
-                  5. Qual seu interesse em fazer parte da corporação do bombeiro? *
+                  6. Qual seu interesse em fazer parte da corporação do bombeiro? *
                 </Label>
                 <Textarea
                   id="interesse"
@@ -163,10 +184,10 @@ export default function Recrutamento() {
                 />
               </div>
 
-              {/* Pergunta 6 - Eliminatória */}
+              {/* Pergunta 7 - Eliminatória */}
               <div>
                 <Label className="text-base font-semibold text-red-700">
-                  6. Você possui microfone e disponibilidade para ficar em call do Discord do bombeiro durante seu patrulhamento? (pergunta eliminatória) *
+                  7. Você possui microfone e disponibilidade para ficar em call do Discord do bombeiro durante seu patrulhamento? (pergunta eliminatória) *
                 </Label>
                 <RadioGroup
                   value={formData.possuiMicrofone}
@@ -184,10 +205,10 @@ export default function Recrutamento() {
                 </RadioGroup>
               </div>
 
-              {/* Pergunta 7 */}
+              {/* Pergunta 8 */}
               <div>
                 <Label htmlFor="regrasIlegais" className="text-base font-semibold">
-                  7. Você está ciente que é EXTREMAMENTE proibido o envolvimento de bombeiro com coisas ilegais (farm, venda de drogas, desmanche de veículo) mesmo que você não esteja em serviço (fora do ponto)? *
+                  8. Você está ciente que é EXTREMAMENTE proibido o envolvimento de bombeiro com coisas ilegais (farm, venda de drogas, desmanche de veículo) mesmo que você não esteja em serviço (fora do ponto)? *
                 </Label>
                 <Textarea
                   id="regrasIlegais"
@@ -200,10 +221,10 @@ export default function Recrutamento() {
                 />
               </div>
 
-              {/* Pergunta 8 */}
+              {/* Pergunta 9 */}
               <div>
                 <Label htmlFor="ordemSuperior" className="text-base font-semibold">
-                  8. Você desobedeceria uma ordem de um superior (patente acima)? Explique o porquê! *
+                  9. Você desobedeceria uma ordem de um superior (patente acima)? Explique o porquê! *
                 </Label>
                 <Textarea
                   id="ordemSuperior"
@@ -216,10 +237,10 @@ export default function Recrutamento() {
                 />
               </div>
 
-              {/* Pergunta 9 */}
+              {/* Pergunta 10 */}
               <div>
                 <Label htmlFor="tiroteio" className="text-base font-semibold">
-                  9. O que você faria se recebesse um chamado estando em patrulhamento, e chegando ao local presenciasse um tiroteio entre polícia e bandido? *
+                  10. O que você faria se recebesse um chamado estando em patrulhamento, e chegando ao local presenciasse um tiroteio entre polícia e bandido? *
                 </Label>
                 <Textarea
                   id="tiroteio"
@@ -232,10 +253,10 @@ export default function Recrutamento() {
                 />
               </div>
 
-              {/* Pergunta 10 */}
+              {/* Pergunta 11 */}
               <div>
                 <Label htmlFor="multiplasOcorrencias" className="text-base font-semibold">
-                  10. O que você faria se estivesse a caminho de uma ocorrência e, cruzasse com uma vítima (de outro chamado) precisando de atendimento? *
+                  11. O que você faria se estivesse a caminho de uma ocorrência e, cruzasse com uma vítima (de outro chamado) precisando de atendimento? *
                 </Label>
                 <Textarea
                   id="multiplasOcorrencias"

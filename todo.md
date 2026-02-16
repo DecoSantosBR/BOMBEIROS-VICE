@@ -1541,3 +1541,10 @@
 - [x] Usar bot Discord ao invés de webhook para enviar aos canais
 - [x] Expandir nomes das perguntas (11 perguntas completas)
 - [ ] Testar fluxo completo de aprovação e reprovação
+
+## Campo Discord ID Manual
+- [x] Adicionar campo "Discord ID" no formulário (Pergunta 5)
+- [x] Validar formato do Discord ID (17-19 dígitos)
+- [x] Usar Discord ID manual quando fornecido
+- [x] Atualizar numeração das perguntas (agora 11 perguntas)
+- [ ] Testar menção com Discord ID manual
