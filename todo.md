@@ -1339,3 +1339,8 @@
 - [x] Manter apenas login Discord
 - [ ] Testar login Discord no site Manus
 - [ ] Validar sincronização com bot Discord
+
+## Redirecionar para Login Customizado
+- [x] Modificar Home.tsx para redirecionar não autenticados para /login
+- [ ] Testar redirecionamento
+- [ ] Publicar alteração

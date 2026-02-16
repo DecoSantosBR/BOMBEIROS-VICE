@@ -15,9 +15,9 @@ export default function Home() {
   // Redirect to login if not authenticated
   useEffect(() => {
     if (!loading && !isAuthenticated) {
-      window.location.href = getLoginUrl();
+      setLocation("/login");
     }
-  }, [loading, isAuthenticated]);
+  }, [loading, isAuthenticated, setLocation]);
 
   const { data: courses, isLoading: coursesLoading } = trpc.courses.list.useQuery();
 
