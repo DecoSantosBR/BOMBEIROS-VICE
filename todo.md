@@ -1564,3 +1564,8 @@
 - [x] Permitir aprovação parcial (banco + canal) mesmo sem modificar cargos
 - [x] Mostrar mensagem clara quando hierarquia impede modificação
 - [ ] Testar aprovação funcionando corretamente
+
+## Correção de Discord ID Undefined
+- [ ] Verificar se campo discordId está sendo enviado no formulário
+- [ ] Verificar se API está salvando discordId no banco
+- [ ] Testar formulário salvando Discord ID corretamente

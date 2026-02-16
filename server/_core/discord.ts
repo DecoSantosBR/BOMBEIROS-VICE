@@ -39,6 +39,8 @@ function registerInteractionHandler(discordClient: Client) {
 }
 
 export async function initDiscordBot() {
+  console.log(`[Discord] initDiscordBot called. global.discordClient exists: ${!!global.discordClient}, local client exists: ${!!client}`);
+  
   if (!DISCORD_BOT_TOKEN) {
     console.log("[Discord] Bot token not configured, skipping initialization");
     return null;
@@ -77,13 +79,13 @@ export async function initDiscordBot() {
     // Register slash commands
     await registerCommands();
 
+    // Armazenar na variável global ANTES do login para persistir entre hot reloads
+    global.discordClient = client;
+    
     // Registrar handler de interações
     registerInteractionHandler(client);
 
     await client.login(DISCORD_BOT_TOKEN);
-    
-    // Armazenar na variável global para persistir entre hot reloads
-    global.discordClient = client;
     
     return client;
   } catch (error) {
@@ -862,17 +864,14 @@ async function handleButtonInteraction(interaction: any) {
       try {
         await interaction.deferReply({ ephemeral: true });
       } catch (deferError: any) {
-        // Se a interação já foi reconhecida, outro listener já está processando
+        // Se a interação já foi reconhecida, outro listener já fez deferReply
+        // Continuar mesmo assim, pois podemos usar editReply
         if (deferError.code === 40060) {
-          console.log(`[Discord] Interaction already acknowledged by another listener, skipping`);
-          return;
+          console.log(`[Discord] Interaction already deferred by another listener, continuing anyway`);
+        } else {
+          throw deferError;
         }
-        throw deferError;
       }
-    } else if (interaction.deferred || interaction.replied) {
-      // Se já foi processado, não fazer nada
-      console.log(`[Discord] Interaction already processed, skipping`);
-      return;
     }
 
     // Verificar se é botão de aprovação/reprovação de recrutamento
@@ -897,6 +896,8 @@ async function handleButtonInteraction(interaction: any) {
 
 async function handleRecruitmentApproval(interaction: any, customId: string) {
   const applicationId = parseInt(customId.replace("approve_recruitment_", ""));
+  console.log(`[Discord] handleRecruitmentApproval called for application ${applicationId}`);
+  console.log(`[Discord] interaction.user:`, interaction.user);
 
   try {
     // Buscar dados da aplicação no banco
@@ -916,7 +917,10 @@ async function handleRecruitmentApproval(interaction: any, customId: string) {
       return;
     }
 
-    const application = applications[0] as any;
+    // MySQL retorna [rows, fields], pegar apenas rows
+    const rows = Array.isArray(applications[0]) ? applications[0] : applications;
+    const application = rows[0] as any;
+    console.log(`[Discord] Application data:`, JSON.stringify(application, null, 2));
 
     // Atualizar status no banco
     await dbInstance.execute(
@@ -942,8 +946,14 @@ async function handleRecruitmentApproval(interaction: any, customId: string) {
       return;
     }
     
-    console.log(`[Discord] Member found:`, member.user.tag);
+    console.log(`[Discord] Member found:`, member.user?.tag || member.id);
     console.log(`[Discord] Member roles object:`, typeof member.roles, member.roles ? 'exists' : 'undefined');
+    
+    if (!member.user) {
+      console.error(`[Discord] member.user is undefined!`);
+      await interaction.editReply("❌ Erro: Não foi possível acessar informações do usuário.");
+      return;
+    }
 
     // Atribuir roles: Soldado (1472645309040431296) e Bombeiro | Praça (1472689134081540116)
     const soldadoRoleId = "1472645309040431296";
@@ -1013,7 +1023,7 @@ async function handleRecruitmentApproval(interaction: any, customId: string) {
             { name: "🎯 Cargo Atribuído", value: rolesAdded ? "Soldado + Bombeiro | Praça" : "⚠️ Não modificado (hierarquia)", inline: true },
             { name: "📝 Nickname", value: nicknameChanged ? newNickname : "⚠️ Não modificado (hierarquia)", inline: true }
           )
-          .setFooter({ text: `Aprovado por ${interaction.user.tag}` })
+          .setFooter({ text: `Aprovado por ${interaction.user?.tag || interaction.user?.username || 'Recrutador'}` })
           .setTimestamp();
         
         await approvedChannel2.send({ embeds: [embed] });
@@ -1075,7 +1085,9 @@ async function handleRecruitmentRejection(interaction: any, customId: string) {
       return;
     }
 
-    const application = applications[0] as any;
+    // MySQL retorna [rows, fields], pegar apenas rows
+    const rows = Array.isArray(applications[0]) ? applications[0] : applications;
+    const application = rows[0] as any;
 
     // Atualizar status no banco
     await dbInstance.execute(
@@ -1108,7 +1120,7 @@ async function handleRecruitmentRejection(interaction: any, customId: string) {
             { name: "🔫 10. Você está em um tiroteio e seu superior ordena recuo, mas você pode abater o suspeito. O que faz?", value: (application.tiroteio || "Não respondido").substring(0, 1024), inline: false },
             { name: "🚨 11. Como você lidaria com múltiplas ocorrências simultâneas?", value: (application.multiplas_ocorrencias || "Não respondido").substring(0, 1024), inline: false }
           )
-          .setFooter({ text: `Reprovado por ${interaction.user.tag}` })
+          .setFooter({ text: `Reprovado por ${interaction.user?.tag || interaction.user?.username || 'Recrutador'}` })
           .setTimestamp();
         
         await rejectedChannel2.send({ embeds: [embed] });
