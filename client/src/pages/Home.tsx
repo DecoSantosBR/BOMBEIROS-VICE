@@ -116,15 +116,15 @@ export default function Home() {
 
       {/* 2º Painel de Instrutores */}
       {(isInstructor || isAdmin) && (
-        <section className="bg-red-600 text-white py-12">
+        <section className="bg-white py-12">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h2 className="text-3xl font-bold mb-4">Painel de Instrutores</h2>
-            <p className="text-red-100 mb-6">
+            <h2 className="text-3xl font-bold mb-4 text-red-700">Painel de Instrutores</h2>
+            <p className="text-gray-600 mb-6">
               Acesse as ferramentas exclusivas para instrutores e administradores
             </p>
             <Button 
               size="lg"
-              className="bg-white text-red-700 hover:bg-red-50 font-bold"
+              className="bg-red-700 text-white hover:bg-red-800 font-bold"
               onClick={() => {
                 document.getElementById('gerador-certificados')?.scrollIntoView({ behavior: 'smooth' });
               }}
@@ -136,12 +136,12 @@ export default function Home() {
       )}
 
       {/* 3º NOSSA MISSÃO */}
-      <section className="py-16 bg-white">
+      <section className="py-16 bg-red-700">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-4xl font-bold text-center mb-4 text-red-700">NOSSA MISSÃO</h2>
+          <h2 className="text-4xl font-bold text-center mb-4 text-white">NOSSA MISSÃO</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12">
             {/* CORAGEM */}
-            <Card className="p-8 text-center hover:shadow-xl transition-shadow">
+            <Card className="p-8 text-center hover:shadow-xl transition-shadow bg-white">
               <div className="flex justify-center mb-4">
                 <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center">
                   <Heart className="w-8 h-8 text-red-700" />
@@ -154,7 +154,7 @@ export default function Home() {
             </Card>
 
             {/* DISCIPLINA */}
-            <Card className="p-8 text-center hover:shadow-xl transition-shadow">
+            <Card className="p-8 text-center hover:shadow-xl transition-shadow bg-white">
               <div className="flex justify-center mb-4">
                 <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center">
                   <Shield className="w-8 h-8 text-red-700" />
@@ -167,7 +167,7 @@ export default function Home() {
             </Card>
 
             {/* ESPÍRITO DE EQUIPE */}
-            <Card className="p-8 text-center hover:shadow-xl transition-shadow">
+            <Card className="p-8 text-center hover:shadow-xl transition-shadow bg-white">
               <div className="flex justify-center mb-4">
                 <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center">
                   <UsersRound className="w-8 h-8 text-red-700" />

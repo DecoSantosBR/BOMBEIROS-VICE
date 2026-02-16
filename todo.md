@@ -1432,3 +1432,7 @@
 - [x] 6º Gerador de Certificados em Lote
 - [x] Atualizar header e footer
 - [ ] Testar responsividade
+
+## Ajustar Cores das Seções
+- [x] Painel de Instrutores: fundo branco
+- [x] Nossa Missão: fundo vermelho
