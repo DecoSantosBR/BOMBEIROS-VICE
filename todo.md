@@ -1344,3 +1344,10 @@
 - [x] Modificar Home.tsx para redirecionar não autenticados para /login
 - [ ] Testar redirecionamento
 - [ ] Publicar alteração
+
+## Configurar Discord OAuth no Manus
+- [x] Verificar variáveis DISCORD_CLIENT_ID e DISCORD_REDIRECT_URI
+- [x] Configurar redirect URI correto para ambiente Manus
+- [x] Criar teste automatizado para validar configuração
+- [ ] Testar login Discord no navegador
+- [ ] Publicar após validação
