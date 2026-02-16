@@ -12,10 +12,9 @@ export async function getDb() {
                     process.env.HOSTNAME?.includes('sandbox') ||
                     process.env.NODE_ENV === 'development';
   
-  // Use local DATABASE_URL in sandbox, RAILWAY_DATABASE_URL in production
-  const databaseUrl = isSandbox 
-    ? process.env.DATABASE_URL 
-    : (process.env.RAILWAY_DATABASE_URL || process.env.DATABASE_URL);
+  // Prefer RAILWAY_DATABASE_URL if available (for bot to access production data)
+  // Otherwise use local DATABASE_URL
+  const databaseUrl = process.env.RAILWAY_DATABASE_URL || process.env.DATABASE_URL;
   
   if (!_db && databaseUrl) {
     try {

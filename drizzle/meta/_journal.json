@@ -120,6 +120,13 @@
       "when": 1771093939148,
       "tag": "0016_tough_mach_iv",
       "breakpoints": true
+    },
+    {
+      "idx": 17,
+      "version": "5",
+      "when": 1771215989415,
+      "tag": "0017_strong_moondragon",
+      "breakpoints": true
     }
   ]
 }

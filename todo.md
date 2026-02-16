@@ -1380,4 +1380,17 @@
 - [x] Verificar logs do bot
 - [x] Identificar causa do problema (timeout de 3s)
 - [x] Adicionar defer() e trocar reply por editReply
-- [ ] Testar comandos
+- [ ] Investigar erro "Erro ao buscar certificados"
+- [ ] Corrigir e testar novamente
+
+## Conectar Bot ao Banco Railway
+- [x] Obter DATABASE_URL do Railway (RAILWAY_DATABASE_URL já existia)
+- [x] Modificar lógica de conexão para priorizar Railway
+- [x] Bot conectado ao Railway MySQL
+- [ ] Testar comandos com dados reais
+
+## Migrar para Novo Banco MySQL Railway
+- [x] Atualizar RAILWAY_DATABASE_URL no Manus
+- [ ] Atualizar RAILWAY_DATABASE_URL no Railway (cbm-lotus)
+- [x] Criar todas as tabelas no novo banco
+- [ ] Testar comandos do bot

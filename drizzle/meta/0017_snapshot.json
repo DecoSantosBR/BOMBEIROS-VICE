@@ -1,8 +1,8 @@
 {
   "version": "5",
   "dialect": "mysql",
-  "id": "38836347-5f70-4f88-bc76-ff16d05a9049",
-  "prevId": "630a8172-7e54-4b00-966b-48ea3153a02e",
+  "id": "8708ac89-de63-4da4-95af-29ca4382372d",
+  "prevId": "38836347-5f70-4f88-bc76-ff16d05a9049",
   "tables": {
     "certificates": {
       "name": "certificates",
@@ -44,7 +44,7 @@
         },
         "courseId": {
           "name": "courseId",
-          "type": "int",
+          "type": "varchar(36)",
           "primaryKey": false,
           "notNull": false,
           "autoincrement": false
@@ -68,6 +68,20 @@
           "type": "varchar(100)",
           "primaryKey": false,
           "notNull": true,
+          "autoincrement": false
+        },
+        "auxiliar": {
+          "name": "auxiliar",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "ID_auxiliar": {
+          "name": "ID_auxiliar",
+          "type": "varchar(100)",
+          "primaryKey": false,
+          "notNull": false,
           "autoincrement": false
         },
         "issuedAt": {
@@ -323,6 +337,20 @@
         "maxParticipants": {
           "name": "maxParticipants",
           "type": "int",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "auxiliar": {
+          "name": "auxiliar",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "ID_auxiliar": {
+          "name": "ID_auxiliar",
+          "type": "varchar(100)",
           "primaryKey": false,
           "notNull": false,
           "autoincrement": false

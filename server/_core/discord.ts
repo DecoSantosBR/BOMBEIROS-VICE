@@ -289,8 +289,13 @@ async function handleCommand(interaction: ChatInputCommandInteraction) {
       
       case "meuscertificados":
         try {
-          // Defer a resposta para evitar timeout
-          await interaction.deferReply();
+          // Verificar se a interação já foi respondida
+          console.log(`[Discord] /meuscertificados - Status: replied=${interaction.replied}, deferred=${interaction.deferred}`);
+          
+          // Defer a resposta para evitar timeout (apenas se ainda não foi respondida)
+          if (!interaction.replied && !interaction.deferred) {
+            await interaction.deferReply();
+          }
           
           // Capturar nickname do servidor Discord
           const member = interaction.member;
