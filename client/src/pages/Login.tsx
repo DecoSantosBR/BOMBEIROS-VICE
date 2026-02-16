@@ -1,13 +1,7 @@
 import { Card } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 import { DiscordLoginButton } from "@/components/DiscordLoginButton";
-import { getLoginUrl } from "@/const";
 
 export default function Login() {
-  const handleManusLogin = () => {
-    window.location.href = getLoginUrl();
-  };
-
   return (
     <div style={{ minHeight: "100vh", backgroundColor: "#ffffff" }}>
       {/* Header */}
@@ -48,42 +42,16 @@ export default function Login() {
               Bem-vindo
             </h2>
             <p style={{ color: "#666", fontSize: "14px" }}>
-              Escolha uma opção para fazer login
+              Faça login com sua conta Discord
             </p>
           </div>
 
           <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
-            {/* Discord Login */}
+            {/* Discord Login - Único método */}
             <DiscordLoginButton 
               size="lg" 
               className="w-full"
             />
-
-            {/* Divider */}
-            <div style={{ 
-              display: "flex", 
-              alignItems: "center", 
-              gap: "16px",
-              margin: "8px 0"
-            }}>
-              <div style={{ flex: 1, height: "1px", backgroundColor: "#e5e7eb" }} />
-              <span style={{ color: "#999", fontSize: "12px", textTransform: "uppercase" }}>ou</span>
-              <div style={{ flex: 1, height: "1px", backgroundColor: "#e5e7eb" }} />
-            </div>
-
-            {/* Manus Login */}
-            <Button
-              onClick={handleManusLogin}
-              variant="outline"
-              size="lg"
-              className="w-full"
-              style={{
-                borderColor: "#b91c1c",
-                color: "#b91c1c"
-              }}
-            >
-              Entrar com Manus
-            </Button>
           </div>
 
           <div style={{ 

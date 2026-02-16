@@ -1283,6 +1283,59 @@
 - [ ] Usuário: Fazer deploy e validar
 
 ## Upload Código para GitHub BOMBEIROS-VICE
-- [ ] Configurar repositório remoto
-- [ ] Fazer push do código
+- [x] Configurar repositório remoto
+- [x] Tentativa de push (erro 403 - sem permissão)
+- [x] Criar instruções de upload manual (INSTRUCOES_UPLOAD_GITHUB.md)
+- [ ] Usuário: Fazer upload manual via interface web ou Git local
 - [ ] Validar upload no GitHub
+
+## Tentativa de Push via GitHub CLI
+- [ ] Usar gh repo clone para clonar BOMBEIROS-VICE
+- [ ] Copiar arquivos para o clone
+- [ ] Fazer push via gh CLI autenticado
+
+## Fase Upload GitHub: Preparação de Arquivos
+- [x] Criar ZIP limpo com código do projeto (cbm-vice-city-github.zip)
+- [x] Criar GUIA_UPLOAD_GITHUB.md com instruções detalhadas
+- [ ] Fazer upload manual no GitHub (3 lotes: config, client, server)
+- [ ] Conectar repositório ao Railway
+- [ ] Configurar variáveis de ambiente no Railway
+- [ ] Validar deploy e sincronização site-bot
+
+## Fase Railway Deploy: Correção de Erro pnpm
+- [x] Analisar erro "pnpm install --frozen-lockfile" no Railway
+- [x] Corrigir nixpacks.toml para usar --no-frozen-lockfile
+- [ ] Atualizar código no GitHub
+- [ ] Validar novo deploy no Railway
+
+## Fase Deploy Railway: Configuração e Validação
+- [x] Upload do código no GitHub concluído
+- [ ] Criar projeto no Railway
+- [ ] Conectar repositório BOMBEIROS-VICE
+- [ ] Configurar variáveis de ambiente essenciais
+- [ ] Aguardar primeiro deploy
+- [ ] Copiar URL gerada pelo Railway
+- [ ] Atualizar NEXTAUTH_URL e OAUTH_SERVER_URL
+- [ ] Fazer redeploy
+- [ ] Testar site publicado
+- [ ] Testar bot Discord
+- [ ] Validar sincronização site-bot
+
+## Fase Railway: Correção Erro Freedesktop
+- [ ] Analisar erro freedesktop no build
+- [ ] Ajustar nixpacks.toml com configuração alternativa
+- [ ] Atualizar arquivo no GitHub
+- [ ] Validar novo deploy
+
+## Fase Railway: Criar Dockerfile Customizado
+- [ ] Criar Dockerfile otimizado para o projeto
+- [ ] Adicionar Dockerfile no GitHub
+- [ ] Remover nixpacks.toml (conflito)
+- [ ] Validar deploy com Dockerfile
+
+## Implementar Login Discord Visível no Manus
+- [x] Verificar se botão Discord está no código da página de login
+- [x] Remover login Manus, Google, Microsoft e Apple
+- [x] Manter apenas login Discord
+- [ ] Testar login Discord no site Manus
+- [ ] Validar sincronização com bot Discord
