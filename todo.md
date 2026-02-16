@@ -1436,3 +1436,31 @@
 ## Ajustar Cores das Seções
 - [x] Painel de Instrutores: fundo branco
 - [x] Nossa Missão: fundo vermelho
+
+## Sincronização Automática Discord
+- [ ] Criar função para extrair cargo e matrícula do nickname Discord
+- [ ] Atualizar callback OAuth para sincronizar dados automaticamente
+- [ ] Buscar dados do servidor Discord (cargo/patente)
+- [ ] Testar sincronização no login
+
+## Sincronização Automática Discord com Roles
+- [x] Adicionar campo matricula ao schema
+- [x] Implementar lógica de mapeamento de roles Discord
+- [x] Implementar extração de cargo e matrícula do nickname
+- [x] Role "Membro" → member
+- [x] Role "Instrutor" → instructor
+- [x] Role "Administrador" → Emails específicos (admin)
+- [x] Atualizar callback OAuth para buscar roles do servidor
+- [x] Mapear cargos Discord (SCG, SGT, etc) para ranks do banco
+- [ ] Configurar variáveis DISCORD_ROLE_INSTRUTOR e DISCORD_ROLE_MEMBRO
+- [ ] Testar sincronização com diferentes roles
+
+## Atualizar Mapeamento de Cargos e Roles
+- [x] Adicionar Sargento e Aspirante ao schema
+- [x] Adicionar todos os apelidos de cargos ao mapeamento
+- [x] Implementar lógica de determinação de role baseada no cargo
+- [x] Praças (SD, CB, SGT, Sub.T, ASP) → member
+- [x] Oficiais (2º TEN, 1º TEN, CAP, MAJ) → instructor
+- [x] Alto-Comando (T.CEL, CEL, SCG, CMD) → instructor
+- [x] Admins por email → admin
+- [ ] Testar sincronização com diferentes cargos

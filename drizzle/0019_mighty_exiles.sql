@@ -1,0 +1,1 @@
+ALTER TABLE `users` MODIFY COLUMN `rank` enum('Comandante Geral','Subcomandante Geral','Coronel','Tenente-Coronel','Major','Capitão','1º Tenente','2º Tenente','Aspirante','Subtenente','Sargento','Cabo','Soldado');

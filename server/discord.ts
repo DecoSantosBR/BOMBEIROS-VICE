@@ -15,6 +15,59 @@ const DISCORD_REDIRECT_URI = process.env.DISCORD_REDIRECT_URI || "";
 const DISCORD_API_ENDPOINT = "https://discord.com/api/v10";
 const DISCORD_OAUTH_URL = "https://discord.com/oauth2/authorize";
 const DISCORD_TOKEN_URL = "https://discord.com/api/oauth2/token";
+const DISCORD_SERVER_ID = process.env.DISCORD_SERVER_ID || "";
+
+// Emails de administradores
+const ADMIN_EMAILS = ["decossantos2@gmail.com", "close.jackson2025@gmail.com"];
+
+// Mapeamento de cargos Discord para ranks do banco
+function mapDiscordRankToDbRank(discordRank: string | null): typeof users.$inferSelect.rank | null {
+  if (!discordRank) return null;
+  
+  const rankMap: Record<string, typeof users.$inferSelect.rank> = {
+    "CMD": "Comandante Geral",
+    "SCG": "Subcomandante Geral",
+    "CEL": "Coronel",
+    "T.CEL": "Tenente-Coronel",
+    "MAJ": "Major",
+    "CAP": "Capit\u00e3o",
+    "1\u00ba TEN": "1\u00ba Tenente",
+    "2\u00ba TEN": "2\u00ba Tenente",
+    "ASP": "Aspirante",
+    "SUB.T": "Subtenente",
+    "SGT": "Sargento",
+    "CB": "Cabo",
+    "SD": "Soldado",
+  };
+  
+  return rankMap[discordRank.toUpperCase()] || null;
+}
+
+// Determinar role do site baseado no cargo
+function determineRoleFromRank(rank: typeof users.$inferSelect.rank | null, email: string | null | undefined): "admin" | "instructor" | "member" {
+  // Verificar se é admin por email
+  if (email && ADMIN_EMAILS.includes(email.toLowerCase())) {
+    return "admin";
+  }
+  
+  if (!rank) return "member";
+  
+  // Pra\u00e7as (SD, CB, SGT, Sub.T, ASP) → member
+  const pracas = ["Soldado", "Cabo", "Sargento", "Subtenente", "Aspirante"];
+  if (pracas.includes(rank)) {
+    return "member";
+  }
+  
+  // Oficiais e Alto-Comando → instructor
+  const oficiais = ["2\u00ba Tenente", "1\u00ba Tenente", "Capit\u00e3o", "Major"];
+  const altoComando = ["Tenente-Coronel", "Coronel", "Subcomandante Geral", "Comandante Geral"];
+  
+  if (oficiais.includes(rank) || altoComando.includes(rank)) {
+    return "instructor";
+  }
+  
+  return "member";
+}
 
 interface DiscordUser {
   id: string;
@@ -22,6 +75,13 @@ interface DiscordUser {
   discriminator: string;
   email?: string;
   avatar?: string;
+  global_name?: string;
+}
+
+interface DiscordGuildMember {
+  user: DiscordUser;
+  nick?: string;
+  roles: string[];
 }
 
 interface DiscordTokenResponse {
@@ -47,7 +107,7 @@ export function initiateDiscordOAuth(req: Request, res: Response) {
     client_id: DISCORD_CLIENT_ID,
     redirect_uri: DISCORD_REDIRECT_URI,
     response_type: "code",
-    scope: "identify email",
+    scope: "identify email guilds.members.read",
   });
 
   const authUrl = `${DISCORD_OAUTH_URL}?${params.toString()}`;
@@ -120,6 +180,58 @@ export async function handleDiscordCallback(req: Request, res: Response) {
     console.log("[Discord OAuth] Discord User ID:", discordUser.id);
     console.log("[Discord OAuth] Discord Username:", discordUser.username);
     
+    // Buscar informações do membro no servidor Discord
+    let guildMember: DiscordGuildMember | null = null;
+    let userRole: string = "member";
+    let userRank: string | null = null;
+    let userMatricula: string | null = null;
+    
+    if (DISCORD_SERVER_ID) {
+      try {
+        const memberResponse = await fetch(
+          `${DISCORD_API_ENDPOINT}/users/@me/guilds/${DISCORD_SERVER_ID}/member`,
+          {
+            headers: {
+              Authorization: `Bearer ${tokenData.access_token}`,
+            },
+          }
+        );
+        
+        if (memberResponse.ok) {
+          guildMember = await memberResponse.json();
+          console.log("[Discord OAuth] Guild Member:", guildMember);
+          
+          // Extrair cargo e matrícula do nickname
+          const nickname = guildMember?.nick || discordUser.global_name || discordUser.username;
+          console.log("[Discord OAuth] Nickname:", nickname);
+          
+          // Formato esperado: "Cargo | Nome | Matrícula" ou "Cargo | Nome"
+          const parts = nickname.split("|").map(p => p.trim());
+          if (parts.length >= 2) {
+            userRank = parts[0]; // Cargo (ex: SCG, SGT, etc)
+            if (parts.length >= 3) {
+              userMatricula = parts[2]; // Matrícula
+            }
+          }
+          
+          console.log("[Discord OAuth] User Rank (raw):", userRank);
+          console.log("[Discord OAuth] User Matrícula:", userMatricula);
+          
+          // Mapear cargo Discord para rank do banco
+          const mappedRank = mapDiscordRankToDbRank(userRank);
+          
+          // Determinar role baseado no cargo
+          userRole = determineRoleFromRank(mappedRank, discordUser.email);
+          userRank = mappedRank;
+          
+          console.log("[Discord OAuth] User Rank (mapped):", userRank);
+          console.log("[Discord OAuth] User Role:", userRole);
+        }
+      } catch (error) {
+        console.error("[Discord OAuth] Erro ao buscar membro do servidor:", error);
+      }
+    }
+    
     // Verificar se já existe um usuário com este Discord ID
     const database = await db.getDb();
     if (!database) {
@@ -132,12 +244,20 @@ export async function handleDiscordCallback(req: Request, res: Response) {
     let user;
 
     if (existingUser) {
-      // Usuário já existe, atualizar lastSignedIn
+      // Usuário já existe, atualizar lastSignedIn e dados do Discord
       await database
         .update(users)
-        .set({ lastSignedIn: new Date() })
+        .set({ 
+          lastSignedIn: new Date(),
+          role: userRole as "admin" | "instructor" | "member",
+          rank: userRank as typeof users.$inferSelect.rank,
+          matricula: userMatricula,
+        })
         .where(eq(users.id, existingUser.id));
-      user = existingUser;
+      
+      // Buscar usuário atualizado
+      const updatedUsers = await database.select().from(users).where(eq(users.id, existingUser.id)).limit(1);
+      user = updatedUsers.length > 0 ? updatedUsers[0] : existingUser;
     } else {
       // Criar novo usuário
       const displayName = `${discordUser.username}#${discordUser.discriminator}`;
@@ -159,8 +279,10 @@ export async function handleDiscordCallback(req: Request, res: Response) {
         email: discordUser.email || null,
         loginMethod: "discord",
         discordId: discordUser.id,
-        role: shouldAutoApprove ? "admin" : "member",
-        approvalStatus: shouldAutoApprove ? "approved" : "pending",
+        role: userRole as "admin" | "instructor" | "member",
+        rank: userRank as typeof users.$inferSelect.rank,
+        matricula: userMatricula,
+        approvalStatus: "approved", // Auto-aprovar todos os usuários do Discord
         lastSignedIn: new Date(),
       });
 

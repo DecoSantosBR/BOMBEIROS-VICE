@@ -1,8 +1,8 @@
 {
   "version": "5",
   "dialect": "mysql",
-  "id": "86466660-e520-455f-8e46-92b81c6e6406",
-  "prevId": "38836347-5f70-4f88-bc76-ff16d05a9049",
+  "id": "0eb1989b-1987-4ca4-997a-9831ecf9c22b",
+  "prevId": "35197756-0dd0-46f2-b4cf-b2842276ea6c",
   "tables": {
     "certificates": {
       "name": "certificates",
@@ -68,6 +68,20 @@
           "type": "varchar(100)",
           "primaryKey": false,
           "notNull": true,
+          "autoincrement": false
+        },
+        "auxiliar": {
+          "name": "auxiliar",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "ID_auxiliar": {
+          "name": "ID_auxiliar",
+          "type": "varchar(100)",
+          "primaryKey": false,
+          "notNull": false,
           "autoincrement": false
         },
         "issuedAt": {
@@ -323,6 +337,20 @@
         "maxParticipants": {
           "name": "maxParticipants",
           "type": "int",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "auxiliar": {
+          "name": "auxiliar",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "ID_auxiliar": {
+          "name": "ID_auxiliar",
+          "type": "varchar(100)",
           "primaryKey": false,
           "notNull": false,
           "autoincrement": false
@@ -587,10 +615,10 @@
       "columns": {
         "id": {
           "name": "id",
-          "type": "int",
+          "type": "varchar(36)",
           "primaryKey": false,
           "notNull": true,
-          "autoincrement": true
+          "autoincrement": false
         },
         "nome": {
           "name": "nome",
@@ -720,7 +748,14 @@
         },
         "rank": {
           "name": "rank",
-          "type": "enum('Comandante Geral','Subcomandante Geral','Coronel','Tenente-Coronel','Major','Capitão','1º Tenente','2º Tenente','Subtenente','Cabo','Soldado')",
+          "type": "enum('Comandante Geral','Subcomandante Geral','Coronel','Tenente-Coronel','Major','Capitão','1º Tenente','2º Tenente','Aspirante','Subtenente','Sargento','Cabo','Soldado')",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "matricula": {
+          "name": "matricula",
+          "type": "varchar(50)",
           "primaryKey": false,
           "notNull": false,
           "autoincrement": false

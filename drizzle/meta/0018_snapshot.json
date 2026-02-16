@@ -1,8 +1,8 @@
 {
   "version": "5",
   "dialect": "mysql",
-  "id": "8708ac89-de63-4da4-95af-29ca4382372d",
-  "prevId": "38836347-5f70-4f88-bc76-ff16d05a9049",
+  "id": "35197756-0dd0-46f2-b4cf-b2842276ea6c",
+  "prevId": "697307a5-0312-4972-91c3-1e9de6c1f125",
   "tables": {
     "certificates": {
       "name": "certificates",
@@ -749,6 +749,13 @@
         "rank": {
           "name": "rank",
           "type": "enum('Comandante Geral','Subcomandante Geral','Coronel','Tenente-Coronel','Major','Capitão','1º Tenente','2º Tenente','Subtenente','Cabo','Soldado')",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "matricula": {
+          "name": "matricula",
+          "type": "varchar(50)",
           "primaryKey": false,
           "notNull": false,
           "autoincrement": false

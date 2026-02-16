@@ -127,6 +127,20 @@
       "when": 1771215989415,
       "tag": "0017_strong_moondragon",
       "breakpoints": true
+    },
+    {
+      "idx": 18,
+      "version": "5",
+      "when": 1771221877977,
+      "tag": "0018_wet_bruce_banner",
+      "breakpoints": true
+    },
+    {
+      "idx": 19,
+      "version": "5",
+      "when": 1771222729420,
+      "tag": "0019_mighty_exiles",
+      "breakpoints": true
     }
   ]
 }
