@@ -31,7 +31,7 @@ export async function generateCertificateImage(data: CertificateData): Promise<B
   const __dirname = dirname(__filename);
   
   // Usar URL do S3 para o logo
-  const logoUrl = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663187653950/bxJjgjqSJmOJwoPB.png";
+  const logoUrl = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663187653950/EgsUSXxNqzyvoFzI.png";
   const logoResponse = await fetch(logoUrl);
   const logoBuffer = Buffer.from(await logoResponse.arrayBuffer());
   const logoBase64 = logoBuffer.toString("base64");
