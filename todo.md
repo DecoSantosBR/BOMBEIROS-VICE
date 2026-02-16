@@ -1421,3 +1421,14 @@
 - [x] Encontrar componente do header
 - [x] Atualizar URL do logo na página de login
 - [ ] Testar visualização
+
+## Redesign Completo do Site
+- [x] Analisar imagem de referência e identificar mudanças
+- [x] 1º Hero: Logo + FORÇA & HONRA + textos
+- [x] 2º Painel de Instrutores
+- [x] 3º NOSSA MISSÃO (Coragem, Disciplina, Espírito de Equipe)
+- [x] 4º Grid de Cursos (3 colunas)
+- [x] 5º Gerador de Certificados Individual
+- [x] 6º Gerador de Certificados em Lote
+- [x] Atualizar header e footer
+- [ ] Testar responsividade
