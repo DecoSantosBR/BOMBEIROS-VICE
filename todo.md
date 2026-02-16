@@ -1464,3 +1464,13 @@
 - [x] Alto-Comando (T.CEL, CEL, SCG, CMD) → instructor
 - [x] Admins por email → admin
 - [ ] Testar sincronização com diferentes cargos
+
+## Corrigir Erro 500 no Callback Discord
+- [ ] Verificar logs do servidor
+- [ ] Identificar causa do erro
+- [ ] Corrigir e testar
+
+## Substituir matricula por studentId
+- [x] Atualizar código Discord OAuth para usar studentId
+- [x] Remover coluna matricula do schema
+- [ ] Testar sincronização

@@ -184,7 +184,7 @@ export async function handleDiscordCallback(req: Request, res: Response) {
     let guildMember: DiscordGuildMember | null = null;
     let userRole: string = "member";
     let userRank: string | null = null;
-    let userMatricula: string | null = null;
+    let userStudentId: string | null = null;
     
     if (DISCORD_SERVER_ID) {
       try {
@@ -210,12 +210,12 @@ export async function handleDiscordCallback(req: Request, res: Response) {
           if (parts.length >= 2) {
             userRank = parts[0]; // Cargo (ex: SCG, SGT, etc)
             if (parts.length >= 3) {
-              userMatricula = parts[2]; // Matrícula
+              userStudentId = parts[2]; // Matrícula
             }
           }
           
           console.log("[Discord OAuth] User Rank (raw):", userRank);
-          console.log("[Discord OAuth] User Matrícula:", userMatricula);
+          console.log("[Discord OAuth] User StudentId:", userStudentId);
           
           // Mapear cargo Discord para rank do banco
           const mappedRank = mapDiscordRankToDbRank(userRank);
@@ -251,7 +251,7 @@ export async function handleDiscordCallback(req: Request, res: Response) {
           lastSignedIn: new Date(),
           role: userRole as "admin" | "instructor" | "member",
           rank: userRank as typeof users.$inferSelect.rank,
-          matricula: userMatricula,
+          studentId: userStudentId,
         })
         .where(eq(users.id, existingUser.id));
       
@@ -281,7 +281,7 @@ export async function handleDiscordCallback(req: Request, res: Response) {
         discordId: discordUser.id,
         role: userRole as "admin" | "instructor" | "member",
         rank: userRank as typeof users.$inferSelect.rank,
-        matricula: userMatricula,
+        studentId: userStudentId,
         approvalStatus: "approved", // Auto-aprovar todos os usuários do Discord
         lastSignedIn: new Date(),
       });

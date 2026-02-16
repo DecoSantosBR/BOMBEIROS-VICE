@@ -34,7 +34,6 @@ export const users = mysqlTable("users", {
     "Cabo",
     "Soldado"
   ]),
-  matricula: varchar("matricula", { length: 50 }),
   role: mysqlEnum("role", ["member", "instructor", "admin"]).default("member").notNull(),
   approvalStatus: mysqlEnum("approvalStatus", ["pending", "approved", "rejected"]).default("pending").notNull(),
   createdAt: timestamp("createdAt").defaultNow().notNull(),
