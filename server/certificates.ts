@@ -1,4 +1,5 @@
 import puppeteer from "puppeteer";
+import chromium from "@sparticuz/chromium";
 import { storagePut } from "./storage";
 import { ENV } from "./_core/env";
 import path from "path";
@@ -288,9 +289,12 @@ export async function generateCertificateImage(data: CertificateData): Promise<B
   `;
 
   // Gerar imagem usando Puppeteer
+  // Usar @sparticuz/chromium para compatibilidade com Railway
   const browser = await puppeteer.launch({
     headless: true,
+    executablePath: await chromium.executablePath(),
     args: [
+      ...chromium.args,
       "--no-sandbox",
       "--disable-setuid-sandbox",
       "--disable-dev-shm-usage",

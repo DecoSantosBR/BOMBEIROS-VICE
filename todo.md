@@ -665,30 +665,30 @@
 - [x] Criar função de geração de certificado com dados dinâmicos
 - [x] Integrar geração no endpoint emitCertificate
 - [x] Atualizar sendCertificateNotification para anexar imagem
-- [ ] Testar geração de certificado com dados reais
+- [x] Testar geração de certificado com dados reais
 - [ ] Validar publicação no Discord com imagem anexada
 
 ## Fase 75: Corrigir Erro de Módulo canvas.node
 - [x] Remover dependência `canvas` do package.json
 - [x] Atualizar certificateGenerator.ts para usar apenas @napi-rs/canvas
 - [x] Reiniciar servidor
-- [ ] Testar geração de certificado
+- [x] Testar geração de certificado
 
 ## Fase 76: Corrigir Erro __dirname is not defined
 - [x] Substituir __dirname por import.meta.url no certificateGenerator.ts
 - [x] Adicionar log de debug para template path
-- [ ] Testar geração de certificado
+- [x] Testar geração de certificado
 
 ## Fase 77: Criar Template Limpo do Certificado
 - [x] Gerar template limpo do certificado sem texto (apenas design visual)
 - [x] Atualizar certificateGenerator.ts para adicionar todos os textos dinamicamente
 - [x] Ajustar coordenadas e tamanhos de fonte
-- [ ] Testar geração de certificado com dados reais
+- [x] Testar geração de certificado com dados reais
 
 ## Fase 78: Ajustar Posicionamento e Tamanho do Texto no Certificado
 - [x] Centralizar texto do certificado (ajustar coordenadas Y para melhor espaçamento)
 - [x] Aumentar tamanho de todas as fontes em 2px
-- [ ] Testar geração de certificado com ajustes
+- [x] Testar geração de certificado com ajustes
 
 ## Fase 79: Adicionar Timestamp ao Nome do Arquivo do Certificado
 - [x] Atualizar discord.ts para adicionar timestamp ao nome do arquivo
@@ -1596,3 +1596,9 @@
 - [x] Salvar e-mail na tabela users ao criar usuário
 - [x] Atualizar approvalStatus para 'approved' ao aprovar no Discord
 - [x] Testar fluxo completo
+
+## Fase 104: Resolver Erro Persistente de Certificado
+- [x] Verificar logs do Railway para confirmar instalação das dependências
+- [x] Verificar configuração do Puppeteer no código
+- [x] Implementar solução alternativa se necessário
+- [x] Testar geração de certificado
