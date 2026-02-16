@@ -72,6 +72,9 @@ export async function handleDiscordCallback(req: Request, res: Response) {
   }
 
   try {
+    console.log("[Discord OAuth] Iniciando callback...");
+    console.log("[Discord OAuth] Code recebido:", code.substring(0, 10) + "...");
+    
     // Trocar código por access token
     const tokenResponse = await fetch(DISCORD_TOKEN_URL, {
       method: "POST",
@@ -89,9 +92,11 @@ export async function handleDiscordCallback(req: Request, res: Response) {
 
     if (!tokenResponse.ok) {
       const errorData = await tokenResponse.text();
-      console.error("Erro ao obter token do Discord:", errorData);
+      console.error("[Discord OAuth] Erro ao obter token:", errorData);
       return res.status(500).json({ error: "Falha ao obter token do Discord" });
     }
+    
+    console.log("[Discord OAuth] Token obtido com sucesso");
 
     const tokenData: DiscordTokenResponse = await tokenResponse.json();
 
@@ -104,12 +109,17 @@ export async function handleDiscordCallback(req: Request, res: Response) {
 
     if (!userResponse.ok) {
       const errorData = await userResponse.text();
-      console.error("Erro ao buscar usuário do Discord:", errorData);
+      console.error("[Discord OAuth] Erro ao buscar usuário:", errorData);
       return res.status(500).json({ error: "Falha ao buscar informações do usuário" });
     }
+    
+    console.log("[Discord OAuth] Usuário obtido com sucesso");
 
     const discordUser: DiscordUser = await userResponse.json();
 
+    console.log("[Discord OAuth] Discord User ID:", discordUser.id);
+    console.log("[Discord OAuth] Discord Username:", discordUser.username);
+    
     // Verificar se já existe um usuário com este Discord ID
     const database = await db.getDb();
     if (!database) {
@@ -176,7 +186,7 @@ export async function handleDiscordCallback(req: Request, res: Response) {
     // Redirecionar para home
     res.redirect("/");
   } catch (error) {
-    console.error("Erro no callback do Discord:", error);
+    console.error("[Discord OAuth] Erro no callback:", error);
     res.status(500).json({ error: "Erro interno ao processar login do Discord" });
   }
 }

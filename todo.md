@@ -1351,3 +1351,15 @@
 - [x] Criar teste automatizado para validar configuração
 - [ ] Testar login Discord no navegador
 - [ ] Publicar após validação
+
+## Corrigir Redirect URI no Discord Developer Portal
+- [ ] Acessar Discord Developer Portal (https://discord.com/developers/applications)
+- [ ] Adicionar URL de callback no OAuth2 Redirects
+- [ ] Testar login novamente
+
+## Corrigir Erro no Callback Discord OAuth
+- [x] Verificar logs do servidor para identificar erro
+- [x] Adicionar logs detalhados ao callback
+- [x] Adicionar URL Railway no Discord Developer Portal
+- [ ] Publicar site Manus
+- [ ] Testar login em ambas plataformas
