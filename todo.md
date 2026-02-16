@@ -1521,3 +1521,9 @@
 - [x] Remover validação de link inválido no formulário de recrutamento
 - [x] Permitir acesso direto sem parâmetros do Discord
 - [ ] Testar formulário com acesso direto
+
+## Correções do Formulário de Recrutamento
+- [x] Corrigir exibição do Discord ID (mostrar valor real ao invés de <@MANUAL_ENTRY>)
+- [x] Mudar de webhook para bot Discord para enviar mensagens com botões
+- [x] Adicionar botões "Aprovar" e "Reprovar" usando bot Discord
+- [ ] Testar envio completo do formulário com botões funcionais

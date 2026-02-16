@@ -1078,60 +1078,62 @@ export const appRouter = router({
         // Salvar no banco de dados
         const applicationId = await db.createRecruitmentApplication(input);
 
-        // Enviar webhook para canal do Discord (canal de recrutamento)
-        const webhookUrl = process.env.DISCORD_WEBHOOK_RECRUITMENT;
-        if (webhookUrl) {
-          try {
-            await fetch(webhookUrl, {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({
-                embeds: [
-                  {
-                    color: 0xdc2626,
-                    title: "📋 Nova Solicitação de Recrutamento",
-                    description: `**${input.nome}** enviou uma solicitação de recrutamento.`,
-                    fields: [
-                      { name: "👤 Nome", value: input.nome, inline: true },
-                      { name: "🆔 ID Vice City", value: input.idViceCity, inline: true },
-                      { name: "📱 Telefone", value: input.telefone, inline: true },
-                      { name: "🎂 Idade", value: input.idade, inline: true },
-                      { name: "💬 Discord", value: `<@${input.discordId}>`, inline: true },
-                      { name: "📝 Por que quer entrar?", value: input.interesse || "Não informado" },
-                      { name: "🎤 Possui microfone?", value: input.possuiMicrofone === "sim" ? "✅ Sim" : "❌ Não", inline: true },
-                      { name: "⚖️ Regras ilegais", value: input.regrasIlegais || "Não respondido" },
-                      { name: "👮 Ordem superior", value: input.ordemSuperior || "Não respondido" },
-                      { name: "🔫 Tiroteio", value: input.tiroteio || "Não respondido" },
-                      { name: "🚨 Múltiplas ocorrências", value: input.multiplasOcorrencias || "Não respondido" },
-                    ],
-                    footer: { text: `ID da Aplicação: ${applicationId}` },
-                    timestamp: new Date().toISOString(),
-                  },
-                ],
-                components: [
-                  {
-                    type: 1,
-                    components: [
-                      {
-                        type: 2,
-                        style: 3,
-                        label: "Aprovar",
-                        custom_id: `approve_recruitment_${applicationId}`,
-                      },
-                      {
-                        type: 2,
-                        style: 4,
-                        label: "Reprovar",
-                        custom_id: `reject_recruitment_${applicationId}`,
-                      },
-                    ],
-                  },
-                ],
-              }),
-            });
-          } catch (error) {
-            console.error("Erro ao enviar webhook:", error);
+        // Enviar mensagem via bot Discord (com botões)
+        console.log("[Recruitment] Enviando mensagem para Discord via bot...");
+        try {
+          const { getDiscordClient } = await import("./_core/discord");
+          const client = getDiscordClient();
+          
+          if (!client) {
+            console.error("[Recruitment] Bot Discord não está disponível");
+          } else {
+            const channelId = process.env.DISCORD_CHANNEL_RECRUITMENT || "1472632068046454784";
+            const channel = await client.channels.fetch(channelId);
+            
+            if (channel && channel.isTextBased()) {
+              const { EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = await import("discord.js");
+              const textChannel = channel as any;
+              
+              const embed = new EmbedBuilder()
+                .setColor(0xdc2626)
+                .setTitle("📋 Nova Solicitação de Recrutamento")
+                .setDescription(`**${input.nome}** enviou uma solicitação de recrutamento.`)
+                .addFields(
+                  { name: "👤 Nome", value: input.nome, inline: true },
+                  { name: "🆔 ID Vice City", value: input.idViceCity, inline: true },
+                  { name: "📱 Telefone", value: input.telefone, inline: true },
+                  { name: "🎂 Idade", value: input.idade, inline: true },
+                  { name: "💬 Discord", value: input.discordId === "MANUAL_ENTRY" ? "Não informado (entrada manual)" : `<@${input.discordId}>`, inline: true },
+                  { name: "📝 Por que quer entrar?", value: input.interesse || "Não informado" },
+                  { name: "🎤 Possui microfone?", value: input.possuiMicrofone === "sim" ? "✅ Sim" : "❌ Não", inline: true },
+                  { name: "⚖️ Regras ilegais", value: input.regrasIlegais || "Não respondido" },
+                  { name: "👮 Ordem superior", value: input.ordemSuperior || "Não respondido" },
+                  { name: "🔫 Tiroteio", value: input.tiroteio || "Não respondido" },
+                  { name: "🚨 Múltiplas ocorrências", value: input.multiplasOcorrencias || "Não respondido" }
+                )
+                .setFooter({ text: `ID da Aplicação: ${applicationId}` })
+                .setTimestamp();
+              
+              const row = new ActionRowBuilder()
+                .addComponents(
+                  new ButtonBuilder()
+                    .setCustomId(`approve_recruitment_${applicationId}`)
+                    .setLabel("Aprovar")
+                    .setStyle(ButtonStyle.Success),
+                  new ButtonBuilder()
+                    .setCustomId(`reject_recruitment_${applicationId}`)
+                    .setLabel("Reprovar")
+                    .setStyle(ButtonStyle.Danger)
+                );
+              
+              await textChannel.send({ embeds: [embed], components: [row] });
+              console.log("[Recruitment] Mensagem enviada com sucesso via bot!");
+            } else {
+              console.error("[Recruitment] Canal não encontrado ou não é um canal de texto");
+            }
           }
+        } catch (error) {
+          console.error("[Recruitment] Erro ao enviar mensagem via bot:", error);
         }
 
         return { success: true, applicationId };
