@@ -1394,3 +1394,30 @@
 - [ ] Atualizar RAILWAY_DATABASE_URL no Railway (cbm-lotus)
 - [x] Criar todas as tabelas no novo banco
 - [ ] Testar comandos do bot
+
+## Investigar Erro Discord OAuth em Produção
+- [ ] Verificar logs do servidor em produção
+- [ ] Identificar causa específica do erro
+- [ ] Corrigir e republicar
+
+## Corrigir Erro no Railway
+- [ ] Investigar erro "Failed to construct 'URL': Invalid URL"
+- [ ] Verificar variáveis VITE_ no Railway
+- [ ] Corrigir e testar
+
+## Adicionar Cursos ao Banco
+- [x] Preparar lista de cursos com valores e imagens
+- [x] Fazer upload de todas as 13 imagens para S3
+- [x] Criar script SQL com URLs das imagens
+- [ ] Executar script no DBeaver
+- [ ] Testar visualização no site
+
+## Atualizar Logo do Site
+- [ ] Fazer upload do novo logo para S3
+- [ ] Atualizar VITE_APP_LOGO com nova URL
+- [ ] Testar visualização no site
+
+## Alterar Logo no Header
+- [x] Encontrar componente do header
+- [x] Atualizar URL do logo na página de login
+- [ ] Testar visualização

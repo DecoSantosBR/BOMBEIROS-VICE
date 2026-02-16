@@ -9,8 +9,8 @@ export default function Login() {
         <div style={{ maxWidth: "1280px", marginLeft: "auto", marginRight: "auto", paddingLeft: "16px", paddingRight: "16px", paddingTop: "16px", paddingBottom: "16px" }}>
           <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>
             <img 
-              src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663187653950/GrEReyHfWMeFEfpu.jpg" 
-              alt="CBMRJ Logo" 
+              src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663187653950/VZqdIOMlfuNYVhdk.png" 
+              alt="CBM Vice City Logo" 
               style={{ width: "48px", height: "48px" }} 
             />
             <div>
