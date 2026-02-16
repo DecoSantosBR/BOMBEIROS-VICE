@@ -1515,3 +1515,9 @@
 
 ## Correções
 - [x] Corrigir erro NOW() no MySQL para compatibilidade com banco de dados
+- [x] Corrigir formato de data para MySQL (converter Date para string YYYY-MM-DD HH:MM:SS)
+
+## Acesso Direto ao Formulário
+- [x] Remover validação de link inválido no formulário de recrutamento
+- [x] Permitir acesso direto sem parâmetros do Discord
+- [ ] Testar formulário com acesso direto

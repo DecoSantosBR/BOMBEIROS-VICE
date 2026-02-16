@@ -1,0 +1,43 @@
+{
+  "query": "SHOW TABLES;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 44TTARZqZm4zxSK.9ce58a8ab24b --database mpF46NADk5NFevEEQ9e39Y --execute SHOW TABLES;",
+  "rows": [
+    {
+      "Tables_in_mpF46NADk5NFevEEQ9e39Y": "__drizzle_migrations"
+    },
+    {
+      "Tables_in_mpF46NADk5NFevEEQ9e39Y": "certificates"
+    },
+    {
+      "Tables_in_mpF46NADk5NFevEEQ9e39Y": "course_applications"
+    },
+    {
+      "Tables_in_mpF46NADk5NFevEEQ9e39Y": "course_enrollments"
+    },
+    {
+      "Tables_in_mpF46NADk5NFevEEQ9e39Y": "course_events"
+    },
+    {
+      "Tables_in_mpF46NADk5NFevEEQ9e39Y": "course_files"
+    },
+    {
+      "Tables_in_mpF46NADk5NFevEEQ9e39Y": "course_images"
+    },
+    {
+      "Tables_in_mpF46NADk5NFevEEQ9e39Y": "course_materials"
+    },
+    {
+      "Tables_in_mpF46NADk5NFevEEQ9e39Y": "courses"
+    },
+    {
+      "Tables_in_mpF46NADk5NFevEEQ9e39Y": "recruitment_applications"
+    },
+    {
+      "Tables_in_mpF46NADk5NFevEEQ9e39Y": "users"
+    }
+  ],
+  "messages": [],
+  "stdout": "Tables_in_mpF46NADk5NFevEEQ9e39Y\n__drizzle_migrations\ncertificates\ncourse_applications\ncourse_enrollments\ncourse_events\ncourse_files\ncourse_images\ncourse_materials\ncourses\nrecruitment_applications\nusers\n",
+  "stderr": "",
+  "execution_time_ms": 348
+}

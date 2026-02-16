@@ -447,7 +447,10 @@ export async function createRecruitmentApplication(application: {
   const db = await getDb();
   if (!db) throw new Error("Database not available");
   
+  // Formatar data para MySQL: YYYY-MM-DD HH:MM:SS
   const now = new Date();
+  const mysqlDate = now.toISOString().slice(0, 19).replace('T', ' ');
+  
   const result = await db.execute(
     sql`INSERT INTO recruitment_applications 
      (discord_id, discord_username, nome, id_vice_city, telefone, idade, 
@@ -458,7 +461,7 @@ export async function createRecruitmentApplication(application: {
              ${application.interesse || null}, ${application.possuiMicrofone}, 
              ${application.regrasIlegais || null}, ${application.ordemSuperior || null}, 
              ${application.tiroteio || null}, ${application.multiplasOcorrencias || null}, 
-             'pending', ${now})`
+             'pending', ${mysqlDate})`
   );
   
   return Number(result[0].insertId);

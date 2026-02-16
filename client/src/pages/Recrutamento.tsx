@@ -37,12 +37,13 @@ export default function Recrutamento() {
     },
   });
 
-  useEffect(() => {
-    if (!discordId || !discordUsername) {
-      alert("Link inválido. Use o comando /solicitar_set no Discord para gerar um novo link.");
-      setTimeout(() => setLocation("/"), 3000);
-    }
-  }, [discordId, discordUsername, setLocation]);
+  // Validação removida - permitir acesso direto ao formulário
+  // useEffect(() => {
+  //   if (!discordId || !discordUsername) {
+  //     alert("Link inválido. Use o comando /solicitar_set no Discord para gerar um novo link.");
+  //     setTimeout(() => setLocation("/"), 3000);
+  //   }
+  // }, [discordId, discordUsername, setLocation]);
 
   const handleChange = (field: string, value: string) => {
     setFormData(prev => ({ ...prev, [field]: value }));
@@ -63,21 +64,14 @@ export default function Recrutamento() {
       return;
     }
 
-    if (!discordId || !discordUsername) {
-      alert("Informações do Discord não encontradas.");
-      return;
-    }
-
     submitMutation.mutate({
-      discordId,
-      discordUsername,
+      discordId: discordId || "MANUAL_ENTRY",
+      discordUsername: discordUsername || "manual_user",
       ...formData,
     });
   };
 
-  if (!discordId || !discordUsername) {
-    return null;
-  }
+  // Permitir acesso sem Discord ID
 
   return (
     <div className="min-h-screen bg-gray-50 py-12 px-4">
