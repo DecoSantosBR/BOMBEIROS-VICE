@@ -1579,3 +1579,14 @@
 - [x] Implementar criação automática de usuário ao submeter formulário
 - [x] Vincular Discord ID ao usuário criado
 - [x] Testar fluxo completo
+
+## Fase 102: Corrigir Campos NULL no Cadastro de Usuário
+- [ ] Investigar por que discordId e studentId ficam NULL
+- [ ] Corrigir mapeamento de campos no SQL INSERT
+- [ ] Testar criação de usuário com valores corretos
+
+## Fase 102: Corrigir Campos NULL no Cadastro de Usuário
+- [x] Investigar por que discordId e studentId ficam NULL
+- [x] Corrigir mapeamento de campos no SQL INSERT (adicionar crases)
+- [x] Adicionar campo rank com valor 'Soldado'
+- [x] Testar criação de usuário com valores corretos

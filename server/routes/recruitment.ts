@@ -51,10 +51,16 @@ router.post("/api/recruitment/submit", async (req, res) => {
       console.log(`[Recruitment] Usuário já existe com Discord ID ${discordId}, ID: ${userId}`);
     } else {
       // Criar novo usuário
+      console.log(`[Recruitment] Criando usuário com dados:`, {
+        discordId,
+        nome,
+        idViceCity,
+        rank: 'Soldado'
+      });
       const newUserResult = await db.execute(
         sql`INSERT INTO users 
-         (openId, name, discordId, studentId, role, approvalStatus, createdAt, updatedAt, lastSignedIn)
-         VALUES (${`discord_${discordId}`}, ${nome}, ${discordId}, ${idViceCity}, 'member', 'pending', NOW(), NOW(), NOW())`
+         (\`openId\`, \`name\`, \`discordId\`, \`studentId\`, \`rank\`, \`role\`, \`approvalStatus\`, \`createdAt\`, \`updatedAt\`, \`lastSignedIn\`)
+         VALUES (${`discord_${discordId}`}, ${nome}, ${discordId}, ${idViceCity}, 'Soldado', 'member', 'pending', NOW(), NOW(), NOW())`
       );
       userId = Number(newUserResult[0].insertId);
       console.log(`[Recruitment] Novo usuário criado com Discord ID ${discordId}, ID: ${userId}`);
