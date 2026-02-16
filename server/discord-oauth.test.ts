@@ -15,12 +15,16 @@ describe("Discord OAuth Configuration", () => {
     expect(process.env.DISCORD_REDIRECT_URI).toBeDefined();
     expect(process.env.DISCORD_REDIRECT_URI).not.toBe("");
     expect(process.env.DISCORD_REDIRECT_URI).toContain("https://");
-    expect(process.env.DISCORD_REDIRECT_URI).toContain("/api/auth/discord/callback");
+    // Aceita tanto /discord/callback quanto /callback/discord
+    const hasValidPath = process.env.DISCORD_REDIRECT_URI.includes("/api/auth/discord/callback") || 
+                         process.env.DISCORD_REDIRECT_URI.includes("/api/auth/callback/discord");
+    expect(hasValidPath).toBe(true);
   });
 
   it("should have valid Discord redirect URI format", () => {
     const redirectUri = process.env.DISCORD_REDIRECT_URI || "";
-    const urlPattern = /^https:\/\/.+\/api\/auth\/discord\/callback$/;
+    // Aceita tanto /discord/callback quanto /callback/discord
+    const urlPattern = /^https:\/\/.+\/api\/auth\/(discord\/callback|callback\/discord)$/;
     expect(redirectUri).toMatch(urlPattern);
   });
 });

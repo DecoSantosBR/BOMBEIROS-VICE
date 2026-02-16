@@ -1363,3 +1363,9 @@
 - [x] Adicionar URL Railway no Discord Developer Portal
 - [ ] Publicar site Manus
 - [ ] Testar login em ambas plataformas
+
+## Corrigir DISCORD_REDIRECT_URI
+- [x] Identificar problema: ordem da URL invertida
+- [x] Atualizar para /callback/discord ao invés de /discord/callback
+- [x] Atualizar teste para aceitar ambas ordens
+- [ ] Republicar e testar
