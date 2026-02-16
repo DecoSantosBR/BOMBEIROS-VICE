@@ -1369,3 +1369,9 @@
 - [x] Atualizar para /callback/discord ao invés de /discord/callback
 - [x] Atualizar teste para aceitar ambas ordens
 - [ ] Republicar e testar
+
+## Reverter para Ordem Original da URL
+- [x] Reverter DISCORD_REDIRECT_URI para /discord/callback
+- [x] Teste automatizado validado com sucesso
+- [ ] Atualizar Discord Developer Portal para /discord/callback
+- [ ] Publicar e testar login
