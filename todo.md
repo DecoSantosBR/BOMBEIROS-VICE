@@ -1569,3 +1569,7 @@
 - [ ] Verificar se campo discordId está sendo enviado no formulário
 - [ ] Verificar se API está salvando discordId no banco
 - [ ] Testar formulário salvando Discord ID corretamente
+
+## Fase 100: Correção de Dependências do Chrome no Railway
+- [x] Criar arquivo nixpacks.toml com dependências do sistema
+- [ ] Testar geração de certificado em produção
