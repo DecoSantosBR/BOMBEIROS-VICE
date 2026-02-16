@@ -16,6 +16,7 @@ export default function Recrutamento() {
 
 const [formData, setFormData] = useState({
     nome: "",
+    email: "",
     idViceCity: "",
     telefone: "",
     idade: "",
@@ -54,7 +55,7 @@ const [formData, setFormData] = useState({
     e.preventDefault();
     
     // Validação
-    if (!formData.nome || !formData.idViceCity || !formData.telefone || !formData.idade) {
+    if (!formData.nome || !formData.email || !formData.idViceCity || !formData.telefone || !formData.idade) {
       alert("Por favor, preencha todos os campos obrigatórios.");
       return;
     }
@@ -101,10 +102,26 @@ submitMutation.mutate({
                 />
               </div>
 
-              {/* Pergunta 2 */}
+              {/* Pergunta 2 - E-mail */}
+              <div>
+                <Label htmlFor="email" className="text-base font-semibold">
+                  2. Seu e-mail *
+                </Label>
+                <Input
+                  id="email"
+                  type="email"
+                  value={formData.email}
+                  onChange={(e) => handleChange("email", e.target.value)}
+                  placeholder="Ex: seuemail@exemplo.com"
+                  required
+                  className="mt-2"
+                />
+              </div>
+
+              {/* Pergunta 3 */}
               <div>
                 <Label htmlFor="idViceCity" className="text-base font-semibold">
-                  2. ID no Vice City *
+                  3. ID no Vice City *
                 </Label>
                 <Input
                   id="idViceCity"
@@ -116,10 +133,10 @@ submitMutation.mutate({
                 />
               </div>
 
-              {/* Pergunta 3 */}
+              {/* Pergunta 4 */}
               <div>
                 <Label htmlFor="telefone" className="text-base font-semibold">
-                  3. Telefone no RP *
+                  4. Telefone no RP *
                 </Label>
                 <Input
                   id="telefone"
@@ -131,10 +148,10 @@ submitMutation.mutate({
                 />
               </div>
 
-              {/* Pergunta 4 */}
+              {/* Pergunta 5 */}
               <div>
                 <Label htmlFor="idade" className="text-base font-semibold">
-                  4. Qual é a sua idade em NÁRNIA (vida real)? *
+                  5. Qual é a sua idade em NÁRNIA (vida real)? *
                 </Label>
                 <Input
                   id="idade"
@@ -148,10 +165,10 @@ submitMutation.mutate({
                 />
               </div>
 
-              {/* Pergunta 5 - Discord ID */}
+              {/* Pergunta 6 - Discord ID */}
               <div>
                 <Label htmlFor="discordIdManual" className="text-base font-semibold">
-                  5. Seu Discord ID *
+                  6. Seu Discord ID *
                 </Label>
                 <p className="text-sm text-gray-600 mt-1 mb-2">
                   Para obter seu Discord ID: Ative o Modo Desenvolvedor (Configurações → Avançado → Modo Desenvolvedor), depois clique com botão direito no seu nome e selecione "Copiar ID".
@@ -168,10 +185,10 @@ submitMutation.mutate({
                 />
               </div>
 
-              {/* Pergunta 6 */}
+              {/* Pergunta 7 */}
               <div>
                 <Label htmlFor="interesse" className="text-base font-semibold">
-                  6. Qual seu interesse em fazer parte da corporação do bombeiro? *
+                  7. Qual seu interesse em fazer parte da corporação do bombeiro? *
                 </Label>
                 <Textarea
                   id="interesse"
@@ -184,10 +201,10 @@ submitMutation.mutate({
                 />
               </div>
 
-              {/* Pergunta 7 - Eliminatória */}
+              {/* Pergunta 8 - Eliminatória */}
               <div>
                 <Label className="text-base font-semibold text-red-700">
-                  7. Você possui microfone e disponibilidade para ficar em call do Discord do bombeiro durante seu patrulhamento? (pergunta eliminatória) *
+                  8. Você possui microfone e disponibilidade para ficar em call do Discord do bombeiro durante seu patrulhamento? (pergunta eliminatória) *
                 </Label>
                 <RadioGroup
                   value={formData.possuiMicrofone}
@@ -205,10 +222,10 @@ submitMutation.mutate({
                 </RadioGroup>
               </div>
 
-              {/* Pergunta 8 */}
+              {/* Pergunta 9 */}
               <div>
                 <Label htmlFor="regrasIlegais" className="text-base font-semibold">
-                  8. Você está ciente que é EXTREMAMENTE proibido o envolvimento de bombeiro com coisas ilegais (farm, venda de drogas, desmanche de veículo) mesmo que você não esteja em serviço (fora do ponto)? *
+                  9. Você está ciente que é EXTREMAMENTE proibido o envolvimento de bombeiro com coisas ilegais (farm, venda de drogas, desmanche de veículo) mesmo que você não esteja em serviço (fora do ponto)? *
                 </Label>
                 <Textarea
                   id="regrasIlegais"
@@ -221,10 +238,10 @@ submitMutation.mutate({
                 />
               </div>
 
-              {/* Pergunta 9 */}
+              {/* Pergunta 10 */}
               <div>
                 <Label htmlFor="ordemSuperior" className="text-base font-semibold">
-                  9. Você desobedeceria uma ordem de um superior (patente acima)? Explique o porquê! *
+                  10. Você desobedeceria uma ordem de um superior (patente acima)? Explique o porquê! *
                 </Label>
                 <Textarea
                   id="ordemSuperior"
@@ -237,10 +254,10 @@ submitMutation.mutate({
                 />
               </div>
 
-              {/* Pergunta 10 */}
+              {/* Pergunta 11 */}
               <div>
                 <Label htmlFor="tiroteio" className="text-base font-semibold">
-                  10. O que você faria se recebesse um chamado estando em patrulhamento, e chegando ao local presenciasse um tiroteio entre polícia e bandido? *
+                  11. O que você faria se recebesse um chamado estando em patrulhamento, e chegando ao local presenciasse um tiroteio entre polícia e bandido? *
                 </Label>
                 <Textarea
                   id="tiroteio"
@@ -253,10 +270,10 @@ submitMutation.mutate({
                 />
               </div>
 
-              {/* Pergunta 11 */}
+              {/* Pergunta 12 */}
               <div>
                 <Label htmlFor="multiplasOcorrencias" className="text-base font-semibold">
-                  11. O que você faria se estivesse a caminho de uma ocorrência e, cruzasse com uma vítima (de outro chamado) precisando de atendimento? *
+                  12. O que você faria se estivesse a caminho de uma ocorrência e, cruzasse com uma vítima (de outro chamado) precisando de atendimento? *
                 </Label>
                 <Textarea
                   id="multiplasOcorrencias"

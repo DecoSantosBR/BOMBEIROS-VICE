@@ -1590,3 +1590,9 @@
 - [x] Corrigir mapeamento de campos no SQL INSERT (adicionar crases)
 - [x] Adicionar campo rank com valor 'Soldado'
 - [x] Testar criação de usuário com valores corretos
+
+## Fase 103: Adicionar E-mail e Sincronizar Aprovação
+- [x] Adicionar campo de e-mail no formulário de recrutamento
+- [x] Salvar e-mail na tabela users ao criar usuário
+- [x] Atualizar approvalStatus para 'approved' ao aprovar no Discord
+- [x] Testar fluxo completo

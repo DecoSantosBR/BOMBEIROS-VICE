@@ -434,6 +434,7 @@ export async function createRecruitmentApplication(application: {
   discordId: string;
   discordUsername: string;
   nome: string;
+  email: string;
   idViceCity: string;
   telefone: string;
   idade: string;
@@ -464,13 +465,14 @@ export async function createRecruitmentApplication(application: {
     console.log(`[Recruitment] Criando usuário com dados:`, {
       discordId: application.discordId,
       nome: application.nome,
+      email: application.email,
       idViceCity: application.idViceCity,
       rank: 'Soldado'
     });
     const newUserResult = await db.execute(
       sql`INSERT INTO users 
-       (\`openId\`, \`name\`, \`discordId\`, \`studentId\`, \`rank\`, \`role\`, \`approvalStatus\`, \`createdAt\`, \`updatedAt\`, \`lastSignedIn\`)
-       VALUES (${`discord_${application.discordId}`}, ${application.nome}, ${application.discordId}, ${application.idViceCity}, 'Soldado', 'member', 'pending', NOW(), NOW(), NOW())`
+       (\`openId\`, \`name\`, \`email\`, \`discordId\`, \`studentId\`, \`rank\`, \`role\`, \`approvalStatus\`, \`createdAt\`, \`updatedAt\`, \`lastSignedIn\`)
+       VALUES (${`discord_${application.discordId}`}, ${application.nome}, ${application.email}, ${application.discordId}, ${application.idViceCity}, 'Soldado', 'member', 'pending', NOW(), NOW(), NOW())`
     );
     userId = Number(newUserResult[0].insertId);
     console.log(`[Recruitment] Novo usuário criado com Discord ID ${application.discordId}, ID: ${userId}`);

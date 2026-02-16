@@ -927,6 +927,12 @@ async function handleRecruitmentApproval(interaction: any, customId: string) {
       sql`UPDATE recruitment_applications SET status = 'approved' WHERE id = ${applicationId}`
     );
 
+    // Atualizar approvalStatus do usuário para 'approved'
+    await dbInstance.execute(
+      sql`UPDATE users SET \`approvalStatus\` = 'approved' WHERE \`discordId\` = ${application.discord_id}`
+    );
+    console.log(`[Discord] User approvalStatus updated to 'approved' for Discord ID: ${application.discord_id}`);
+
     // Buscar membro no servidor Discord
     const guild = await client?.guilds.fetch(DISCORD_SERVER_ID!);
     if (!guild) {

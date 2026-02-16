@@ -1055,6 +1055,7 @@ export const appRouter = router({
         discordId: z.string(),
         discordUsername: z.string(),
         nome: z.string(),
+        email: z.string().email(),
         idViceCity: z.string(),
         telefone: z.string(),
         idade: z.string(),
@@ -1067,7 +1068,7 @@ export const appRouter = router({
       }))
       .mutation(async ({ input }) => {
         // Validações
-        if (!input.discordId || !input.discordUsername || !input.nome || !input.idViceCity || !input.telefone || !input.idade) {
+        if (!input.discordId || !input.discordUsername || !input.nome || !input.email || !input.idViceCity || !input.telefone || !input.idade) {
           throw new TRPCError({ code: "BAD_REQUEST", message: "Campos obrigatórios faltando" });
         }
 
