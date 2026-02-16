@@ -222,7 +222,7 @@ async function handleCommand(interaction: ChatInputCommandInteraction) {
           await interaction.reply("📚 **Cursos Disponíveis**\n\nNenhum curso cadastrado no momento.");
         } else {
           const courseList = courses.map((c, idx) => `${idx + 1}. **${c.nome}** - ${c.valor || "Valor a consultar"}`).join("\n");
-          await interaction.reply(`📚 **Cursos Disponíveis**\n\n${courseList}\n\nPara mais detalhes, acesse: https://cbm-vice-city.manus.space`);
+          await interaction.reply(`📚 **Cursos Disponíveis**\n\n${courseList}\n\nPara mais detalhes, acesse: https://cbmlotus-mpf46nad.manus.space`);
         }
         break;
       
@@ -240,7 +240,7 @@ async function handleCommand(interaction: ChatInputCommandInteraction) {
         const user = userResults[0];
 
         if (!user) {
-          await interaction.reply("❌ Você precisa vincular sua conta Discord ao site primeiro. Acesse: https://cbm-vice-city.manus.space e faça login com Discord.");
+          await interaction.reply("❌ Você precisa vincular sua conta Discord ao site primeiro. Acesse: https://cbmlotus-mpf46nad.manus.space e faça login com Discord.");
           break;
         }
 
@@ -294,7 +294,7 @@ async function handleCommand(interaction: ChatInputCommandInteraction) {
             const timeStr = formatInTimeZone(new Date(e.startDate), brasiliaTimezone, "HH:mm");
             return `${idx + 1}. **${e.title}** - ${dateStr} às ${timeStr} (ID: ${e.id})`;
           }).join("\n");
-          await interaction.editReply(`📅 **Próximos Eventos**\n\n${eventList}\n\nPara se inscrever, use: \`/inscrever <evento_id>\`\nAgenda completa: https://cbm-vice-city.manus.space/agendamento`);
+          await interaction.editReply(`📅 **Próximos Eventos**\n\n${eventList}\n\nPara se inscrever, use: \`/inscrever <evento_id>\`\nAgenda completa: https://cbmlotus-mpf46nad.manus.space/agendamento`);
         }
         break;
       
@@ -310,7 +310,7 @@ async function handleCommand(interaction: ChatInputCommandInteraction) {
         const currentUser = userRes[0];
 
         if (!currentUser) {
-          await interaction.reply("❌ Você precisa vincular sua conta Discord ao site primeiro. Acesse: https://cbm-vice-city.manus.space");
+          await interaction.reply("❌ Você precisa vincular sua conta Discord ao site primeiro. Acesse: https://cbmlotus-mpf46nad.manus.space");
           break;
         }
 
@@ -326,7 +326,7 @@ async function handleCommand(interaction: ChatInputCommandInteraction) {
             const statusEmoji = enr.status === "confirmed" ? "✅" : enr.status === "pending" ? "⏳" : enr.status === "rejected" ? "❌" : "🚫";
             return `${statusEmoji} **${evt?.title || "Evento"}** - ${enr.status}`;
           }));
-          await interaction.reply(`📊 **Suas Inscrições**\n\n${statusList.join("\n")}\n\nDetalhes completos: https://cbm-vice-city.manus.space/agendamento`);
+          await interaction.reply(`📊 **Suas Inscrições**\n\n${statusList.join("\n")}\n\nDetalhes completos: https://cbmlotus-mpf46nad.manus.space/agendamento`);
         }
         break;
       
@@ -613,17 +613,17 @@ async function handleCommand(interaction: ChatInputCommandInteraction) {
           `• \`/emitircertificado\` - Emitir certificado para um aluno\n` +
           `• \`/lembrete\` - Enviar lembrete aos inscritos\n` +
           `• \`/avisar\` - Enviar aviso geral\n\n` +
-          `**Site:** https://cbm-vice-city.manus.space`;
+          `**Site:** https://cbmlotus-mpf46nad.manus.space`;
         await interaction.reply(helpText);
         break;
       
       case "emitircertificado":
         // Verificar se é instrutor (implementar verificação de permissão)
-        await interaction.reply("⚠️ Este comando deve ser usado através do site: https://cbm-vice-city.manus.space/agendamento\n\nAcesse a página de agendamentos e clique em 'Emitir Certificado' para o aluno aprovado.");
+        await interaction.reply("⚠️ Este comando deve ser usado através do site: https://cbmlotus-mpf46nad.manus.space/agendamento\n\nAcesse a página de agendamentos e clique em 'Emitir Certificado' para o aluno aprovado.");
         break;
       
       case "lembrete":
-        await interaction.reply("⚠️ Este comando deve ser usado através do site: https://cbm-vice-city.manus.space/gerenciar-usuarios\n\nAcesse a página de gerenciamento para enviar lembretes.");
+        await interaction.reply("⚠️ Este comando deve ser usado através do site: https://cbmlotus-mpf46nad.manus.space/gerenciar-usuarios\n\nAcesse a página de gerenciamento para enviar lembretes.");
         break;
       
       case "solicitar_set":
@@ -645,7 +645,7 @@ async function handleCommand(interaction: ChatInputCommandInteraction) {
         break;
       
       case "avisar":
-        await interaction.reply("⚠️ Este comando deve ser usado através do site: https://cbm-vice-city.manus.space/gerenciar-usuarios\n\nAcesse a página de gerenciamento para enviar avisos.");
+        await interaction.reply("⚠️ Este comando deve ser usado através do site: https://cbmlotus-mpf46nad.manus.space/gerenciar-usuarios\n\nAcesse a página de gerenciamento para enviar avisos.");
         break;
       
       default:
