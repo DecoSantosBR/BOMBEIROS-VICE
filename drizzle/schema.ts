@@ -176,3 +176,31 @@ export const certificates = mysqlTable("certificates", {
 
 export type Certificate = typeof certificates.$inferSelect;
 export type InsertCertificate = typeof certificates.$inferInsert;
+
+// Tabela de aplicações de recrutamento
+export const recruitmentApplications = mysqlTable("recruitment_applications", {
+  id: int("id").autoincrement().primaryKey(),
+  discordId: varchar("discordId", { length: 64 }).notNull(),
+  discordUsername: varchar("discordUsername", { length: 255 }).notNull(),
+  // Respostas do formulário
+  nome: varchar("nome", { length: 255 }).notNull(), // Nome completo do personagem
+  idViceCity: varchar("idViceCity", { length: 100 }).notNull(), // ID no Vice City
+  telefone: varchar("telefone", { length: 50 }).notNull(), // Telefone no RP
+  idade: int("idade").notNull(), // Idade real (Nárnia)
+  interesse: text("interesse").notNull(), // Por que quer fazer parte
+  possuiMicrofone: mysqlEnum("possuiMicrofone", ["sim", "nao"]).notNull(), // Pergunta eliminatória
+  cienteProibicoes: mysqlEnum("cienteProibicoes", ["sim", "nao"]).notNull(),
+  desobedeceriaOrdem: text("desobedeceriaOrdem").notNull(), // Explicação
+  situacaoTiroteio: text("situacaoTiroteio").notNull(), // O que faria
+  situacaoOutroChamado: text("situacaoOutroChamado").notNull(), // O que faria
+  // Status e metadados
+  status: mysqlEnum("status", ["pending", "approved", "rejected"]).default("pending").notNull(),
+  discordMessageId: varchar("discordMessageId", { length: 64 }), // ID da mensagem no Discord
+  reviewedBy: int("reviewedBy"), // ID do usuário que aprovou/rejeitou
+  reviewedAt: timestamp("reviewedAt"),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type RecruitmentApplication = typeof recruitmentApplications.$inferSelect;
+export type InsertRecruitmentApplication = typeof recruitmentApplications.$inferInsert;

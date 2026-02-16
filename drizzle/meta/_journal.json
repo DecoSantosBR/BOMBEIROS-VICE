@@ -141,6 +141,13 @@
       "when": 1771222729420,
       "tag": "0019_mighty_exiles",
       "breakpoints": true
+    },
+    {
+      "idx": 20,
+      "version": "5",
+      "when": 1771225380708,
+      "tag": "0020_vengeful_starhawk",
+      "breakpoints": true
     }
   ]
 }

@@ -1474,3 +1474,31 @@
 - [x] Atualizar código Discord OAuth para usar studentId
 - [x] Remover coluna matricula do schema
 - [ ] Testar sincronização
+
+## Sistema de Recrutamento com /solicitar_set
+- [x] Criar comando /solicitar_set no bot Discord
+- [x] Comando envia link do formulário de recrutamento
+- [x] Criar schema recruitment_applications no banco
+- [ ] Criar página /recrutamento com formulário de 10 perguntas
+- [ ] Implementar API para salvar formulário
+- [ ] Enviar formulário para canal Discord com embed
+- [ ] Adicionar botões Aprovar/Rejeitar no Discord
+- [ ] Implementar handler de aprovação/rejeição
+- [ ] Ao aprovar: setar cargo "Soldado" no Discord
+- [ ] Ao aprovar: setar role "Bombeiro | Praça" no Discord
+- [ ] Ao aprovar: alterar nickname para formato correto
+- [ ] Ao aprovar: atualizar dados do usuário no site
+- [ ] Configurar variável DISCORD_CHANNEL_RECRUITMENT
+- [ ] Testar fluxo completo
+
+## Sistema de Recrutamento Discord
+- [x] Criar comando /solicitar_set no Discord bot
+- [x] Criar página /recrutamento com formulário de 10 perguntas
+- [x] Implementar validação de campos obrigatórios
+- [x] Criar tabela recruitment_applications no banco de dados
+- [x] Implementar API tRPC para submissão de formulário
+- [x] Configurar envio de webhook para canal do Discord
+- [ ] Criar sistema de aprovação/rejeição via Discord
+- [ ] Implementar atribuição automática de roles (Soldado + Bombeiro | Praça)
+- [ ] Implementar mudança automática de nickname (SD | Nome | Matrícula)
+- [ ] Testar fluxo completo de recrutamento

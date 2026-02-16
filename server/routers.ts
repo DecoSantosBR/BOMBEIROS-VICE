@@ -1048,6 +1048,76 @@ export const appRouter = router({
         };
       }),
   }),
+
+  recruitment: router({
+    submit: publicProcedure
+      .input(z.object({
+        discordId: z.string(),
+        discordUsername: z.string(),
+        nome: z.string(),
+        idViceCity: z.string(),
+        telefone: z.string(),
+        idade: z.string(),
+        interesse: z.string().optional(),
+        possuiMicrofone: z.string(),
+        regrasIlegais: z.string().optional(),
+        ordemSuperior: z.string().optional(),
+        tiroteio: z.string().optional(),
+        multiplasOcorrencias: z.string().optional(),
+      }))
+      .mutation(async ({ input }) => {
+        // Validações
+        if (!input.discordId || !input.discordUsername || !input.nome || !input.idViceCity || !input.telefone || !input.idade) {
+          throw new TRPCError({ code: "BAD_REQUEST", message: "Campos obrigatórios faltando" });
+        }
+
+        if (input.possuiMicrofone === "nao") {
+          throw new TRPCError({ code: "BAD_REQUEST", message: "É obrigatório possuir microfone" });
+        }
+
+        // Salvar no banco de dados
+        const applicationId = await db.createRecruitmentApplication(input);
+
+        // Enviar webhook para canal do Discord
+        const webhookUrl = process.env.DISCORD_WEBHOOK_ENROLLMENTS;
+        if (webhookUrl) {
+          try {
+            await fetch(webhookUrl, {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                embeds: [
+                  {
+                    color: 0xdc2626,
+                    title: "📋 Nova Solicitação de Recrutamento",
+                    description: `**${input.nome}** enviou uma solicitação de recrutamento.`,
+                    fields: [
+                      { name: "👤 Nome", value: input.nome, inline: true },
+                      { name: "🆔 ID Vice City", value: input.idViceCity, inline: true },
+                      { name: "📱 Telefone", value: input.telefone, inline: true },
+                      { name: "🎂 Idade", value: input.idade, inline: true },
+                      { name: "💬 Discord", value: `<@${input.discordId}>`, inline: true },
+                      { name: "📝 Por que quer entrar?", value: input.interesse || "Não informado" },
+                      { name: "🎤 Possui microfone?", value: input.possuiMicrofone === "sim" ? "✅ Sim" : "❌ Não", inline: true },
+                      { name: "⚖️ Regras ilegais", value: input.regrasIlegais || "Não respondido" },
+                      { name: "👮 Ordem superior", value: input.ordemSuperior || "Não respondido" },
+                      { name: "🔫 Tiroteio", value: input.tiroteio || "Não respondido" },
+                      { name: "🚨 Múltiplas ocorrências", value: input.multiplasOcorrencias || "Não respondido" },
+                    ],
+                    footer: { text: `ID da Aplicação: ${applicationId}` },
+                    timestamp: new Date().toISOString(),
+                  },
+                ],
+              }),
+            });
+          } catch (error) {
+            console.error("Erro ao enviar webhook:", error);
+          }
+        }
+
+        return { success: true, applicationId };
+      }),
+  }),
 });
 
 export type AppRouter = typeof appRouter;

@@ -428,3 +428,37 @@ export async function getUserByStudentId(studentId: string) {
   
   return result.length > 0 ? result[0] : null;
 }
+
+// Recruitment Applications
+export async function createRecruitmentApplication(application: {
+  discordId: string;
+  discordUsername: string;
+  nome: string;
+  idViceCity: string;
+  telefone: string;
+  idade: string;
+  interesse?: string;
+  possuiMicrofone: string;
+  regrasIlegais?: string;
+  ordemSuperior?: string;
+  tiroteio?: string;
+  multiplasOcorrencias?: string;
+}): Promise<number> {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  
+  const result = await db.execute(
+    sql`INSERT INTO recruitment_applications 
+     (discord_id, discord_username, nome, id_vice_city, telefone, idade, 
+      interesse, possui_microfone, regras_ilegais, ordem_superior, 
+      tiroteio, multiplas_ocorrencias, status, created_at)
+     VALUES (${application.discordId}, ${application.discordUsername}, ${application.nome}, 
+             ${application.idViceCity}, ${application.telefone}, ${application.idade}, 
+             ${application.interesse || null}, ${application.possuiMicrofone}, 
+             ${application.regrasIlegais || null}, ${application.ordemSuperior || null}, 
+             ${application.tiroteio || null}, ${application.multiplasOcorrencias || null}, 
+             'pending', NOW())`
+  );
+  
+  return Number(result[0].insertId);
+}

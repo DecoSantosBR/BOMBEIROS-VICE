@@ -89,6 +89,10 @@ async function registerCommands() {
       .setDescription("Ver todos os seus certificados emitidos"),
     
     new SlashCommandBuilder()
+      .setName("solicitar_set")
+      .setDescription("Solicitar configuração inicial no servidor (cargo, nickname, etc)"),
+    
+    new SlashCommandBuilder()
       .setName("ranking")
       .setDescription("Ver ranking de instrutores por cursos aplicados")
       .addStringOption(option =>
@@ -581,6 +585,24 @@ async function handleCommand(interaction: ChatInputCommandInteraction) {
       
       case "lembrete":
         await interaction.reply("⚠️ Este comando deve ser usado através do site: https://cbm-vice-city.manus.space/gerenciar-usuarios\n\nAcesse a página de gerenciamento para enviar lembretes.");
+        break;
+      
+      case "solicitar_set":
+        try {
+          const siteUrl = process.env.SITE_URL || "https://cbmlotus-mpf46nad.manus.space";
+          const formUrl = `${siteUrl}/recrutamento?discord_id=${interaction.user.id}&discord_username=${encodeURIComponent(interaction.user.username)}`;
+          
+          await interaction.reply({
+            content: `📝 **Solicitação de Configuração Inicial**\n\nPara configurar seu cargo, nickname e matrícula no servidor, preencha o formulário de recrutamento:\n\n🔗 ${formUrl}\n\n⚠️ **Importante:**\n• Preencha todas as perguntas com atenção\n• Seu formulário será avaliado por um recrutador\n• Após aprovação, suas configurações serão aplicadas automaticamente`,
+            ephemeral: true, // Mensagem visível apenas para o usuário
+          });
+        } catch (error) {
+          console.error("[Discord] Erro no comando /solicitar_set:", error);
+          await interaction.reply({
+            content: "❌ Erro ao gerar link do formulário. Tente novamente mais tarde.",
+            ephemeral: true,
+          });
+        }
         break;
       
       case "avisar":

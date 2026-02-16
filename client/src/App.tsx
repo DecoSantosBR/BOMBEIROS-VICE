@@ -12,6 +12,7 @@ import ManageApplications from "./pages/ManageApplications";
 import Login from "./pages/Login";
 import CompleteProfile from "./pages/CompleteProfile";
 import CalendarPage from "./pages/CalendarPage";
+import Recrutamento from "./pages/Recrutamento";
 
 function Router() {
   // make sure to consider if you need authentication for certain routes
@@ -25,6 +26,7 @@ function Router() {
 
       <Route path="/admin/inscricoes" component={ManageApplications} />
       <Route path="/calendario" component={CalendarPage} />
+      <Route path="/recrutamento" component={Recrutamento} />
       <Route path={"/404"} component={NotFound} />
       {/* Final fallback route */}
       <Route component={NotFound} />
