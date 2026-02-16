@@ -819,9 +819,14 @@ export async function sendCertificateNotification(data: {
 }
 
 async function handleButtonInteraction(interaction: any) {
+  const customId = interaction.customId;
+  console.log(`[Discord] Button interaction: ${customId}`);
+
   try {
-    const customId = interaction.customId;
-    console.log(`[Discord] Button interaction: ${customId}`);
+    // Responder imediatamente para evitar timeout
+    if (!interaction.deferred && !interaction.replied) {
+      await interaction.deferReply({ ephemeral: true });
+    }
 
     // Verificar se é botão de aprovação/reprovação de recrutamento
     if (customId.startsWith("approve_recruitment_")) {
@@ -831,16 +836,20 @@ async function handleButtonInteraction(interaction: any) {
     }
   } catch (error) {
     console.error("[Discord] Error handling button interaction:", error);
-    if (!interaction.replied && !interaction.deferred) {
-      await interaction.reply({ content: "❌ Erro ao processar ação.", ephemeral: true });
+    try {
+      if (interaction.deferred) {
+        await interaction.editReply("❌ Erro ao processar ação.");
+      } else if (!interaction.replied) {
+        await interaction.reply({ content: "❌ Erro ao processar ação.", ephemeral: true });
+      }
+    } catch (replyError) {
+      console.error("[Discord] Failed to send error message:", replyError);
     }
   }
 }
 
 async function handleRecruitmentApproval(interaction: any, customId: string) {
   const applicationId = parseInt(customId.replace("approve_recruitment_", ""));
-  
-  await interaction.deferReply({ ephemeral: true });
 
   try {
     // Buscar dados da aplicação no banco
@@ -931,8 +940,6 @@ async function handleRecruitmentApproval(interaction: any, customId: string) {
 
 async function handleRecruitmentRejection(interaction: any, customId: string) {
   const applicationId = parseInt(customId.replace("reject_recruitment_", ""));
-  
-  await interaction.deferReply({ ephemeral: true });
 
   try {
     // Buscar dados da aplicação no banco

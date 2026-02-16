@@ -1527,3 +1527,9 @@
 - [x] Mudar de webhook para bot Discord para enviar mensagens com botões
 - [x] Adicionar botões "Aprovar" e "Reprovar" usando bot Discord
 - [ ] Testar envio completo do formulário com botões funcionais
+
+## Correção de Erro nos Botões
+- [x] Corrigir erro "Unknown interaction" ao clicar em Aprovar/Reprovar
+- [x] Remover resposta duplicada (deferReply + reply)
+- [x] Mover deferReply para handleButtonInteraction (resposta imediata)
+- [ ] Testar botões funcionando corretamente
