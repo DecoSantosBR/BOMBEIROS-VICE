@@ -10,7 +10,33 @@ const DISCORD_CHANNEL_ENROLLMENTS = process.env.DISCORD_CHANNEL_ENROLLMENTS;
 const DISCORD_CHANNEL_EVENTS = process.env.DISCORD_CHANNEL_EVENTS;
 const DISCORD_CHANNEL_CERTIFICATES = process.env.DISCORD_CHANNEL_CERTIFICATES;
 
-let client: Client | null = null;
+// Usar global para persistir cliente entre hot reloads do tsx
+declare global {
+  var discordClient: Client | undefined;
+}
+
+let client: Client | null = global.discordClient || null;
+
+// Função auxiliar para registrar handler de interações
+function registerInteractionHandler(discordClient: Client) {
+  const listenerCountBefore = discordClient.listenerCount("interactionCreate");
+  console.log(`[Discord] Listeners before removal: ${listenerCountBefore}`);
+  
+  // Remover TODOS os listeners antigos para evitar duplicação
+  discordClient.removeAllListeners("interactionCreate");
+  
+  // Registrar novo handler (apenas uma vez)
+  discordClient.on("interactionCreate", async (interaction) => {
+    if (interaction.isChatInputCommand()) {
+      await handleCommand(interaction);
+    } else if (interaction.isButton()) {
+      await handleButtonInteraction(interaction);
+    }
+  });
+  
+  const listenerCountAfter = discordClient.listenerCount("interactionCreate");
+  console.log(`[Discord] Listeners after registration: ${listenerCountAfter}`);
+}
 
 export async function initDiscordBot() {
   if (!DISCORD_BOT_TOKEN) {
@@ -18,20 +44,19 @@ export async function initDiscordBot() {
     return null;
   }
 
-  // Se o bot já está inicializado, remover listeners antigos e retornar
+  // Verificar se já existe instância global
+  if (global.discordClient) {
+    console.log("[Discord] Using existing global Discord client");
+    client = global.discordClient;
+    registerInteractionHandler(client);
+    return client;
+  }
+
+  // Se o bot já está inicializado localmente, apenas re-registrar handlers
   if (client) {
-    console.log("[Discord] Bot already initialized, removing old listeners");
-    client.removeAllListeners("interactionCreate");
-    
-    // Re-register interaction handler
-    client.on("interactionCreate", async (interaction) => {
-      if (interaction.isChatInputCommand()) {
-        await handleCommand(interaction);
-      } else if (interaction.isButton()) {
-        await handleButtonInteraction(interaction);
-      }
-    });
-    
+    console.log("[Discord] Bot already initialized, re-registering handlers");
+    global.discordClient = client;
+    registerInteractionHandler(client);
     return client;
   }
 
@@ -52,19 +77,14 @@ export async function initDiscordBot() {
     // Register slash commands
     await registerCommands();
 
-    // Remove all previous listeners to avoid duplicates on hot reload
-    client.removeAllListeners("interactionCreate");
-
-    // Handle slash commands
-    client.on("interactionCreate", async (interaction) => {
-      if (interaction.isChatInputCommand()) {
-        await handleCommand(interaction);
-      } else if (interaction.isButton()) {
-        await handleButtonInteraction(interaction);
-      }
-    });
+    // Registrar handler de interações
+    registerInteractionHandler(client);
 
     await client.login(DISCORD_BOT_TOKEN);
+    
+    // Armazenar na variável global para persistir entre hot reloads
+    global.discordClient = client;
+    
     return client;
   } catch (error) {
     console.error("[Discord] Failed to initialize bot:", error);
@@ -910,21 +930,60 @@ async function handleRecruitmentApproval(interaction: any, customId: string) {
       return;
     }
 
-    const member = await guild.members.fetch(application.discord_id);
+    console.log(`[Discord] Fetching member with ID: ${application.discord_id}`);
+    
+    const member = await guild.members.fetch(application.discord_id).catch(err => {
+      console.error(`[Discord] Failed to fetch member:`, err);
+      return null;
+    });
+    
     if (!member) {
-      await interaction.editReply("❌ Membro não encontrado no servidor.");
+      await interaction.editReply(`❌ Membro não encontrado no servidor. Discord ID: ${application.discord_id}`);
       return;
     }
+    
+    console.log(`[Discord] Member found:`, member.user.tag);
+    console.log(`[Discord] Member roles object:`, typeof member.roles, member.roles ? 'exists' : 'undefined');
 
     // Atribuir roles: Soldado (1472645309040431296) e Bombeiro | Praça (1472689134081540116)
     const soldadoRoleId = "1472645309040431296";
     const bombeiroRoleId = "1472689134081540116";
+    
+    if (!member.roles) {
+      console.error(`[Discord] member.roles is undefined!`);
+      await interaction.editReply("❌ Erro: Não foi possível acessar os cargos do membro.");
+      return;
+    }
 
-    await member.roles.add([soldadoRoleId, bombeiroRoleId]);
-
-    // Mudar nickname para formato: SD | Nome | Matrícula
+    // Verificar hierarquia de cargos
+    const botMember = await guild.members.fetchMe();
+    const botHighestRole = botMember.roles.highest;
+    const memberHighestRole = member.roles.highest;
+    
+    let rolesAdded = false;
+    let nicknameChanged = false;
+    let hierarchyIssue = false;
+    
+    // Preparar novo nickname
     const newNickname = `SD | ${application.nome} | ${application.id_vice_city}`;
-    await member.setNickname(newNickname);
+    
+    // Tentar adicionar cargos apenas se o bot tiver permissão
+    if (botHighestRole.position > memberHighestRole.position) {
+      try {
+        console.log(`[Discord] Adding roles to member...`);
+        await member.roles.add([soldadoRoleId, bombeiroRoleId]);
+        rolesAdded = true;
+        
+        // Mudar nickname
+        await member.setNickname(newNickname);
+        nicknameChanged = true;
+      } catch (roleError: any) {
+        console.error(`[Discord] Error modifying member:`, roleError);
+      }
+    } else {
+      console.log(`[Discord] Cannot modify member: bot role (${botHighestRole.position}) is not higher than member role (${memberHighestRole.position})`);
+      hierarchyIssue = true;
+    }
 
     // Enviar formulário completo para canal de aprovados via bot
     try {
@@ -951,8 +1010,8 @@ async function handleRecruitmentApproval(interaction: any, customId: string) {
             { name: "👮 9. Se um superior lhe der uma ordem que você não concorda, o que você faria?", value: (application.ordem_superior || "Não respondido").substring(0, 1024), inline: false },
             { name: "🔫 10. Você está em um tiroteio e seu superior ordena recuo, mas você pode abater o suspeito. O que faz?", value: (application.tiroteio || "Não respondido").substring(0, 1024), inline: false },
             { name: "🚨 11. Como você lidaria com múltiplas ocorrências simultâneas?", value: (application.multiplas_ocorrencias || "Não respondido").substring(0, 1024), inline: false },
-            { name: "🎯 Cargo Atribuído", value: "Soldado + Bombeiro | Praça", inline: true },
-            { name: "📝 Nickname Alterado", value: newNickname, inline: true }
+            { name: "🎯 Cargo Atribuído", value: rolesAdded ? "Soldado + Bombeiro | Praça" : "⚠️ Não modificado (hierarquia)", inline: true },
+            { name: "📝 Nickname", value: nicknameChanged ? newNickname : "⚠️ Não modificado (hierarquia)", inline: true }
           )
           .setFooter({ text: `Aprovado por ${interaction.user.tag}` })
           .setTimestamp();
@@ -968,10 +1027,30 @@ async function handleRecruitmentApproval(interaction: any, customId: string) {
       components: [],
     });
 
-    await interaction.editReply("✅ Recrutamento aprovado com sucesso! Cargos atribuídos e nickname alterado.");
-  } catch (error) {
+    // Mensagem de sucesso baseada no que foi modificado
+    let successMessage = "✅ Recrutamento aprovado com sucesso!";
+    
+    if (hierarchyIssue) {
+      successMessage += "\n\n⚠️ **Atenção:** Não foi possível modificar cargos/nickname automaticamente devido à hierarquia de cargos do Discord. Por favor, adicione os cargos manualmente.";
+    } else if (rolesAdded && nicknameChanged) {
+      successMessage += " Cargos atribuídos e nickname alterado.";
+    } else if (rolesAdded) {
+      successMessage += " Cargos atribuídos. (Nickname não foi alterado)";
+    } else if (nicknameChanged) {
+      successMessage += " Nickname alterado. (Cargos não foram atribuídos)";
+    }
+    
+    await interaction.editReply(successMessage);
+  } catch (error: any) {
     console.error("[Discord] Error approving recruitment:", error);
-    await interaction.editReply("❌ Erro ao aprovar recrutamento.");
+    console.error("[Discord] Error stack:", error?.stack);
+    console.error("[Discord] Error message:", error?.message);
+    
+    try {
+      await interaction.editReply(`❌ Erro ao aprovar recrutamento: ${error?.message || 'Erro desconhecido'}`);
+    } catch (replyError) {
+      console.error("[Discord] Failed to send error reply:", replyError);
+    }
   }
 }
 

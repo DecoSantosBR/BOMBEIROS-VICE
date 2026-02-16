@@ -1554,3 +1554,13 @@
 - [x] Remover listeners antigos antes de registrar novos (removeAllListeners)
 - [x] Garantir que interação seja respondida apenas uma vez
 - [ ] Testar botões Aprovar/Reprovar funcionando
+
+## Correção de Erro ao Adicionar Cargos
+- [x] Adicionar validação para member e member.roles
+- [x] Adicionar logs de debug para identificar problema
+- [x] Identificar problema: hierarquia de cargos do Discord
+- [x] Implementar verificação de hierarquia antes de modificar cargos
+- [x] Adicionar tratamento de erro específico para permissões
+- [x] Permitir aprovação parcial (banco + canal) mesmo sem modificar cargos
+- [x] Mostrar mensagem clara quando hierarquia impede modificação
+- [ ] Testar aprovação funcionando corretamente
