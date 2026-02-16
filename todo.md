@@ -1375,3 +1375,9 @@
 - [x] Teste automatizado validado com sucesso
 - [ ] Atualizar Discord Developer Portal para /discord/callback
 - [ ] Publicar e testar login
+
+## Corrigir Comandos do Bot Discord
+- [x] Verificar logs do bot
+- [x] Identificar causa do problema (timeout de 3s)
+- [x] Adicionar defer() e trocar reply por editReply
+- [ ] Testar comandos

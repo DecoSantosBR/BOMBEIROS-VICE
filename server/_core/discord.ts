@@ -289,17 +289,20 @@ async function handleCommand(interaction: ChatInputCommandInteraction) {
       
       case "meuscertificados":
         try {
+          // Defer a resposta para evitar timeout
+          await interaction.deferReply();
+          
           // Capturar nickname do servidor Discord
           const member = interaction.member;
           if (!member) {
-            await interaction.reply("❌ Não foi possível identificar você no servidor.");
+            await interaction.editReply("❌ Não foi possível identificar você no servidor.");
             break;
           }
           
           // Buscar membro do servidor para obter nickname
           const guild = interaction.guild;
           if (!guild) {
-            await interaction.reply("❌ Este comando só pode ser usado dentro do servidor.");
+            await interaction.editReply("❌ Este comando só pode ser usado dentro do servidor.");
             break;
           }
           
@@ -315,7 +318,7 @@ async function handleCommand(interaction: ChatInputCommandInteraction) {
           console.log(`[Discord] /meuscertificados - Parts extraídas:`, parts);
           
           if (parts.length < 2) {
-            await interaction.reply(
+            await interaction.editReply(
               `❌ Seu nickname não está no formato correto.\n\n` +
               `Nickname atual: \`${nickname}\`\n` +
               `Formato esperado: \`Cargo | Nome | Matrícula\` ou \`Cargo • Nome | Matrícula\``
@@ -328,14 +331,14 @@ async function handleCommand(interaction: ChatInputCommandInteraction) {
           console.log(`[Discord] /meuscertificados - Matrícula extraída: "${matricula}"`);
           
           if (!matricula) {
-            await interaction.reply("❌ Não foi possível extrair sua matrícula do nickname. Verifique se seu nickname está no formato correto.");
+            await interaction.editReply("❌ Não foi possível extrair sua matrícula do nickname. Verifique se seu nickname está no formato correto.");
             break;
           }
           
           // Buscar certificados por studentId (matrícula)
           const dbCerts = await db.getDb();
           if (!dbCerts) {
-            await interaction.reply("❌ Erro ao conectar com o banco de dados.");
+            await interaction.editReply("❌ Erro ao conectar com o banco de dados.");
             break;
           }
           
@@ -352,7 +355,7 @@ async function handleCommand(interaction: ChatInputCommandInteraction) {
           }
           
           if (userCerts.length === 0) {
-            await interaction.reply(
+            await interaction.editReply(
               `🎓 **Seus Certificados**\n\n` +
               `Você ainda não possui certificados emitidos.\n\n` +
               `Quando você concluir um curso, seu certificado aparecerá aqui!`
@@ -383,20 +386,20 @@ async function handleCommand(interaction: ChatInputCommandInteraction) {
               return `• **${cert.courseName}**\n  Instrutor: ${cert.instructorRank} ${cert.instructorName}\n  Data: ${issuedDate}`;
             }).join("\n\n");
             
-            await interaction.reply(
+            await interaction.editReply(
               `🎓 **Seus Certificados**\n\n` +
               `Você possui **${userCerts.length}** certificado(s). Mostrando os 10 mais recentes:\n\n` +
               `${limitedCertList}`
             );
           } else {
-            await interaction.reply(message);
+            await interaction.editReply(message);
           }
         } catch (error) {
           console.error("[Discord] Error in meuscertificados command:", error);
           // Não tentar responder novamente se a interação já foi reconhecida
           if (!interaction.replied && !interaction.deferred) {
             try {
-              await interaction.reply("❌ Erro ao buscar certificados. Tente novamente.");
+              await interaction.editReply("❌ Erro ao buscar certificados. Tente novamente.");
             } catch (replyError) {
               console.error("[Discord] Failed to send error message:", replyError);
             }
