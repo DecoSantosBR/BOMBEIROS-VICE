@@ -447,6 +447,35 @@ export async function createRecruitmentApplication(application: {
   const db = await getDb();
   if (!db) throw new Error("Database not available");
   
+  // Criar usuário automaticamente na tabela users
+  // Verificar se já existe um usuário com este Discord ID
+  const existingUser = await db.execute(
+    sql`SELECT id FROM users WHERE \`discordId\` = ${application.discordId} LIMIT 1`
+  );
+
+  let userId;
+  const existingUserRows = existingUser[0] as unknown as any[];
+  if (existingUserRows && existingUserRows.length > 0) {
+    // Usuário já existe, usar ID existente
+    userId = existingUserRows[0].id;
+    console.log(`[Recruitment] Usuário já existe com Discord ID ${application.discordId}, ID: ${userId}`);
+  } else {
+    // Criar novo usuário
+    console.log(`[Recruitment] Criando usuário com dados:`, {
+      discordId: application.discordId,
+      nome: application.nome,
+      idViceCity: application.idViceCity,
+      rank: 'Soldado'
+    });
+    const newUserResult = await db.execute(
+      sql`INSERT INTO users 
+       (\`openId\`, \`name\`, \`discordId\`, \`studentId\`, \`rank\`, \`role\`, \`approvalStatus\`, \`createdAt\`, \`updatedAt\`, \`lastSignedIn\`)
+       VALUES (${`discord_${application.discordId}`}, ${application.nome}, ${application.discordId}, ${application.idViceCity}, 'Soldado', 'member', 'pending', NOW(), NOW(), NOW())`
+    );
+    userId = Number(newUserResult[0].insertId);
+    console.log(`[Recruitment] Novo usuário criado com Discord ID ${application.discordId}, ID: ${userId}`);
+  }
+  
   // Formatar data para MySQL: YYYY-MM-DD HH:MM:SS
   const now = new Date();
   const mysqlDate = now.toISOString().slice(0, 19).replace('T', ' ');
