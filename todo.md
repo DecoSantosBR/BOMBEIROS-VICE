@@ -1602,3 +1602,9 @@
 - [x] Verificar configuração do Puppeteer no código
 - [x] Implementar solução alternativa se necessário
 - [x] Testar geração de certificado
+
+## Fase 105: Atualizar Design do Certificado
+- [x] Analisar diferenças entre design atual e modelo fornecido
+- [x] Implementar novo design no certificates.ts
+- [x] Testar geração com novo design
+- [ ] Validar com usuário

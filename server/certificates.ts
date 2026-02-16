@@ -164,7 +164,7 @@ export async function generateCertificateImage(data: CertificateData): Promise<B
         
         .student-id {
           text-align: center;
-          margin-bottom: 15px;
+          margin-bottom: 25px;
         }
         
         .student-id p {
@@ -177,56 +177,56 @@ export async function generateCertificateImage(data: CertificateData): Promise<B
           width: calc(100% - 120px);
           height: 2px;
           background: #8B1A1A;
-          margin: 15px auto;
+          margin: 20px auto;
         }
         
         .course-intro {
           text-align: center;
-          margin: 15px 0;
+          margin: 25px 0 20px 0;
         }
         
         .course-intro p {
-          font-size: 22px;
+          font-size: 20px;
           color: #8B1A1A;
           font-style: italic;
         }
         
         .course-name {
           text-align: center;
-          margin: 20px 0;
+          margin: 25px 0;
         }
         
         .course-name h2 {
-          font-size: 42px;
+          font-size: 48px;
           color: #8B1A1A;
           font-weight: bold;
           margin: 0;
         }
         
         .signature-section {
-          margin-top: 20px;
+          margin-top: 40px;
           text-align: center;
         }
         
         .signature {
           font-family: 'Optimistral', Georgia, cursive;
-          font-size: 36px;
+          font-size: 40px;
           color: #8B1A1A;
-          margin-bottom: 5px;
+          margin-bottom: 10px;
         }
         
         .signature-line {
           width: 400px;
           height: 1.5px;
           background: #8B1A1A;
-          margin: 0 auto 10px auto;
+          margin: 10px auto 15px auto;
         }
         
         .instructor-rank {
           font-size: 22px;
           color: #8B1A1A;
           font-weight: bold;
-          margin-top: 5px;
+          margin-top: 0;
         }
         
         .certificate-id {
