@@ -1533,3 +1533,11 @@
 - [x] Remover resposta duplicada (deferReply + reply)
 - [x] Mover deferReply para handleButtonInteraction (resposta imediata)
 - [ ] Testar botões funcionando corretamente
+
+## Ajustes Finais de Aprovação/Reprovação
+- [x] Garantir que aprovação adiciona cargos sem remover existentes
+- [x] Enviar formulário completo para canal de aprovados (1472632147469668711)
+- [x] Enviar formulário completo para canal de reprovados (1472632272724295762)
+- [x] Usar bot Discord ao invés de webhook para enviar aos canais
+- [x] Expandir nomes das perguntas (11 perguntas completas)
+- [ ] Testar fluxo completo de aprovação e reprovação

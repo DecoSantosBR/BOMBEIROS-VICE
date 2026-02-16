@@ -1098,18 +1098,18 @@ export const appRouter = router({
                 .setColor(0xdc2626)
                 .setTitle("📋 Nova Solicitação de Recrutamento")
                 .setDescription(`**${input.nome}** enviou uma solicitação de recrutamento.`)
-                .addFields(
-                  { name: "👤 Nome", value: input.nome, inline: true },
-                  { name: "🆔 ID Vice City", value: input.idViceCity, inline: true },
-                  { name: "📱 Telefone", value: input.telefone, inline: true },
-                  { name: "🎂 Idade", value: input.idade, inline: true },
-                  { name: "💬 Discord", value: input.discordId === "MANUAL_ENTRY" ? "Não informado (entrada manual)" : `<@${input.discordId}>`, inline: true },
-                  { name: "📝 Por que quer entrar?", value: input.interesse || "Não informado" },
-                  { name: "🎤 Possui microfone?", value: input.possuiMicrofone === "sim" ? "✅ Sim" : "❌ Não", inline: true },
-                  { name: "⚖️ Regras ilegais", value: input.regrasIlegais || "Não respondido" },
-                  { name: "👮 Ordem superior", value: input.ordemSuperior || "Não respondido" },
-                  { name: "🔫 Tiroteio", value: input.tiroteio || "Não respondido" },
-                  { name: "🚨 Múltiplas ocorrências", value: input.multiplasOcorrencias || "Não respondido" }
+.addFields(
+                  { name: "👤 1. Nome completo do personagem em Vice City", value: input.nome, inline: false },
+                  { name: "🆔 2. ID do Vice City (matrícula)", value: input.idViceCity, inline: true },
+                  { name: "📱 3. Telefone", value: input.telefone, inline: true },
+                  { name: "🎂 4. Idade", value: input.idade, inline: true },
+                  { name: "💬 5. Discord", value: input.discordId === "MANUAL_ENTRY" ? "Não informado (entrada manual)" : `<@${input.discordId}>`, inline: false },
+                  { name: "📝 6. Por que você quer entrar no Corpo de Bombeiros Militar?", value: (input.interesse || "Não informado").substring(0, 1024), inline: false },
+                  { name: "🎤 7. Você possui microfone e disponibilidade para ficar em call durante o patrulhamento?", value: input.possuiMicrofone === "sim" ? "✅ Sim" : "❌ Não", inline: false },
+                  { name: "⚖️ 8. Você está ciente de que não pode cometer atos ilegais enquanto estiver fardado?", value: (input.regrasIlegais || "Não respondido").substring(0, 1024), inline: false },
+                  { name: "👮 9. Se um superior lhe der uma ordem que você não concorda, o que você faria?", value: (input.ordemSuperior || "Não respondido").substring(0, 1024), inline: false },
+                  { name: "🔫 10. Você está em um tiroteio e seu superior ordena recuo, mas você pode abater o suspeito. O que faz?", value: (input.tiroteio || "Não respondido").substring(0, 1024), inline: false },
+                  { name: "🚨 11. Como você lidaria com múltiplas ocorrências simultâneas?", value: (input.multiplasOcorrencias || "Não respondido").substring(0, 1024), inline: false }
                 )
                 .setFooter({ text: `ID da Aplicação: ${applicationId}` })
                 .setTimestamp();

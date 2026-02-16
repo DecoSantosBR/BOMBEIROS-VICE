@@ -899,31 +899,41 @@ async function handleRecruitmentApproval(interaction: any, customId: string) {
     const newNickname = `SD | ${application.nome} | ${application.id_vice_city}`;
     await member.setNickname(newNickname);
 
-    // Enviar para canal de aprovados
-    const approvedWebhook = process.env.DISCORD_WEBHOOK_APPROVED;
-    if (approvedWebhook) {
-      await fetch(approvedWebhook, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          embeds: [
-            {
-              color: 0x00ff00,
-              title: "✅ Recrutamento Aprovado",
-              description: `**${application.nome}** foi aprovado no recrutamento!`,
-              fields: [
-                { name: "👤 Nome", value: application.nome, inline: true },
-                { name: "🆔 ID Vice City", value: application.id_vice_city, inline: true },
-                { name: "💬 Discord", value: `<@${application.discord_id}>`, inline: true },
-                { name: "🎯 Cargo Atribuído", value: "Soldado", inline: true },
-                { name: "📝 Nickname", value: newNickname, inline: true },
-              ],
-              footer: { text: `Aprovado por ${interaction.user.tag}` },
-              timestamp: new Date().toISOString(),
-            },
-          ],
-        }),
-      });
+    // Enviar formulário completo para canal de aprovados via bot
+    try {
+      const approvedChannelId = "1472632147469668711";
+      const approvedChannel = await client?.channels.fetch(approvedChannelId);
+      
+      if (approvedChannel && approvedChannel.isTextBased()) {
+        const { EmbedBuilder } = await import("discord.js");
+        const approvedChannel2 = approvedChannel as any;
+        
+        const embed = new EmbedBuilder()
+          .setColor(0x00ff00)
+          .setTitle("✅ Recrutamento Aprovado")
+          .setDescription(`**${application.nome}** foi aprovado no recrutamento!`)
+.addFields(
+            { name: "👤 1. Nome completo do personagem em Vice City", value: application.nome, inline: false },
+            { name: "🆔 2. ID do Vice City (matrícula)", value: application.id_vice_city, inline: true },
+            { name: "📱 3. Telefone", value: application.telefone, inline: true },
+            { name: "🎂 4. Idade", value: application.idade, inline: true },
+            { name: "💬 5. Discord", value: application.discord_id === "MANUAL_ENTRY" ? "Não informado (entrada manual)" : `<@${application.discord_id}>`, inline: false },
+            { name: "📝 6. Por que você quer entrar no Corpo de Bombeiros Militar?", value: (application.interesse || "Não informado").substring(0, 1024), inline: false },
+            { name: "🎤 7. Você possui microfone e disponibilidade para ficar em call durante o patrulhamento?", value: application.possui_microfone === "sim" ? "✅ Sim" : "❌ Não", inline: false },
+            { name: "⚖️ 8. Você está ciente de que não pode cometer atos ilegais enquanto estiver fardado?", value: (application.regras_ilegais || "Não respondido").substring(0, 1024), inline: false },
+            { name: "👮 9. Se um superior lhe der uma ordem que você não concorda, o que você faria?", value: (application.ordem_superior || "Não respondido").substring(0, 1024), inline: false },
+            { name: "🔫 10. Você está em um tiroteio e seu superior ordena recuo, mas você pode abater o suspeito. O que faz?", value: (application.tiroteio || "Não respondido").substring(0, 1024), inline: false },
+            { name: "🚨 11. Como você lidaria com múltiplas ocorrências simultâneas?", value: (application.multiplas_ocorrencias || "Não respondido").substring(0, 1024), inline: false },
+            { name: "🎯 Cargo Atribuído", value: "Soldado + Bombeiro | Praça", inline: true },
+            { name: "📝 Nickname Alterado", value: newNickname, inline: true }
+          )
+          .setFooter({ text: `Aprovado por ${interaction.user.tag}` })
+          .setTimestamp();
+        
+        await approvedChannel2.send({ embeds: [embed] });
+      }
+    } catch (error) {
+      console.error("[Discord] Erro ao enviar para canal de aprovados:", error);
     }
 
     // Desabilitar botões da mensagem original
@@ -966,29 +976,39 @@ async function handleRecruitmentRejection(interaction: any, customId: string) {
       sql`UPDATE recruitment_applications SET status = 'rejected' WHERE id = ${applicationId}`
     );
 
-    // Enviar para canal de reprovados
-    const rejectedWebhook = process.env.DISCORD_WEBHOOK_REJECTED;
-    if (rejectedWebhook) {
-      await fetch(rejectedWebhook, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          embeds: [
-            {
-              color: 0xff0000,
-              title: "❌ Recrutamento Reprovado",
-              description: `**${application.nome}** foi reprovado no recrutamento.`,
-              fields: [
-                { name: "👤 Nome", value: application.nome, inline: true },
-                { name: "🆔 ID Vice City", value: application.id_vice_city, inline: true },
-                { name: "💬 Discord", value: `<@${application.discord_id}>`, inline: true },
-              ],
-              footer: { text: `Reprovado por ${interaction.user.tag}` },
-              timestamp: new Date().toISOString(),
-            },
-          ],
-        }),
-      });
+    // Enviar formulário completo para canal de reprovados via bot
+    try {
+      const rejectedChannelId = "1472632272724295762";
+      const rejectedChannel = await client?.channels.fetch(rejectedChannelId);
+      
+      if (rejectedChannel && rejectedChannel.isTextBased()) {
+        const { EmbedBuilder } = await import("discord.js");
+        const rejectedChannel2 = rejectedChannel as any;
+        
+        const embed = new EmbedBuilder()
+          .setColor(0xff0000)
+          .setTitle("❌ Recrutamento Reprovado")
+          .setDescription(`**${application.nome}** foi reprovado no recrutamento.`)
+.addFields(
+            { name: "👤 1. Nome completo do personagem em Vice City", value: application.nome, inline: false },
+            { name: "🆔 2. ID do Vice City (matrícula)", value: application.id_vice_city, inline: true },
+            { name: "📱 3. Telefone", value: application.telefone, inline: true },
+            { name: "🎂 4. Idade", value: application.idade, inline: true },
+            { name: "💬 5. Discord", value: application.discord_id === "MANUAL_ENTRY" ? "Não informado (entrada manual)" : `<@${application.discord_id}>`, inline: false },
+            { name: "📝 6. Por que você quer entrar no Corpo de Bombeiros Militar?", value: (application.interesse || "Não informado").substring(0, 1024), inline: false },
+            { name: "🎤 7. Você possui microfone e disponibilidade para ficar em call durante o patrulhamento?", value: application.possui_microfone === "sim" ? "✅ Sim" : "❌ Não", inline: false },
+            { name: "⚖️ 8. Você está ciente de que não pode cometer atos ilegais enquanto estiver fardado?", value: (application.regras_ilegais || "Não respondido").substring(0, 1024), inline: false },
+            { name: "👮 9. Se um superior lhe der uma ordem que você não concorda, o que você faria?", value: (application.ordem_superior || "Não respondido").substring(0, 1024), inline: false },
+            { name: "🔫 10. Você está em um tiroteio e seu superior ordena recuo, mas você pode abater o suspeito. O que faz?", value: (application.tiroteio || "Não respondido").substring(0, 1024), inline: false },
+            { name: "🚨 11. Como você lidaria com múltiplas ocorrências simultâneas?", value: (application.multiplas_ocorrencias || "Não respondido").substring(0, 1024), inline: false }
+          )
+          .setFooter({ text: `Reprovado por ${interaction.user.tag}` })
+          .setTimestamp();
+        
+        await rejectedChannel2.send({ embeds: [embed] });
+      }
+    } catch (error) {
+      console.error("[Discord] Erro ao enviar para canal de reprovados:", error);
     }
 
     // Desabilitar botões da mensagem original
