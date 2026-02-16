@@ -30,12 +30,16 @@ export async function generateCertificateImage(data: CertificateData): Promise<B
   const __filename = fileURLToPath(import.meta.url);
   const __dirname = dirname(__filename);
   
-  const logoPath = join(__dirname, "assets", "LOTUSBOMBEIROS.png");
-  const logoBuffer = fs.readFileSync(logoPath);
+  // Usar URL do S3 para o logo
+  const logoUrl = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663187653950/bxJjgjqSJmOJwoPB.png";
+  const logoResponse = await fetch(logoUrl);
+  const logoBuffer = Buffer.from(await logoResponse.arrayBuffer());
   const logoBase64 = logoBuffer.toString("base64");
   
-  const fontPath = join(__dirname, "assets", "fonts", "optimistral-graff.otf");
-  const fontBuffer = fs.readFileSync(fontPath);
+  // Usar URL do S3 para a fonte
+  const fontUrl = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663187653950/RvhRYWGRUIBmbVCt.otf";
+  const fontResponse = await fetch(fontUrl);
+  const fontBuffer = Buffer.from(await fontResponse.arrayBuffer());
   const fontBase64 = fontBuffer.toString("base64");
 
   // Gerar ID único do certificado
