@@ -1640,3 +1640,7 @@
 - [x] Instalar @sparticuz/chromium atualizado
 - [x] Atualizar código
 - [x] Testar em produção
+
+## Fase 113: Adicionar nixpacks.toml para @sparticuz/chromium
+- [x] Criar nixpacks.toml com bibliotecas essenciais
+- [x] Testar em produção
