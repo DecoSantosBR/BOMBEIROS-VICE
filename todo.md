@@ -1623,3 +1623,8 @@
 
 ## Fase 109: Ajustar Posição do Instrutor
 - [x] Mover seção do instrutor 3px para cima
+
+## Fase 110: Corrigir Chromium no Railway
+- [x] Adicionar variável PUPPETEER_EXECUTABLE_PATH no Railway
+- [x] Adicionar PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
+- [x] Testar em produção

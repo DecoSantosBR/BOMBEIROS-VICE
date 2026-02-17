@@ -288,34 +288,11 @@ export async function generateCertificateImage(data: CertificateData): Promise<B
   `;
 
   // Gerar imagem usando Puppeteer
-  // Detectar qual Chromium usar (Railway vs local)
-  let executablePath: string | undefined = undefined;
-  
-  // Tentar encontrar Chromium no sistema
-  const chromiumPaths = [
-    process.env.PUPPETEER_EXECUTABLE_PATH,
-    '/usr/bin/chromium',
-    '/usr/bin/chromium-browser',
-    '/usr/bin/google-chrome',
-    '/usr/bin/google-chrome-stable',
-  ];
-  
-  for (const chromePath of chromiumPaths) {
-    if (chromePath && fs.existsSync(chromePath)) {
-      executablePath = chromePath;
-      console.log(`[Certificates] Using Chromium at: ${executablePath}`);
-      break;
-    }
-  }
-  
-  // Se não encontrar, deixar Puppeteer usar o bundled (dev local)
-  if (!executablePath) {
-    console.log('[Certificates] No system Chromium found, using Puppeteer bundled Chrome');
-  }
+  // Usar Chrome bundled do Puppeteer com bibliotecas do sistema instaladas via nixpacks
+  console.log('[Certificates] Launching Puppeteer with bundled Chrome');
   
   const browser = await puppeteer.launch({
     headless: true,
-    executablePath,
     args: [
       "--no-sandbox",
       "--disable-setuid-sandbox",
