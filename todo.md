@@ -1305,7 +1305,7 @@
 ## Fase Railway Deploy: Correção de Erro pnpm
 - [x] Analisar erro "pnpm install --frozen-lockfile" no Railway
 - [x] Corrigir nixpacks.toml para usar --no-frozen-lockfile
-- [ ] Atualizar código no GitHub
+- [x] Atualizar código no GitHub
 - [ ] Validar novo deploy no Railway
 
 ## Fase Deploy Railway: Configuração e Validação
@@ -1633,4 +1633,10 @@
 - [x] Instalar chrome-aws-lambda e puppeteer-core
 - [x] Atualizar código para usar chrome-aws-lambda
 - [x] Remover nixpacks.toml (não é mais necessário)
+- [x] Testar em produção
+
+## Fase 112: Substituir por @sparticuz/chromium
+- [x] Remover chrome-aws-lambda desatualizado
+- [x] Instalar @sparticuz/chromium atualizado
+- [x] Atualizar código
 - [x] Testar em produção

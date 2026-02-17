@@ -1,4 +1,4 @@
-import chromium from "chrome-aws-lambda";
+import chromium from "@sparticuz/chromium";
 import puppeteerCore from "puppeteer-core";
 import puppeteer from "puppeteer";
 import { storagePut } from "./storage";
@@ -295,13 +295,11 @@ export async function generateCertificateImage(data: CertificateData): Promise<B
   
   let browser;
   if (isProduction) {
-    console.log('[Certificates] Launching Puppeteer with chrome-aws-lambda (production)');
+    console.log('[Certificates] Launching Puppeteer with @sparticuz/chromium (production)');
     browser = await puppeteerCore.launch({
       args: chromium.args,
-      defaultViewport: chromium.defaultViewport,
-      executablePath: await chromium.executablePath,
-      headless: chromium.headless,
-      ignoreHTTPSErrors: true,
+      executablePath: await chromium.executablePath(),
+      headless: true,
     });
   } else {
     console.log('[Certificates] Launching Puppeteer with bundled Chrome (development)');
