@@ -1,5 +1,4 @@
 import puppeteer from "puppeteer";
-import chromium from "@sparticuz/chromium";
 import { storagePut } from "./storage";
 import { ENV } from "./_core/env";
 import path from "path";
@@ -289,16 +288,17 @@ export async function generateCertificateImage(data: CertificateData): Promise<B
   `;
 
   // Gerar imagem usando Puppeteer
-  // Usar @sparticuz/chromium para compatibilidade com Railway
+  // Usar chromium instalado via nixpacks no Railway
   const browser = await puppeteer.launch({
     headless: true,
-    executablePath: await chromium.executablePath(),
+    executablePath: process.env.PUPPETEER_EXECUTABLE_PATH || '/usr/bin/chromium' || '/usr/bin/chromium-browser' || undefined,
     args: [
-      ...chromium.args,
       "--no-sandbox",
       "--disable-setuid-sandbox",
       "--disable-dev-shm-usage",
       "--disable-gpu",
+      "--disable-software-rasterizer",
+      "--disable-dev-shm-usage",
     ],
   });
 

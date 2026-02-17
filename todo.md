@@ -1608,3 +1608,7 @@
 - [x] Implementar novo design no certificates.ts
 - [x] Testar geração com novo design
 - [ ] Validar com usuário
+
+## Fase 106: Corrigir Biblioteca libnspr4.so Faltando
+- [x] Adicionar libnspr4 ao nixpacks.toml
+- [x] Republicar e testar em produção

@@ -36,7 +36,9 @@ aptPkgs = [
   "libxtst6",
   "lsb-release",
   "wget",
-  "xdg-utils"
+  "xdg-utils",
+  "chromium",
+  "chromium-driver"
 ]
 
 [phases.install]
