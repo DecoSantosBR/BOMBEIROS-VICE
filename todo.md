@@ -1612,3 +1612,7 @@
 ## Fase 106: Corrigir Biblioteca libnspr4.so Faltando
 - [x] Adicionar libnspr4 ao nixpacks.toml
 - [x] Republicar e testar em produção
+
+## Fase 107: Corrigir Chromium para Dev e Produção
+- [x] Detectar ambiente (dev/prod) e usar Chromium apropriado
+- [x] Testar geração de certificado localmente

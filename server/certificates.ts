@@ -288,17 +288,40 @@ export async function generateCertificateImage(data: CertificateData): Promise<B
   `;
 
   // Gerar imagem usando Puppeteer
-  // Usar chromium instalado via nixpacks no Railway
+  // Detectar qual Chromium usar (Railway vs local)
+  let executablePath: string | undefined = undefined;
+  
+  // Tentar encontrar Chromium no sistema
+  const chromiumPaths = [
+    process.env.PUPPETEER_EXECUTABLE_PATH,
+    '/usr/bin/chromium',
+    '/usr/bin/chromium-browser',
+    '/usr/bin/google-chrome',
+    '/usr/bin/google-chrome-stable',
+  ];
+  
+  for (const chromePath of chromiumPaths) {
+    if (chromePath && fs.existsSync(chromePath)) {
+      executablePath = chromePath;
+      console.log(`[Certificates] Using Chromium at: ${executablePath}`);
+      break;
+    }
+  }
+  
+  // Se não encontrar, deixar Puppeteer usar o bundled (dev local)
+  if (!executablePath) {
+    console.log('[Certificates] No system Chromium found, using Puppeteer bundled Chrome');
+  }
+  
   const browser = await puppeteer.launch({
     headless: true,
-    executablePath: process.env.PUPPETEER_EXECUTABLE_PATH || '/usr/bin/chromium' || '/usr/bin/chromium-browser' || undefined,
+    executablePath,
     args: [
       "--no-sandbox",
       "--disable-setuid-sandbox",
       "--disable-dev-shm-usage",
       "--disable-gpu",
       "--disable-software-rasterizer",
-      "--disable-dev-shm-usage",
     ],
   });
 
