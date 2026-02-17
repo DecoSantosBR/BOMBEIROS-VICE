@@ -1620,3 +1620,6 @@
 ## Fase 108: Corrigir Informações do Instrutor Cortadas
 - [x] Ajustar altura do certificado e espaçamento da seção de assinatura
 - [x] Testar com nomes longos de instrutor e cargo
+
+## Fase 109: Ajustar Posição do Instrutor
+- [x] Mover seção do instrutor 3px para cima
