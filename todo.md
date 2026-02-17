@@ -1628,3 +1628,9 @@
 - [x] Adicionar variável PUPPETEER_EXECUTABLE_PATH no Railway
 - [x] Adicionar PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
 - [x] Testar em produção
+
+## Fase 111: Solução Definitiva com chrome-aws-lambda
+- [x] Instalar chrome-aws-lambda e puppeteer-core
+- [x] Atualizar código para usar chrome-aws-lambda
+- [x] Remover nixpacks.toml (não é mais necessário)
+- [x] Testar em produção

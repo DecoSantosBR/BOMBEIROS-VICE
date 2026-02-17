@@ -1,3 +1,5 @@
+import chromium from "chrome-aws-lambda";
+import puppeteerCore from "puppeteer-core";
 import puppeteer from "puppeteer";
 import { storagePut } from "./storage";
 import { ENV } from "./_core/env";
@@ -288,19 +290,32 @@ export async function generateCertificateImage(data: CertificateData): Promise<B
   `;
 
   // Gerar imagem usando Puppeteer
-  // Usar Chrome bundled do Puppeteer com bibliotecas do sistema instaladas via nixpacks
-  console.log('[Certificates] Launching Puppeteer with bundled Chrome');
+  // Detectar ambiente: usar chrome-aws-lambda em produção, Puppeteer normal localmente
+  const isProduction = process.env.NODE_ENV === 'production' || process.env.RAILWAY_ENVIRONMENT;
   
-  const browser = await puppeteer.launch({
-    headless: true,
-    args: [
-      "--no-sandbox",
-      "--disable-setuid-sandbox",
-      "--disable-dev-shm-usage",
-      "--disable-gpu",
-      "--disable-software-rasterizer",
-    ],
-  });
+  let browser;
+  if (isProduction) {
+    console.log('[Certificates] Launching Puppeteer with chrome-aws-lambda (production)');
+    browser = await puppeteerCore.launch({
+      args: chromium.args,
+      defaultViewport: chromium.defaultViewport,
+      executablePath: await chromium.executablePath,
+      headless: chromium.headless,
+      ignoreHTTPSErrors: true,
+    });
+  } else {
+    console.log('[Certificates] Launching Puppeteer with bundled Chrome (development)');
+    browser = await puppeteer.launch({
+      headless: true,
+      args: [
+        "--no-sandbox",
+        "--disable-setuid-sandbox",
+        "--disable-dev-shm-usage",
+        "--disable-gpu",
+        "--disable-software-rasterizer",
+      ],
+    });
+  }
 
   try {
     const page = await browser.newPage();
@@ -319,6 +334,9 @@ export async function generateCertificateImage(data: CertificateData): Promise<B
           fullPage: false,
         });
 
+    if (!screenshot) {
+      throw new Error('Failed to generate certificate screenshot');
+    }
     return Buffer.from(screenshot);
   } finally {
     await browser.close();
