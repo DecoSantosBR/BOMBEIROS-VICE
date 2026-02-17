@@ -1616,3 +1616,7 @@
 ## Fase 107: Corrigir Chromium para Dev e Produção
 - [x] Detectar ambiente (dev/prod) e usar Chromium apropriado
 - [x] Testar geração de certificado localmente
+
+## Fase 108: Corrigir Informações do Instrutor Cortadas
+- [x] Ajustar altura do certificado e espaçamento da seção de assinatura
+- [x] Testar com nomes longos de instrutor e cargo

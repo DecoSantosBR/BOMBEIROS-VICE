@@ -65,7 +65,7 @@ export async function generateCertificateImage(data: CertificateData): Promise<B
         
         body {
           width: 1200px;
-          height: 750px;
+          height: 800px;
           display: flex;
           align-items: center;
           justify-content: center;
@@ -74,13 +74,13 @@ export async function generateCertificateImage(data: CertificateData): Promise<B
         
         .certificate {
           width: 1200px;
-          height: 680px;
+          height: 720px;
           background: linear-gradient(135deg, #F5E6D3 0%, #EDE4D3 100%);
           border: 16px solid #A52A2A;
           border-radius: 20px;
           box-shadow: inset 0 0 0 3px #D4AF37;
           position: relative;
-          padding: 50px 60px 80px 60px;
+          padding: 50px 60px 100px 60px;
           font-family: Georgia, serif;
         }
         
@@ -327,7 +327,7 @@ export async function generateCertificateImage(data: CertificateData): Promise<B
 
   try {
     const page = await browser.newPage();
-    await page.setViewport({ width: 1200, height: 750 });
+    await page.setViewport({ width: 1200, height: 800 });
     await page.setContent(html, { waitUntil: "networkidle0" });
     
     // Aguardar renderização completa das fontes e imagens
