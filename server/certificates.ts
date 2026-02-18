@@ -297,9 +297,12 @@ export async function generateCertificateImage(data: CertificateData): Promise<B
   `;
 
   // Gerar imagem usando Puppeteer
-  // Usar Puppeteer com Chrome instalado via postinstall
-  console.log('[Certificates] Launching Puppeteer with installed Chrome');
+  // Usar Chromium do sistema (definido via PUPPETEER_EXECUTABLE_PATH) ou Chrome do Puppeteer
+  const executablePath = process.env.PUPPETEER_EXECUTABLE_PATH;
+  console.log('[Certificates] Launching Puppeteer with:', executablePath || 'bundled Chrome');
+  
   const browser = await puppeteer.launch({
+    executablePath: executablePath || undefined,
     headless: true,
     args: [
       "--no-sandbox",
