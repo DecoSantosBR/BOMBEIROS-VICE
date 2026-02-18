@@ -299,9 +299,15 @@ export async function generateCertificateImage(data: CertificateData): Promise<B
 
   // Gerar imagem usando Puppeteer + @sparticuz/chromium (otimizado para Railway)
   console.log('[Certificates] Launching Puppeteer with @sparticuz/chromium');
+  const executablePath = await chromium.executablePath();
   const browser = await puppeteer.launch({
-    args: chromium.args,
-    executablePath: await chromium.executablePath(),
+    args: [
+      ...chromium.args,
+      '--no-sandbox',
+      '--disable-setuid-sandbox',
+      '--disable-dev-shm-usage',
+    ],
+    executablePath,
     headless: true,
   });
 

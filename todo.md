@@ -1722,6 +1722,13 @@
 - [x] Instalar puppeteer-core e @sparticuz/chromium
 - [x] Atualizar código de geração de certificados
 - [x] Remover .npmrc (não é mais necessário)
-- [ ] Testar localmente
+- [x] Testar localmente
+- [x] Fazer commit e push
+- [ ] Testar geração de certificados no Railway após deploy completar
+
+## Simplificação do Dockerfile
+- [x] Substituir Dockerfile por versão enxuta com node:20-slim
+- [x] Remover bibliotecas desnecessárias (libglib, libnss3, etc)
+- [x] Adicionar flags extras de estabilidade no Puppeteer
 - [ ] Fazer commit e push
-- [ ] Testar geração de certificados no Railway
+- [ ] Testar deploy no Railway
