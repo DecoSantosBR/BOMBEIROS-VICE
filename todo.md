@@ -1804,5 +1804,14 @@
 ## Correção Ordem dos Middlewares - Healthcheck
 - [x] Verificar ordem atual dos middlewares no index.ts
 - [x] Mover rotas / e /health para ANTES do Vite e outros middlewares
-- [ ] Fazer commit e push
+- [x] Fazer commit e push
+- [ ] Aguardar deploy do Railway (15-20 min)
 - [ ] Testar no Railway se container fica Running
+- [ ] Testar geração de certificados em produção
+
+## Teste Sem Discord Bot - Identificar Culpado
+- [x] Comentar await initDiscordBot() temporariamente
+- [ ] Fazer commit e push
+- [ ] Testar no Railway se container para de morrer
+- [ ] Se funcionar: problema é no initDiscordBot
+- [ ] Se não funcionar: problema é em outro lugar
