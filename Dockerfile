@@ -1,6 +1,10 @@
 # Dockerfile otimizado para Railway com suporte a Chromium
 # Usa Debian (bookworm) ao invés de Alpine para melhor compatibilidade com Chromium
-FROM node:22-bookworm
+# FORCE REBUILD: 2026-02-18-v4-NOCACHE
+FROM node:22.13.0-bookworm
+
+# Forçar rebuild sem cache
+RUN echo "Build timestamp: $(date)" > /tmp/build-timestamp.txt
 
 # Instalar dependências do sistema necessárias para o Chromium
 RUN apt-get update && apt-get install -y \
