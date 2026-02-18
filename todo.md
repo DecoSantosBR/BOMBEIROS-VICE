@@ -1691,3 +1691,4 @@
 - [x] Remover @sparticuz/chromium e usar apenas Puppeteer com Chrome instalado via postinstall
 - [ ] Corrigir erro "Invalid URL" no Railway que impede o site de funcionar
 - [x] Mover build do Vite para runtime para ter acesso às variáveis VITE_*
+- [x] Atualizar Dockerfile com ARG e ENV para passar variáveis VITE_* durante build

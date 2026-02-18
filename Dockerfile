@@ -1,12 +1,17 @@
 # Dockerfile otimizado para Railway com suporte a Chromium
-# Usa Debian (bookworm) ao invés de Alpine para melhor compatibilidade com Chromium
-# FORCE REBUILD: 2026-02-18-v4-NOCACHE
+# Base Debian (bookworm) para melhor compatibilidade
+# FORCE REBUILD: 2026-02-18-v6-WITH-BUILD-ARGS
 FROM node:22.13.0-bookworm
 
-# Forçar rebuild sem cache
+# Evitar prompts interativos
+ENV DEBIAN_FRONTEND=noninteractive
+
+# Forçar rebuild quando necessário
 RUN echo "Build timestamp: $(date)" > /tmp/build-timestamp.txt
 
-# Instalar dependências do sistema necessárias para o Chromium
+# -------------------------------------------------
+# Dependências do sistema (Chromium / Puppeteer)
+# -------------------------------------------------
 RUN apt-get update && apt-get install -y \
     ca-certificates \
     fonts-liberation \
@@ -49,30 +54,52 @@ RUN apt-get update && apt-get install -y \
     g++ \
     && rm -rf /var/lib/apt/lists/*
 
-# Instalar pnpm globalmente
+# -------------------------------------------------
+# Instalar pnpm
+# -------------------------------------------------
 RUN npm install -g pnpm
 
-# Definir diretório de trabalho
+# -------------------------------------------------
+# Diretório de trabalho
+# -------------------------------------------------
 WORKDIR /app
 
-# Copiar arquivos de dependências primeiro (melhor cache)
+# -------------------------------------------------
+# Copiar dependências primeiro (melhor cache)
+# -------------------------------------------------
 COPY package.json pnpm-lock.yaml* ./
 
-# Instalar dependências
-# Nota: @sparticuz/chromium baixará o Chromium automaticamente
+# Instalar deps
 RUN pnpm install --frozen-lockfile
 
-# Copiar código fonte
+# -------------------------------------------------
+# Copiar restante do código
+# -------------------------------------------------
 COPY . .
 
-# Build da aplicação
+# -------------------------------------------------
+# Build args (caso ainda use VITE_ no frontend)
+# NÃO quebra se não existirem
+# -------------------------------------------------
+ARG VITE_FRONTEND_FORGE_API_URL
+ARG VITE_FRONTEND_FORGE_API_KEY
+ENV VITE_FRONTEND_FORGE_API_URL=$VITE_FRONTEND_FORGE_API_URL
+ENV VITE_FRONTEND_FORGE_API_KEY=$VITE_FRONTEND_FORGE_API_KEY
+
+# -------------------------------------------------
+# Build da aplicação (Vite + backend)
+# -------------------------------------------------
 RUN pnpm run build
 
-# Definir ambiente de produção
+# -------------------------------------------------
+# Ambiente de produção
+# -------------------------------------------------
 ENV NODE_ENV=production
 
-# Expor porta (Railway define automaticamente via variável PORT)
+# Railway fornece PORT automaticamente
 EXPOSE 3000
 
-# Comando de inicialização
+# -------------------------------------------------
+# Start
+# -------------------------------------------------
 CMD ["node", "dist/index.js"]
