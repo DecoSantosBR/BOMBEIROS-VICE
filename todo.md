@@ -1730,5 +1730,10 @@
 - [x] Substituir Dockerfile por versão enxuta com node:20-slim
 - [x] Remover bibliotecas desnecessárias (libglib, libnss3, etc)
 - [x] Adicionar flags extras de estabilidade no Puppeteer
+- [x] Fazer commit e push
+- [ ] Testar deploy no Railway após build completar
+
+## Adicionar Libs Mínimas do Chromium no Dockerfile
+- [x] Adicionar apt-get install com libs essenciais (libnspr4, libnss3, libglib2.0-0, etc)
 - [ ] Fazer commit e push
-- [ ] Testar deploy no Railway
+- [ ] Verificar logs do Railway para confirmar Chromium iniciando sem erros
