@@ -1,6 +1,6 @@
 # Dockerfile otimizado para Railway com @sparticuz/chromium
-# Lista completa de libs para Chromium
-FROM node:20-slim
+# Usando node:20-bookworm para melhor compatibilidade com Chromium
+FROM node:20-bookworm
 
 # Evitar prompts interativos
 ENV DEBIAN_FRONTEND=noninteractive

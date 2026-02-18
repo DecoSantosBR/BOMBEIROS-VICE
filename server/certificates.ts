@@ -311,6 +311,8 @@ export async function generateCertificateImage(data: CertificateData): Promise<B
         '--no-sandbox',
         '--disable-setuid-sandbox',
         '--disable-dev-shm-usage',
+        '--single-process',
+        '--no-zygote',
       ],
       executablePath,
       headless: true,

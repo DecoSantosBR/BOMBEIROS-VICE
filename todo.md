@@ -1763,5 +1763,13 @@
 ## Correção Final - LD_LIBRARY_PATH
 - [x] Adicionar ENV LD_LIBRARY_PATH no Dockerfile
 - [x] Manter headless: true (chromium.headless não existe no @sparticuz/chromium)
-- [ ] Fazer commit vazio para forçar rebuild
+- [x] Fazer commit vazio para forçar rebuild
+- [ ] Aguardar deploy do Railway (15-20 min)
 - [ ] Verificar logs do Railway para confirmar resolução
+- [ ] Testar geração de certificados em produção
+
+## Correção Definitiva - Flags e Base Image
+- [x] Adicionar --single-process e --no-zygote no puppeteer.launch
+- [x] Trocar FROM node:20-slim para node:20-bookworm
+- [ ] Fazer commit vazio para forçar rebuild limpo
+- [ ] Verificar logs do Railway para confirmar resolução final
