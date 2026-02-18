@@ -93,6 +93,11 @@ async function startServer() {
 
   server.listen(port, host, () => {
     console.log(`Server running on http://${host}:${port}/`);
+    
+    // Keepalive para garantir que o processo nunca termine
+    setInterval(() => {
+      console.log("[KEEPALIVE] Process is alive at", new Date().toISOString());
+    }, 30000); // Log a cada 30 segundos
   });
   
   // Initialize Discord bot em paralelo (não bloquear servidor)
