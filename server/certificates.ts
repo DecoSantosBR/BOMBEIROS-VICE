@@ -1,5 +1,3 @@
-import chromium from "@sparticuz/chromium";
-import puppeteerCore from "puppeteer-core";
 import puppeteer from "puppeteer";
 import { storagePut } from "./storage";
 import { ENV } from "./_core/env";
@@ -299,30 +297,18 @@ export async function generateCertificateImage(data: CertificateData): Promise<B
   `;
 
   // Gerar imagem usando Puppeteer
-  // Detectar ambiente: usar chrome-aws-lambda em produção, Puppeteer normal localmente
-  const isProduction = process.env.NODE_ENV === 'production' || process.env.RAILWAY_ENVIRONMENT;
-  
-  let browser;
-  if (isProduction) {
-    console.log('[Certificates] Launching Puppeteer with @sparticuz/chromium (production)');
-    browser = await puppeteerCore.launch({
-      args: chromium.args,
-      executablePath: await chromium.executablePath(),
-      headless: true,
-    });
-  } else {
-    console.log('[Certificates] Launching Puppeteer with bundled Chrome (development)');
-    browser = await puppeteer.launch({
-      headless: true,
-      args: [
-        "--no-sandbox",
-        "--disable-setuid-sandbox",
-        "--disable-dev-shm-usage",
-        "--disable-gpu",
-        "--disable-software-rasterizer",
-      ],
-    });
-  }
+  // Usar Puppeteer com Chrome instalado via postinstall
+  console.log('[Certificates] Launching Puppeteer with installed Chrome');
+  const browser = await puppeteer.launch({
+    headless: true,
+    args: [
+      "--no-sandbox",
+      "--disable-setuid-sandbox",
+      "--disable-dev-shm-usage",
+      "--disable-gpu",
+      "--disable-software-rasterizer",
+    ],
+  });
 
   try {
     const page = await browser.newPage();

@@ -1688,3 +1688,4 @@
 - [ ] Testar localmente
 - [ ] Republicar e validar em produção
 - [x] Remover dependência canvas (node-canvas) que causava falha no deploy do Manus
+- [x] Remover @sparticuz/chromium e usar apenas Puppeteer com Chrome instalado via postinstall
