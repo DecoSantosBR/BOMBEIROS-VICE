@@ -305,6 +305,17 @@ export async function generateCertificateImage(data: CertificateData): Promise<B
     const executablePath = await chromium.executablePath();
     console.log('[Certificates] Chromium path:', executablePath);
     
+    // Debug: verificar dependências do Chromium
+    try {
+      const { execSync } = require('child_process');
+      console.log('=== LDD CHROMIUM OUTPUT ===');
+      const lddOutput = execSync('ldd /tmp/chromium', { encoding: 'utf-8' });
+      console.log(lddOutput);
+      console.log('=== END LDD OUTPUT ===');
+    } catch (e) {
+      console.error('ldd failed:', e);
+    }
+    
     const browser = await puppeteer.launch({
       args: [
         ...chromium.args,

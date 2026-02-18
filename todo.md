@@ -1771,5 +1771,13 @@
 ## Correção Definitiva - Flags e Base Image
 - [x] Adicionar --single-process e --no-zygote no puppeteer.launch
 - [x] Trocar FROM node:20-slim para node:20-bookworm
-- [ ] Fazer commit vazio para forçar rebuild limpo
+- [x] Fazer commit vazio para forçar rebuild limpo
+- [ ] Aguardar deploy do Railway (15-20 min)
 - [ ] Verificar logs do Railway para confirmar resolução final
+- [ ] Testar geração de certificados em produção
+
+## Correção Crítica - Host 0.0.0.0 para Railway
+- [x] Adicionar host "0.0.0.0" no server.listen
+- [x] Usar process.env.HOST || "0.0.0.0" para flexibilidade
+- [ ] Fazer commit e push
+- [ ] Verificar se container fica Running no Railway

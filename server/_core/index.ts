@@ -76,13 +76,14 @@ async function startServer() {
 
   const preferredPort = parseInt(process.env.PORT || "3000");
   const port = await findAvailablePort(preferredPort);
+  const host = process.env.HOST || "0.0.0.0";
 
   if (port !== preferredPort) {
     console.log(`Port ${preferredPort} is busy, using port ${port} instead`);
   }
 
-  server.listen(port, async () => {
-    console.log(`Server running on http://localhost:${port}/`);
+  server.listen(port, host, async () => {
+    console.log(`Server running on http://${host}:${port}/`);
     // Initialize Discord bot
     await initDiscordBot();
   });
