@@ -1695,3 +1695,4 @@
 - [x] Forçar uso de Chromium do sistema sem fallback para cache do Puppeteer
 - [ ] Descobrir caminho real do executável Chromium no Debian Bookworm
 - [x] Adicionar debug e symlink para Chromium no Dockerfile
+- [x] Criar arquivo .npmrc para desabilitar download automático do Puppeteer
