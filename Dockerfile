@@ -61,14 +61,11 @@ RUN pnpm install --frozen-lockfile
 # Copiar código fonte
 COPY . .
 
-# Build da aplicação
-RUN pnpm run build
-
 # Definir ambiente de produção
 ENV NODE_ENV=production
 
 # Expor porta (Railway define automaticamente via variável PORT)
 EXPOSE 3000
 
-# Comando de inicialização
-CMD ["node", "dist/index.js"]
+# Comando de inicialização: build primeiro (com variáveis de ambiente), depois start
+CMD ["sh", "-c", "pnpm run build && node dist/index.js"]
