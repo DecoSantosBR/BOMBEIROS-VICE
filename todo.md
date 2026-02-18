@@ -1691,3 +1691,4 @@
 - [x] Remover @sparticuz/chromium e usar apenas Puppeteer com Chrome instalado via postinstall
 - [x] Adicionar libglib2.0-dev ao Dockerfile para resolver erro libglib-2.0.so.0
 - [x] Reescrever Dockerfile para instalar Chromium completo via apt-get (solução definitiva)
+- [x] Adicionar comando para limpar cache do Puppeteer no Dockerfile (rm -rf /root/.cache/puppeteer)

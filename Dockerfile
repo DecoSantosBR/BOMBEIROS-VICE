@@ -21,6 +21,9 @@ COPY package.json pnpm-lock.yaml* ./
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
 RUN pnpm install --frozen-lockfile
 
+# CRÍTICO: Remover qualquer cache do Puppeteer que possa ter sido criado
+RUN rm -rf /root/.cache/puppeteer
+
 # Copiar código fonte
 COPY . .
 
