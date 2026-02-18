@@ -1697,3 +1697,10 @@
 - [x] Corrigir index.html com estrutura HTML mínima (falta <html>, <head>, <body>, <div id="root">)
 - [x] Adicionar throw em Map.tsx para bloquear execução se API key estiver vazia
 - [x] Testar aplicação localmente após correções
+
+## Investigação - Publicação Travada no Manus
+- [x] Investigar causa da publicação travada há mais de 10 minutos
+- [x] Verificar se há arquivos grandes ou dependências problemáticas
+- [x] Criar .npmrc com PUPPETEER_SKIP_DOWNLOAD=true para desabilitar download do Chrome no Manus
+- [x] Remover script postinstall do package.json
+- [ ] Fazer commit e publicar novamente
