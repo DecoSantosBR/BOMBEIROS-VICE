@@ -1890,3 +1890,12 @@
 ## Corrigir Erro do Chromium em Produção
 - [x] Criar arquivo nixpacks.toml com dependências do Chromium para Railway
 - [ ] Testar geração de certificados após deploy
+
+## Validação de Configuração do Puppeteer para Produção
+- [ ] Adicionar flags obrigatórias no Puppeteer (--no-sandbox, --disable-setuid-sandbox, --disable-dev-shm-usage)
+- [ ] Verificar se está usando puppeteer-core com @sparticuz/chromium
+- [ ] Testar geração de certificados após validações
+
+## Corrigir Script de Build para Incluir Bot Standalone
+- [x] Atualizar script build no package.json para compilar bot-standalone.ts
+- [x] Testar build localmente
