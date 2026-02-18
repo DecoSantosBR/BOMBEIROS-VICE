@@ -1675,3 +1675,9 @@
 ## Fase 107: Ajustar Posição da Assinatura do Instrutor
 - [x] Reduzir margin-top da seção de assinatura em 2px
 - [x] Testar certificado com nova posição
+
+## Fase 108: Ajustar Posição da Assinatura e Resolver Chromium
+- [x] Mover assinatura mais para cima (reduzir margin-top)
+- [x] Testar nova posição
+- [x] Configurar Dockerfile para Railway
+- [x] Documentar instruções de deploy
