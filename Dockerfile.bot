@@ -1,0 +1,31 @@
+# Dockerfile para Discord Bot Standalone
+# Container leve apenas para rodar o bot Discord
+FROM node:20-slim
+
+# Evitar prompts interativos
+ENV DEBIAN_FRONTEND=noninteractive
+ENV NODE_ENV=production
+
+WORKDIR /app
+
+# Copiar arquivos de dependências
+COPY package.json pnpm-lock.yaml ./
+
+# Instalar pnpm e dependências
+RUN corepack enable \
+  && pnpm install --frozen-lockfile --prod
+
+# Copiar código fonte
+COPY drizzle ./drizzle
+COPY server ./server
+COPY shared ./shared
+
+# Build do TypeScript
+RUN pnpm run build
+
+# O bot não precisa de porta exposta (não é servidor HTTP)
+# Mas vamos expor uma porta dummy para o Railway não reclamar
+EXPOSE 3001
+
+# Start do bot
+CMD ["node", "dist/bot-standalone.js"]

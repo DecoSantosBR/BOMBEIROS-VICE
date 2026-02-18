@@ -1861,3 +1861,11 @@
 - [ ] Aguardar deploy automático do Railway
 - [ ] Verificar logs de debug aparecem
 - [ ] Confirmar container fica estável
+
+## Separação do Discord Bot em Container Standalone
+- [x] Criar arquivo bot-standalone.ts com código do Discord bot
+- [x] Criar Dockerfile.bot para o container do bot
+- [x] Adicionar script build:bot no package.json
+- [x] Criar documentação RAILWAY_BOT_SETUP.md
+- [ ] Configurar novo serviço no Railway
+- [ ] Testar ambos os containers rodando simultaneamente
