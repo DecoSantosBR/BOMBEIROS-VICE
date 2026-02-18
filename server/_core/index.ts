@@ -67,6 +67,15 @@ async function startServer() {
       createContext,
     })
   );
+  // Healthcheck routes (OBRIGATÓRIO para Railway)
+  app.get("/", (req, res) => {
+    res.status(200).send("OK");
+  });
+
+  app.get("/health", (req, res) => {
+    res.status(200).json({ status: "healthy" });
+  });
+
   // development mode uses Vite, production mode uses static files
   if (process.env.NODE_ENV === "development") {
     await setupVite(app, server);
@@ -74,13 +83,8 @@ async function startServer() {
     serveStatic(app);
   }
 
-  const preferredPort = parseInt(process.env.PORT || "3000");
-  const port = await findAvailablePort(preferredPort);
-  const host = process.env.HOST || "0.0.0.0";
-
-  if (port !== preferredPort) {
-    console.log(`Port ${preferredPort} is busy, using port ${port} instead`);
-  }
+  const port = Number(process.env.PORT) || 3000;
+  const host = "0.0.0.0";
 
   server.listen(port, host, async () => {
     console.log(`Server running on http://${host}:${port}/`);

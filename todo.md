@@ -1779,5 +1779,14 @@
 ## Correção Crítica - Host 0.0.0.0 para Railway
 - [x] Adicionar host "0.0.0.0" no server.listen
 - [x] Usar process.env.HOST || "0.0.0.0" para flexibilidade
+- [x] Fazer commit e push
+- [ ] Aguardar deploy do Railway (15-20 min)
+- [ ] Verificar se container fica Running no Railway
+- [ ] Testar geração de certificados em produção
+
+## Correção Final Railway - Porta e Healthcheck
+- [x] Remover findAvailablePort e usar porta exata (Number(process.env.PORT) || 3000)
+- [x] Adicionar rota GET / para healthcheck
+- [x] Adicionar rota GET /health para healthcheck
 - [ ] Fazer commit e push
 - [ ] Verificar se container fica Running no Railway
