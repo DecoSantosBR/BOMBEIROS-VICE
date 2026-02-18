@@ -11,9 +11,9 @@ WORKDIR /app
 # Copiar arquivos de dependências
 COPY package.json pnpm-lock.yaml ./
 
-# Instalar pnpm e dependências
+# Instalar pnpm e dependências (incluindo dev para build)
 RUN corepack enable \
-  && pnpm install --frozen-lockfile --prod
+  && pnpm install --frozen-lockfile
 
 # Copiar código fonte
 COPY drizzle ./drizzle
