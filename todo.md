@@ -1687,3 +1687,4 @@
 - [x] Corrigir railway.json para usar DOCKERFILE/@sparticuz/chromium
 - [ ] Testar localmente
 - [ ] Republicar e validar em produção
+- [x] Remover dependência canvas (node-canvas) que causava falha no deploy do Manus
