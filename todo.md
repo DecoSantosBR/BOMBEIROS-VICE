@@ -1666,3 +1666,8 @@
 - [x] Corrigir logo incorreto
 - [x] Corrigir geração de imagem
 - [x] Testar envio para Discord
+
+## Fase 106: Atualizar Logo Correto do Certificado
+- [x] Fazer upload do logo correto para S3
+- [x] Atualizar URL do logo em server/certificates.ts
+- [x] Testar geração de certificado com logo correto

@@ -33,7 +33,7 @@ export async function generateCertificateImage(data: CertificateData): Promise<B
   const __dirname = dirname(__filename);
   
   // Usar URL do S3 para o logo correto do CBM Vice City
-  const logoUrl = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663187653950/TWwjdlHZYzybHmIe.png";
+  const logoUrl = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663187653950/HWRXabaRBVTfjmEx.png";
   
   // Log de debug para verificar dados recebidos
   console.log('[generateCertificateImage] Dados recebidos:', {
