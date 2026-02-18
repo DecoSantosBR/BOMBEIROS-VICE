@@ -1644,3 +1644,11 @@
 ## Fase 113: Adicionar nixpacks.toml para @sparticuz/chromium
 - [x] Criar nixpacks.toml com bibliotecas essenciais
 - [x] Testar em produção
+
+## Fase 114: Adicionar flags específicas do Railway
+- [ ] Adicionar flags --single-process e --no-zygote
+- [ ] Testar em produção
+
+## Fase 115: Script de Push para GitHub
+- [x] Criar script push-to-github.sh
+- [x] Testar script
