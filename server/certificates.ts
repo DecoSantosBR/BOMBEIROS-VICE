@@ -1,6 +1,7 @@
 import puppeteer from "puppeteer-core";
 import chromium from "@sparticuz/chromium";
 import { storagePut } from "./storage";
+import { withRetry } from "./utils/retry";
 import { ENV } from "./_core/env";
 import path from "path";
 import fs from "fs";
@@ -297,44 +298,50 @@ export async function generateCertificateImage(data: CertificateData): Promise<B
     </html>
   `;
 
-  // Gerar imagem usando Puppeteer + @sparticuz/chromium (otimizado para Railway)
-  console.log('[Certificates] Launching Puppeteer with @sparticuz/chromium');
-  const executablePath = await chromium.executablePath();
-  const browser = await puppeteer.launch({
-    args: [
-      ...chromium.args,
-      '--no-sandbox',
-      '--disable-setuid-sandbox',
-      '--disable-dev-shm-usage',
-    ],
-    executablePath,
-    headless: true,
-  });
-
-  try {
-    const page = await browser.newPage();
-    await page.setViewport({ width: 1200, height: 800 });
-    await page.setContent(html, { waitUntil: "networkidle0" });
+  // Gerar imagem usando Puppeteer + @sparticuz/chromium com retry automático
+  console.log('[Certificates] Launching Puppeteer with @sparticuz/chromium (with retry)');
+  
+  return await withRetry(async () => {
+    const executablePath = await chromium.executablePath();
+    console.log('[Certificates] Chromium path:', executablePath);
     
-    // Aguardar renderização completa das fontes e imagens
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    const browser = await puppeteer.launch({
+      args: [
+        ...chromium.args,
+        '--no-sandbox',
+        '--disable-setuid-sandbox',
+        '--disable-dev-shm-usage',
+      ],
+      executablePath,
+      headless: true,
+    });
 
-    // Capturar apenas o elemento do certificado, sem bordas brancas
-    const certificateElement = await page.$('.certificate');
-    const screenshot = certificateElement 
-      ? await certificateElement.screenshot({ type: "png" })
-      : await page.screenshot({
-          type: "png",
-          fullPage: false,
-        });
+    try {
+      const page = await browser.newPage();
+      await page.setViewport({ width: 1200, height: 800 });
+      await page.setContent(html, { waitUntil: "networkidle0" });
+      
+      // Aguardar renderização completa das fontes e imagens
+      await new Promise(resolve => setTimeout(resolve, 1000));
 
-    if (!screenshot) {
-      throw new Error('Failed to generate certificate screenshot');
+      // Capturar apenas o elemento do certificado, sem bordas brancas
+      const certificateElement = await page.$('.certificate');
+      const screenshot = certificateElement 
+        ? await certificateElement.screenshot({ type: "png" })
+        : await page.screenshot({
+            type: "png",
+            fullPage: false,
+          });
+
+      if (!screenshot) {
+        throw new Error('Failed to generate certificate screenshot');
+      }
+      
+      return Buffer.from(screenshot);
+    } finally {
+      await browser.close();
     }
-    return Buffer.from(screenshot);
-  } finally {
-    await browser.close();
-  }
+  }, 3, 1000);
 }
 
 /**

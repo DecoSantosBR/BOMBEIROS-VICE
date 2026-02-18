@@ -1735,5 +1735,13 @@
 
 ## Adicionar Libs Mínimas do Chromium no Dockerfile
 - [x] Adicionar apt-get install com libs essenciais (libnspr4, libnss3, libglib2.0-0, etc)
-- [ ] Fazer commit e push
+- [x] Fazer commit e push
+- [ ] Aguardar deploy do Railway (15-20 min)
 - [ ] Verificar logs do Railway para confirmar Chromium iniciando sem erros
+- [ ] Testar geração de certificados em produção
+
+## Implementar Retry Automático para Certificados
+- [x] Criar helper withRetry com exponential backoff
+- [x] Aplicar retry na geração de certificados (até 3 tentativas)
+- [ ] Testar localmente
+- [ ] Fazer commit e push
