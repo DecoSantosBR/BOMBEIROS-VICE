@@ -1703,4 +1703,15 @@
 - [x] Verificar se há arquivos grandes ou dependências problemáticas
 - [x] Criar .npmrc com PUPPETEER_SKIP_DOWNLOAD=true para desabilitar download do Chrome no Manus
 - [x] Remover script postinstall do package.json
-- [ ] Fazer commit e publicar novamente
+- [x] Fazer commit e publicar novamente
+
+## Erro de Autenticação Discord em Produção
+- [ ] Investigar erro 500 em /api/auth/discord/callback no Manus
+- [ ] Verificar se variáveis de ambiente do Discord estão configuradas no Manus
+- [ ] Corrigir problema de autenticação Discord
+
+## Correção de Auth no Railway - Trust Proxy e CORS
+- [x] Instalar dependência cors
+- [x] Adicionar app.set("trust proxy", 1) no Express
+- [x] Configurar CORS com credentials: true
+- [ ] Testar autenticação Discord no Railway após deploy
