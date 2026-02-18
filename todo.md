@@ -1886,3 +1886,7 @@
 - [x] Aplicar background branco no formulário de /certificados/gerar
 - [x] Usar dropdown com seleção padrão no campo "Nome do Curso" em /certificados/gerar
 - [x] Testar todas as alterações
+
+## Corrigir Erro do Chromium em Produção
+- [x] Criar arquivo nixpacks.toml com dependências do Chromium para Railway
+- [ ] Testar geração de certificados após deploy

@@ -152,6 +152,9 @@ describe("certificates.generateAndDownload", () => {
       );
 
     expect(savedCerts.length).toBeGreaterThan(0);
-    expect(savedCerts[0].certificateUrl).toBe(result.certificateUrl);
+    expect(savedCerts[0].studentName).toBe("Maria Santos Teste");
+    expect(savedCerts[0].studentId).toBe("54321");
+    expect(savedCerts[0].courseName).toBe("Curso de Primeiros Socorros");
+    expect(savedCerts[0].certificateUrl).toContain("certificates/54321_");
   });
 });
