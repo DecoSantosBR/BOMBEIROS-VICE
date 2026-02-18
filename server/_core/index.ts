@@ -94,9 +94,13 @@ async function startServer() {
   server.listen(port, host, async () => {
     console.log(`Server running on http://${host}:${port}/`);
     // Initialize Discord bot
-    // 🔴 TEMPORÁRIO: Comentado para testar se é ele que mata o container
-    // await initDiscordBot();
-    console.log("⚠️ Discord bot DISABLED for testing");
+    try {
+      await initDiscordBot();
+      console.log("✅ Discord bot initialized successfully");
+    } catch (error) {
+      console.error("❌ Discord bot initialization failed:", error);
+      // Não deixar o erro matar o servidor
+    }
   });
 }
 

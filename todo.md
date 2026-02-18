@@ -1815,3 +1815,13 @@
 - [ ] Testar no Railway se container para de morrer
 - [ ] Se funcionar: problema é no initDiscordBot
 - [ ] Se não funcionar: problema é em outro lugar
+
+## Correção Discord Bot - Error Handling Robusto
+- [x] Investigar código do Discord bot
+- [x] Mover registerCommands() para dentro do evento 'ready'
+- [x] Adicionar error handler global no Discord client
+- [x] Envolver registerCommands() em try-catch (non-fatal)
+- [x] Adicionar try-catch ao redor de initDiscordBot() no servidor
+- [x] Limpar variável global em caso de erro
+- [ ] Fazer commit e push
+- [ ] Testar no Railway se container fica estável

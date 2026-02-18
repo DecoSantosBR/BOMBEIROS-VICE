@@ -72,12 +72,21 @@ export async function initDiscordBot() {
       ],
     });
 
-    client.on("ready", () => {
+    client.on("ready", async () => {
       console.log(`[Discord] Bot logged in as ${client?.user?.tag}`);
+      
+      // Registrar comandos DEPOIS do login, em background
+      try {
+        await registerCommands();
+      } catch (error) {
+        console.error("[Discord] Failed to register commands (non-fatal):", error);
+      }
     });
 
-    // Register slash commands
-    await registerCommands();
+    // Adicionar error handler global para evitar crash
+    client.on("error", (error) => {
+      console.error("[Discord] Client error:", error);
+    });
 
     // Armazenar na variável global ANTES do login para persistir entre hot reloads
     global.discordClient = client;
@@ -90,6 +99,9 @@ export async function initDiscordBot() {
     return client;
   } catch (error) {
     console.error("[Discord] Failed to initialize bot:", error);
+    // Limpar variável global em caso de erro
+    global.discordClient = undefined;
+    client = null;
     return null;
   }
 }
