@@ -1840,3 +1840,10 @@
 - [ ] Testar no Railway se container fica estável
 - [ ] Se funcionar: confirma que problema é limite de 1GB de RAM
 - [ ] Solução permanente: aumentar RAM no Railway ou otimizar uso de memória
+
+## Correção Condicional Discord Bot - Variável Explícita
+- [x] Trocar NODE_ENV por DISABLE_DISCORD_BOT
+- [x] Usar variável explícita que funciona no Railway
+- [ ] Adicionar DISABLE_DISCORD_BOT=true no Railway
+- [ ] Fazer commit e push
+- [ ] Testar no Railway se container fica estável

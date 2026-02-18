@@ -97,7 +97,14 @@ async function startServer() {
   
   // Initialize Discord bot em paralelo (não bloquear servidor)
   // 🔴 DESABILITADO EM PRODUÇÃO: Limite de memória (1GB) sendo excedido
-  if (process.env.NODE_ENV === "development") {
+  // Use DISABLE_DISCORD_BOT=true no Railway para desabilitar
+  console.log("[DEBUG] NODE_ENV =", process.env.NODE_ENV);
+  console.log("[DEBUG] DISABLE_DISCORD_BOT =", process.env.DISABLE_DISCORD_BOT);
+  console.log("[DEBUG] Code version: 2026-02-18-v2");
+  
+  const shouldEnableBot = process.env.DISABLE_DISCORD_BOT !== "true";
+  
+  if (shouldEnableBot) {
     initDiscordBot()
       .then(() => {
         console.log("✅ Discord bot initialized successfully");
@@ -107,7 +114,7 @@ async function startServer() {
         // Não deixar o erro matar o servidor
       });
   } else {
-    console.log("⚠️ Discord bot DISABLED in production (memory limit)");
+    console.log("⚠️ Discord bot DISABLED (DISABLE_DISCORD_BOT=true)");
   }
 }
 
