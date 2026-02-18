@@ -1875,3 +1875,14 @@
 - [x] Criar endpoint API para gerar certificado
 - [x] Criar interface no frontend para gerar certificado
 - [x] Testar funcionalidade
+
+## Corrigir Erro 404 na Rota certificates.generateAndDownload
+- [ ] Investigar por que rota não está sendo encontrada
+- [ ] Verificar se rota está exportada corretamente no router
+- [ ] Testar funcionalidade após correção
+
+## Melhorias no Sistema de Certificados
+- [x] Implementar botão "Emitir Certificado" com download automático de PNG na lista de inscritos
+- [x] Aplicar background branco no formulário de /certificados/gerar
+- [x] Usar dropdown com seleção padrão no campo "Nome do Curso" em /certificados/gerar
+- [x] Testar todas as alterações

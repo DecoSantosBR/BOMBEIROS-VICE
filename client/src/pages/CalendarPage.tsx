@@ -781,38 +781,61 @@ export default function CalendarPage() {
   );
 }
 
-// Componente para botão de emitir certificado
-function EmitCertificateButton({ enrollmentId }: { enrollmentId: number }) {
-  const utils = trpc.useUtils();
-  const [isEmitting, setIsEmitting] = useState(false);
+// Componente para botão de gerar certificado com download automático
+function GenerateCertificateButton({ enrollment, eventTitle }: { enrollment: any; eventTitle: string }) {
+  const { user: currentUser } = useAuth();
+  const [isGenerating, setIsGenerating] = useState(false);
 
-  const emitCertificate = trpc.enrollments.emitCertificate.useMutation({
-    onSuccess: () => {
-      toast.success("🎓 Certificado emitido e publicado no Discord com sucesso!");
-      utils.enrollments.listByEvent.invalidate();
-      setIsEmitting(false);
+  const generateCertificate = trpc.certificates.generateAndDownload.useMutation({
+    onSuccess: (data) => {
+      if (data.success && data.certificateUrl) {
+        // Fazer download automático do certificado
+        const link = document.createElement('a');
+        link.href = data.certificateUrl;
+        link.download = `certificado-${enrollment.user?.studentId || 'aluno'}.png`;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        
+        toast.success("🎓 Certificado gerado e baixado com sucesso!");
+      }
+      setIsGenerating(false);
     },
     onError: (error) => {
-      toast.error(error.message || "Erro ao emitir certificado");
-      setIsEmitting(false);
+      toast.error(error.message || "Erro ao gerar certificado");
+      setIsGenerating(false);
     },
   });
 
-  const handleEmitCertificate = () => {
-    if (confirm("🎓 Confirma a emissão do certificado?\n\nO certificado será publicado automaticamente no canal Discord.")) {
-      setIsEmitting(true);
-      emitCertificate.mutate({ enrollmentId });
+  const handleGenerateCertificate = () => {
+    if (!enrollment.user?.name || !enrollment.user?.studentId) {
+      toast.error("Dados do aluno incompletos");
+      return;
     }
+
+    if (!currentUser?.name || !currentUser?.rank) {
+      toast.error("Dados do instrutor incompletos");
+      return;
+    }
+
+    setIsGenerating(true);
+    generateCertificate.mutate({
+      studentName: enrollment.user.name,
+      studentId: enrollment.user.studentId,
+      courseName: eventTitle,
+      instructorName: currentUser.name,
+      instructorRank: currentUser.rank,
+    });
   };
 
   return (
     <Button
       size="sm"
-      onClick={handleEmitCertificate}
-      disabled={isEmitting}
-      style={{ backgroundColor: "#fbbf24", color: "#000000", fontWeight: "600" }}
+      onClick={handleGenerateCertificate}
+      disabled={isGenerating}
+      style={{ backgroundColor: "#dc2626", color: "#ffffff", fontWeight: "600" }}
     >
-      {isEmitting ? "Emitindo..." : "🎓 Emitir Certificado"}
+      {isGenerating ? "Gerando..." : "Emitir Certificado"}
     </Button>
   );
 }
@@ -977,7 +1000,10 @@ function EventEnrollmentSection({
                               >
                                 Marcar Pendente
                               </Button>
-                              <EmitCertificateButton enrollmentId={enrollment.id} />
+                              <GenerateCertificateButton 
+                                enrollment={enrollment}
+                                eventTitle={event.title}
+                              />
                             </>
                           )}
                         </div>

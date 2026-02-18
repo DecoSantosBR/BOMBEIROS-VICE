@@ -6,10 +6,12 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { ArrowLeft, Download, FileText, Loader2 } from "lucide-react";
 
 export default function GenerateCertificate() {
   const { user, isAuthenticated } = useAuth();
+  const { data: courses = [] } = trpc.courses.list.useQuery();
   const [formData, setFormData] = useState({
     studentName: "",
     studentId: "",
@@ -91,7 +93,7 @@ export default function GenerateCertificate() {
         </div>
 
         {/* Form Card */}
-        <Card className="p-8">
+        <Card className="p-8" style={{ backgroundColor: "#ffffff" }}>
           <form onSubmit={handleSubmit} className="space-y-6">
             {/* Dados do Aluno */}
             <div className="space-y-4">
@@ -130,13 +132,21 @@ export default function GenerateCertificate() {
               
               <div>
                 <Label htmlFor="courseName">Nome do Curso *</Label>
-                <Input
-                  id="courseName"
+                <Select
                   value={formData.courseName}
-                  onChange={(e) => setFormData({ ...formData, courseName: e.target.value })}
-                  placeholder="Ex: Curso de Formação de Bombeiros"
-                  required
-                />
+                  onValueChange={(value) => setFormData({ ...formData, courseName: value })}
+                >
+                  <SelectTrigger id="courseName" style={{ backgroundColor: "#ffffff" }}>
+                    <SelectValue placeholder="Selecione um curso" />
+                  </SelectTrigger>
+                  <SelectContent style={{ backgroundColor: "#ffffff" }}>
+                    {courses.map((course: any) => (
+                      <SelectItem key={course.id} value={course.nome}>
+                        {course.nome}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
               </div>
             </div>
 
