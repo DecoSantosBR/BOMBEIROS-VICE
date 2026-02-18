@@ -297,17 +297,9 @@ export async function generateCertificateImage(data: CertificateData): Promise<B
   `;
 
   // Gerar imagem usando Puppeteer
-  // FORÇAR uso de Chromium do sistema - sem fallback para cache
-  const executablePath = process.env.PUPPETEER_EXECUTABLE_PATH || '/usr/bin/chromium';
-  console.log('[Certificates] Launching Puppeteer with:', executablePath);
-  console.log('[Certificates] Environment check:', {
-    PUPPETEER_EXECUTABLE_PATH: process.env.PUPPETEER_EXECUTABLE_PATH,
-    PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: process.env.PUPPETEER_SKIP_CHROMIUM_DOWNLOAD,
-    NODE_ENV: process.env.NODE_ENV
-  });
-  
+  // Usar Puppeteer com Chrome instalado via postinstall
+  console.log('[Certificates] Launching Puppeteer with installed Chrome');
   const browser = await puppeteer.launch({
-    executablePath: executablePath,
     headless: true,
     args: [
       "--no-sandbox",

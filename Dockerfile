@@ -1,14 +1,49 @@
-# Dockerfile otimizado para Railway com Chromium completo
-FROM node:22-bookworm
+# Dockerfile otimizado para Railway com suporte a Chromium
+# Usa Debian (bookworm) ao invés de Alpine para melhor compatibilidade com Chromium
+FROM node:22-bookworm-slim
 
-# Instalar Chromium e TODAS as suas dependências via apt
+# Instalar dependências do sistema necessárias para o Chromium
 RUN apt-get update && apt-get install -y \
-    chromium \
-    chromium-driver \
-    && rm -rf /var/lib/apt/lists/* \
-    && which chromium || echo "Chromium not found in PATH" \
-    && ls -la /usr/bin/chromium* || echo "No chromium in /usr/bin" \
-    && ln -sf $(which chromium) /usr/bin/chromium || true
+    ca-certificates \
+    fonts-liberation \
+    libasound2 \
+    libatk-bridge2.0-0 \
+    libatk1.0-0 \
+    libc6 \
+    libcairo2 \
+    libcups2 \
+    libdbus-1-3 \
+    libexpat1 \
+    libfontconfig1 \
+    libgbm1 \
+    libgcc-s1 \
+    libglib2.0-0 \
+    libgtk-3-0 \
+    libnspr4 \
+    libnss3 \
+    libpango-1.0-0 \
+    libpangocairo-1.0-0 \
+    libstdc++6 \
+    libx11-6 \
+    libx11-xcb1 \
+    libxcb1 \
+    libxcomposite1 \
+    libxcursor1 \
+    libxdamage1 \
+    libxext6 \
+    libxfixes3 \
+    libxi6 \
+    libxrandr2 \
+    libxrender1 \
+    libxss1 \
+    libxtst6 \
+    lsb-release \
+    wget \
+    xdg-utils \
+    python3 \
+    make \
+    g++ \
+    && rm -rf /var/lib/apt/lists/*
 
 # Instalar pnpm globalmente
 RUN npm install -g pnpm
@@ -19,13 +54,9 @@ WORKDIR /app
 # Copiar arquivos de dependências primeiro (melhor cache)
 COPY package.json pnpm-lock.yaml* ./
 
-# Instalar dependências Node.js
-# IMPORTANTE: Não baixar Chrome do Puppeteer, usar o Chromium do sistema
-ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
+# Instalar dependências
+# Nota: @sparticuz/chromium baixará o Chromium automaticamente
 RUN pnpm install --frozen-lockfile
-
-# CRÍTICO: Remover qualquer cache do Puppeteer que possa ter sido criado
-RUN rm -rf /root/.cache/puppeteer
 
 # Copiar código fonte
 COPY . .
@@ -35,9 +66,6 @@ RUN pnpm run build
 
 # Definir ambiente de produção
 ENV NODE_ENV=production
-
-# Definir caminho do Chromium para o Puppeteer
-ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium
 
 # Expor porta (Railway define automaticamente via variável PORT)
 EXPOSE 3000
