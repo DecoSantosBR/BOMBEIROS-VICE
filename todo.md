@@ -1714,4 +1714,14 @@
 - [x] Instalar dependência cors
 - [x] Adicionar app.set("trust proxy", 1) no Express
 - [x] Configurar CORS com credentials: true
-- [ ] Testar autenticação Discord no Railway após deploy
+- [x] Fazer push para GitHub para deploy no Railway
+- [ ] Testar autenticação Discord no Railway após deploy completar
+
+## Migração para puppeteer-core + @sparticuz/chromium
+- [x] Remover puppeteer
+- [x] Instalar puppeteer-core e @sparticuz/chromium
+- [x] Atualizar código de geração de certificados
+- [x] Remover .npmrc (não é mais necessário)
+- [ ] Testar localmente
+- [ ] Fazer commit e push
+- [ ] Testar geração de certificados no Railway

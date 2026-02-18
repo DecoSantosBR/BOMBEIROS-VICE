@@ -1,4 +1,5 @@
-import puppeteer from "puppeteer";
+import puppeteer from "puppeteer-core";
+import chromium from "@sparticuz/chromium";
 import { storagePut } from "./storage";
 import { ENV } from "./_core/env";
 import path from "path";
@@ -296,18 +297,12 @@ export async function generateCertificateImage(data: CertificateData): Promise<B
     </html>
   `;
 
-  // Gerar imagem usando Puppeteer
-  // Usar Puppeteer com Chrome instalado via postinstall
-  console.log('[Certificates] Launching Puppeteer with installed Chrome');
+  // Gerar imagem usando Puppeteer + @sparticuz/chromium (otimizado para Railway)
+  console.log('[Certificates] Launching Puppeteer with @sparticuz/chromium');
   const browser = await puppeteer.launch({
+    args: chromium.args,
+    executablePath: await chromium.executablePath(),
     headless: true,
-    args: [
-      "--no-sandbox",
-      "--disable-setuid-sandbox",
-      "--disable-dev-shm-usage",
-      "--disable-gpu",
-      "--disable-software-rasterizer",
-    ],
   });
 
   try {
