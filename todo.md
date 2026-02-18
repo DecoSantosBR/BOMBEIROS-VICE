@@ -1671,3 +1671,7 @@
 - [x] Fazer upload do logo correto para S3
 - [x] Atualizar URL do logo em server/certificates.ts
 - [x] Testar geração de certificado com logo correto
+
+## Fase 107: Ajustar Posição da Assinatura do Instrutor
+- [x] Reduzir margin-top da seção de assinatura em 2px
+- [x] Testar certificado com nova posição

@@ -214,7 +214,7 @@ export async function generateCertificateImage(data: CertificateData): Promise<B
         }
         
         .signature-section {
-          margin-top: 37px;
+          margin-top: 35px;
           text-align: center;
         }
         
