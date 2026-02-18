@@ -20,8 +20,8 @@ COPY drizzle ./drizzle
 COPY server ./server
 COPY shared ./shared
 
-# Build do TypeScript
-RUN pnpm run build
+# Build do TypeScript (apenas bot)
+RUN pnpm run build:bot
 
 # O bot não precisa de porta exposta (não é servidor HTTP)
 # Mas vamos expor uma porta dummy para o Railway não reclamar
