@@ -1652,3 +1652,17 @@
 ## Fase 115: Script de Push para GitHub
 - [x] Criar script push-to-github.sh
 - [x] Testar script
+
+## Fase 116: Dockerfile Customizado para Railway
+- [ ] Criar Dockerfile com dependências do Chromium
+- [ ] Criar .dockerignore
+- [ ] Remover nixpacks.toml
+- [ ] Testar build local
+- [ ] Documentar deploy no Railway
+
+## Fase 117: Corrigir Certificados em Branco e Logo Incorreto
+- [x] Investigar código de emissão em lote
+- [x] Corrigir dados em branco
+- [x] Corrigir logo incorreto
+- [x] Corrigir geração de imagem
+- [x] Testar envio para Discord

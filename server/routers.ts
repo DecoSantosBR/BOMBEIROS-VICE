@@ -655,40 +655,20 @@ export const appRouter = router({
           throw new TRPCError({ code: "NOT_FOUND", message: "Instrutor não encontrado" });
         }
 
-        // Gerar certificado em PNG usando Puppeteer
-        const { generateCertificate } = await import("./_core/certificateGeneratorPuppeteer");
+        // Gerar certificado usando função atualizada com Puppeteer
+        const { issueCertificate } = await import("./certificates");
         console.log("[EmitCertificate] Generating certificate for:", student.name, student.studentId, course.nome);
-        const certificateBuffer = await generateCertificate({
+        
+        const certificateUrl = await issueCertificate({
           studentName: student.name || "Aluno",
           studentId: student.studentId || "N/A",
           courseName: course.nome,
           instructorName: instructor.name || "Instrutor",
-          instructorRank: instructor.rank || "Tenente-Coronel",
+          instructorRank: instructor.rank || "Subcomandante Geral",
+          issuedAt: new Date(),
         });
-        console.log("[EmitCertificate] Certificate buffer generated, size:", certificateBuffer.length, "bytes");
-
-        // Fazer upload do certificado para S3
-        const { storagePut } = await import("./storage");
-        const timestamp = Date.now();
-        const randomHash = Math.random().toString(36).substring(2, 10);
-        const fileName = `certificado-${student.studentId}-${course.nome.replace(/\s+/g, "-")}-${timestamp}-${randomHash}.png`;
-        const s3Key = `certificates/${fileName}`;
-        console.log("[EmitCertificate] Uploading certificate to S3:", s3Key);
-        const { url: certificateUrl } = await storagePut(s3Key, certificateBuffer, "image/png");
-        console.log("[EmitCertificate] Certificate uploaded to S3:", certificateUrl);
-
-        // Publicar certificado no Discord com URL da imagem
-        const { sendCertificateNotification } = await import("./_core/discord");
-        const success = await sendCertificateNotification({
-          userName: student.name || "Aluno",
-          userStudentId: student.studentId || "N/A",
-          courseName: course.nome,
-          certificateUrl: certificateUrl, // Enviar URL ao invés do buffer
-        });
-
-        if (!success) {
-          throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: "Falha ao publicar certificado no Discord" });
-        }
+        
+        console.log("[EmitCertificate] Certificate generated and uploaded to:", certificateUrl);
 
         // Salvar certificado no banco de dados com URL
         const { certificates } = await import("../drizzle/schema");

@@ -32,8 +32,17 @@ export async function generateCertificateImage(data: CertificateData): Promise<B
   const __filename = fileURLToPath(import.meta.url);
   const __dirname = dirname(__filename);
   
-  // Usar URL do S3 para o logo
-  const logoUrl = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663187653950/EgsUSXxNqzyvoFzI.png";
+  // Usar URL do S3 para o logo correto do CBM Vice City
+  const logoUrl = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663187653950/TWwjdlHZYzybHmIe.png";
+  
+  // Log de debug para verificar dados recebidos
+  console.log('[generateCertificateImage] Dados recebidos:', {
+    studentName: data.studentName,
+    studentId: data.studentId,
+    courseName: data.courseName,
+    instructorName: data.instructorName,
+    instructorRank: data.instructorRank
+  });
   const logoResponse = await fetch(logoUrl);
   const logoBuffer = Buffer.from(await logoResponse.arrayBuffer());
   const logoBase64 = logoBuffer.toString("base64");

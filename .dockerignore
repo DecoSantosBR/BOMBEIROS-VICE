@@ -1,0 +1,57 @@
+# Dependências
+node_modules
+npm-debug.log
+pnpm-debug.log
+yarn-error.log
+
+# Build
+dist
+.vite
+.manus-logs
+
+# Desenvolvimento
+.env.local
+.env.development
+*.local
+
+# Git
+.git
+.gitignore
+
+# IDE
+.vscode
+.idea
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Testes
+coverage
+.nyc_output
+
+# Temporários
+tmp
+temp
+*.tmp
+
+# Logs
+logs
+*.log
+
+# Screenshots e uploads
+screenshots
+upload
+test-certificate-puppeteer.png
+
+# Documentação de desenvolvimento
+README.md
+GITHUB_PUSH_README.md
+push-to-github.sh
+todo.md
+
+# Nixpacks (não usado com Docker)
+nixpacks.toml
