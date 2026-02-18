@@ -118,4 +118,21 @@ async function startServer() {
   }
 }
 
+// Capturar sinais de término para debug
+process.on("SIGTERM", () => {
+  console.log("⚠️ [DEBUG] Received SIGTERM signal");
+});
+
+process.on("SIGINT", () => {
+  console.log("⚠️ [DEBUG] Received SIGINT signal");
+});
+
+process.on("uncaughtException", (error) => {
+  console.error("❌ [DEBUG] Uncaught exception:", error);
+});
+
+process.on("unhandledRejection", (reason, promise) => {
+  console.error("❌ [DEBUG] Unhandled rejection at:", promise, "reason:", reason);
+});
+
 startServer().catch(console.error);

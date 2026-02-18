@@ -1853,3 +1853,11 @@
 - [ ] Fazer commit e push
 - [ ] Verificar se Railway faz rebuild completo
 - [ ] Confirmar que logs de debug aparecem
+
+## Problema Identificado - Código Não Estava no GitHub
+- [x] Descoberto que checkpoints do Manus não fazem push automático para GitHub
+- [x] Railway estava deployando código antigo do GitHub
+- [x] Feito push manual para github/main com --force
+- [ ] Aguardar deploy automático do Railway
+- [ ] Verificar logs de debug aparecem
+- [ ] Confirmar container fica estável
