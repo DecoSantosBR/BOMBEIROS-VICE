@@ -1689,3 +1689,4 @@
 - [ ] Republicar e validar em produção
 - [x] Remover dependência canvas (node-canvas) que causava falha no deploy do Manus
 - [x] Remover @sparticuz/chromium e usar apenas Puppeteer com Chrome instalado via postinstall
+- [x] Adicionar libglib2.0-dev ao Dockerfile para resolver erro libglib-2.0.so.0

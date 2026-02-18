@@ -18,6 +18,7 @@ RUN apt-get update && apt-get install -y \
     libgbm1 \
     libgcc-s1 \
     libglib2.0-0 \
+    libglib2.0-dev \
     libgtk-3-0 \
     libnspr4 \
     libnss3 \
@@ -72,3 +73,4 @@ EXPOSE 3000
 
 # Comando de inicialização
 CMD ["node", "dist/index.js"]
+# Force rebuild - Tue Feb 17 23:11:01 EST 2026
