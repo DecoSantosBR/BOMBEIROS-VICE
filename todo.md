@@ -1869,3 +1869,9 @@
 - [x] Criar documentação RAILWAY_BOT_SETUP.md
 - [ ] Configurar novo serviço no Railway
 - [ ] Testar ambos os containers rodando simultaneamente
+
+## Implementar Gera\u00e7\u00## Implementar Geração e Download de Certificados
+- [x] Investigar código atual de geração de certificados
+- [x] Criar endpoint API para gerar certificado
+- [x] Criar interface no frontend para gerar certificado
+- [x] Testar funcionalidade
