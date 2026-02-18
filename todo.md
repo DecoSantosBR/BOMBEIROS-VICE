@@ -1904,3 +1904,7 @@
 - [x] Adicionar try/catch detalhado na mutation generateAndDownload
 - [x] Adicionar logs de diagnóstico do Chromium (path, variáveis de ambiente)
 - [x] Logs implementados e prontos para diagnóstico em produção
+
+## Criar Script de Start Inteligente para Múltiplos Serviços
+- [x] Criar script start.js que detecta SERVICE_TYPE e roda o serviço correto
+- [x] Atualizar railway.json para usar o script
