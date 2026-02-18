@@ -1796,5 +1796,13 @@
 ## Debug Erro 503 - Logs e Porta
 - [x] Adicionar logs de debug na mutation issueIndividual (STARTED, Launching Puppeteer, Certificate generated)
 - [x] Adicionar log da porta ENV no servidor (console.log("ENV PORT =", process.env.PORT))
-- [ ] Fazer commit e push
+- [x] Fazer commit e push
+- [ ] Aguardar deploy do Railway (15-20 min)
 - [ ] Monitorar logs do Railway para identificar onde o erro acontece
+- [ ] Testar geração de certificados em produção
+
+## Correção Ordem dos Middlewares - Healthcheck
+- [x] Verificar ordem atual dos middlewares no index.ts
+- [x] Mover rotas / e /health para ANTES do Vite e outros middlewares
+- [ ] Fazer commit e push
+- [ ] Testar no Railway se container fica Running
