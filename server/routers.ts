@@ -655,7 +655,7 @@ export const appRouter = router({
           throw new TRPCError({ code: "NOT_FOUND", message: "Instrutor não encontrado" });
         }
 
-        // Gerar certificado usando função atualizada com Puppeteer
+        // Gerar certificado usando Puppeteer
         const { issueCertificate } = await import("./certificates");
         console.log("[EmitCertificate] Generating certificate for:", student.name, student.studentId, course.nome);
         

@@ -1681,3 +1681,9 @@
 - [x] Testar nova posição
 - [x] Configurar Dockerfile para Railway
 - [x] Documentar instruções de deploy
+
+## Fase 106: Solução Definitiva - Canvas ao invés de Chromium
+- [x] Implementar geração de certificado com Canvas (node-canvas) - REVERTIDO
+- [x] Corrigir railway.json para usar DOCKERFILE/@sparticuz/chromium
+- [ ] Testar localmente
+- [ ] Republicar e validar em produção
