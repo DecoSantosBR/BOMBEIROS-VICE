@@ -96,14 +96,19 @@ async function startServer() {
   });
   
   // Initialize Discord bot em paralelo (não bloquear servidor)
-  initDiscordBot()
-    .then(() => {
-      console.log("✅ Discord bot initialized successfully");
-    })
-    .catch((error) => {
-      console.error("❌ Discord bot initialization failed:", error);
-      // Não deixar o erro matar o servidor
-    });
+  // 🔴 DESABILITADO EM PRODUÇÃO: Limite de memória (1GB) sendo excedido
+  if (process.env.NODE_ENV === "development") {
+    initDiscordBot()
+      .then(() => {
+        console.log("✅ Discord bot initialized successfully");
+      })
+      .catch((error) => {
+        console.error("❌ Discord bot initialization failed:", error);
+        // Não deixar o erro matar o servidor
+      });
+  } else {
+    console.log("⚠️ Discord bot DISABLED in production (memory limit)");
+  }
 }
 
 startServer().catch(console.error);

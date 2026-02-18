@@ -1832,3 +1832,11 @@
 - [x] Usar .then/.catch ao invés de await no callback
 - [ ] Fazer commit e push
 - [ ] Testar no Railway se container fica estável
+
+## Desabilitar Discord Bot em Produção - Teste de Memória
+- [x] Adicionar condicional NODE_ENV para desabilitar bot em produção
+- [x] Manter bot habilitado em desenvolvimento
+- [ ] Fazer commit e push
+- [ ] Testar no Railway se container fica estável
+- [ ] Se funcionar: confirma que problema é limite de 1GB de RAM
+- [ ] Solução permanente: aumentar RAM no Railway ou otimizar uso de memória
