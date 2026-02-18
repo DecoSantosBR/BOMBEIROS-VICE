@@ -1788,5 +1788,13 @@
 - [x] Remover findAvailablePort e usar porta exata (Number(process.env.PORT) || 3000)
 - [x] Adicionar rota GET / para healthcheck
 - [x] Adicionar rota GET /health para healthcheck
-- [ ] Fazer commit e push
+- [x] Fazer commit e push
+- [ ] Aguardar deploy do Railway (15-20 min)
 - [ ] Verificar se container fica Running no Railway
+- [ ] Testar geração de certificados em produção
+
+## Debug Erro 503 - Logs e Porta
+- [x] Adicionar logs de debug na mutation issueIndividual (STARTED, Launching Puppeteer, Certificate generated)
+- [x] Adicionar log da porta ENV no servidor (console.log("ENV PORT =", process.env.PORT))
+- [ ] Fazer commit e push
+- [ ] Monitorar logs do Railway para identificar onde o erro acontece

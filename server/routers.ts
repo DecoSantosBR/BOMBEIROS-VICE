@@ -867,6 +867,8 @@ export const appRouter = router({
         auxiliarMatricula: z.string().optional(), // Matrícula do auxiliar (opcional)
       }))
       .mutation(async ({ input, ctx }) => {
+        console.log("🔥 issueIndividual STARTED");
+        
         // Apenas instrutores e admins podem emitir certificados
         if (ctx.user.role !== "instructor" && ctx.user.role !== "admin") {
           throw new TRPCError({ code: "FORBIDDEN", message: "Apenas instrutores e administradores podem emitir certificados" });
@@ -887,6 +889,7 @@ export const appRouter = router({
         }
 
         // Emitir certificado (gera imagem, faz upload S3, envia Discord)
+        console.log("🚀 Launching Puppeteer...");
         const certificateUrl = await issueCertificate({
           studentName: input.studentName,
           studentId: input.studentId,
@@ -916,6 +919,8 @@ export const appRouter = router({
           });
         }
 
+        console.log("✅ Certificate generated:", certificateUrl);
+        
         return {
           success: true,
           message: "Certificado emitido e publicado no Discord com sucesso!",
