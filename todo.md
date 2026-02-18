@@ -1743,5 +1743,12 @@
 ## Implementar Retry Automático para Certificados
 - [x] Criar helper withRetry com exponential backoff
 - [x] Aplicar retry na geração de certificados (até 3 tentativas)
-- [ ] Testar localmente
+- [x] Testar localmente
+- [x] Fazer commit e push
+- [ ] Aguardar deploy do Railway e testar em produção
+
+## Atualizar Dockerfile com Lista Completa de Libs
+- [x] Adicionar libs faltantes (libdrm2, libgcc1, libgtk-3-0, libpangocairo-1.0-0, etc)
 - [ ] Fazer commit e push
+- [ ] Forçar rebuild no Railway (clear cache se necessário)
+- [ ] Verificar logs para confirmar libnspr4.so não aparece mais

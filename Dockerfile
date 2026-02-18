@@ -1,5 +1,5 @@
 # Dockerfile otimizado para Railway com @sparticuz/chromium
-# Versão enxuta com libs mínimas necessárias
+# Lista completa de libs para Chromium
 FROM node:20-slim
 
 # Evitar prompts interativos
@@ -8,8 +8,8 @@ ENV NODE_ENV=production
 
 WORKDIR /app
 
-# ✅ LIBS MÍNIMAS PARA CHROMIUM (ESSENCIAL)
-RUN apt-get update && apt-get install -y \
+# ✅ LISTA COMPLETA E CONFIÁVEL PARA CHROMIUM
+RUN apt-get update && apt-get install -y --no-install-recommends \
     ca-certificates \
     fonts-liberation \
     libasound2 \
@@ -19,25 +19,32 @@ RUN apt-get update && apt-get install -y \
     libcairo2 \
     libcups2 \
     libdbus-1-3 \
+    libdrm2 \
     libexpat1 \
     libfontconfig1 \
     libgbm1 \
+    libgcc1 \
     libglib2.0-0 \
+    libgtk-3-0 \
     libnspr4 \
     libnss3 \
     libpango-1.0-0 \
+    libpangocairo-1.0-0 \
+    libstdc++6 \
     libx11-6 \
     libx11-xcb1 \
     libxcb1 \
     libxcomposite1 \
+    libxcursor1 \
     libxdamage1 \
     libxext6 \
     libxfixes3 \
+    libxi6 \
     libxrandr2 \
     libxrender1 \
-    libxshmfence1 \
+    libxss1 \
+    libxtst6 \
     wget \
-    --no-install-recommends \
     && rm -rf /var/lib/apt/lists/*
 
 # Copiar arquivos de dependências primeiro (melhor cache)
@@ -50,7 +57,7 @@ RUN corepack enable \
 # Copiar restante do código
 COPY . .
 
-# Build args para variáveis de ambiente do frontend (opcional)
+# Build args para variáveis de ambiente do frontend
 ARG VITE_FRONTEND_FORGE_API_URL
 ARG VITE_FRONTEND_FORGE_API_KEY
 ENV VITE_FRONTEND_FORGE_API_URL=$VITE_FRONTEND_FORGE_API_URL
