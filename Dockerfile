@@ -5,6 +5,7 @@ FROM node:20-slim
 # Evitar prompts interativos
 ENV DEBIAN_FRONTEND=noninteractive
 ENV NODE_ENV=production
+ENV LD_LIBRARY_PATH=/usr/lib/x86_64-linux-gnu:$LD_LIBRARY_PATH
 
 WORKDIR /app
 

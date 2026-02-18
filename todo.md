@@ -1749,6 +1749,19 @@
 
 ## Atualizar Dockerfile com Lista Completa de Libs
 - [x] Adicionar libs faltantes (libdrm2, libgcc1, libgtk-3-0, libpangocairo-1.0-0, etc)
-- [ ] Fazer commit e push
-- [ ] Forçar rebuild no Railway (clear cache se necessário)
+- [x] Fazer commit e push
+- [ ] Forçar rebuild no Railway com clear build cache
 - [ ] Verificar logs para confirmar libnspr4.so não aparece mais
+- [ ] Testar geração de certificados em produção
+
+## Debug de Libs no Container Railway
+- [ ] Adicionar comando ls para verificar libnspr4.so
+- [ ] Adicionar comando ldd para verificar dependências do Chromium
+- [ ] Fazer commit vazio para forçar rebuild sem cache
+- [ ] Verificar logs do Railway para confirmar libs instaladas
+
+## Correção Final - LD_LIBRARY_PATH
+- [x] Adicionar ENV LD_LIBRARY_PATH no Dockerfile
+- [x] Manter headless: true (chromium.headless não existe no @sparticuz/chromium)
+- [ ] Fazer commit vazio para forçar rebuild
+- [ ] Verificar logs do Railway para confirmar resolução
