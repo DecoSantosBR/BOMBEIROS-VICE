@@ -1692,3 +1692,4 @@
 - [x] Adicionar libglib2.0-dev ao Dockerfile para resolver erro libglib-2.0.so.0
 - [x] Reescrever Dockerfile para instalar Chromium completo via apt-get (solução definitiva)
 - [x] Adicionar comando para limpar cache do Puppeteer no Dockerfile (rm -rf /root/.cache/puppeteer)
+- [x] Forçar uso de Chromium do sistema sem fallback para cache do Puppeteer
