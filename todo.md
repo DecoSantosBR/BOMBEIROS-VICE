@@ -1693,3 +1693,5 @@
 - [x] Reescrever Dockerfile para instalar Chromium completo via apt-get (solução definitiva)
 - [x] Adicionar comando para limpar cache do Puppeteer no Dockerfile (rm -rf /root/.cache/puppeteer)
 - [x] Forçar uso de Chromium do sistema sem fallback para cache do Puppeteer
+- [ ] Descobrir caminho real do executável Chromium no Debian Bookworm
+- [x] Adicionar debug e symlink para Chromium no Dockerfile

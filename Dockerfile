@@ -5,7 +5,10 @@ FROM node:22-bookworm
 RUN apt-get update && apt-get install -y \
     chromium \
     chromium-driver \
-    && rm -rf /var/lib/apt/lists/*
+    && rm -rf /var/lib/apt/lists/* \
+    && which chromium || echo "Chromium not found in PATH" \
+    && ls -la /usr/bin/chromium* || echo "No chromium in /usr/bin" \
+    && ln -sf $(which chromium) /usr/bin/chromium || true
 
 # Instalar pnpm globalmente
 RUN npm install -g pnpm
