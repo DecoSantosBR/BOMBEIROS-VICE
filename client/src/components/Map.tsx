@@ -86,10 +86,9 @@ declare global {
   }
 }
 
-const API_KEY = import.meta.env.VITE_FRONTEND_FORGE_API_KEY;
-const FORGE_BASE_URL =
-  import.meta.env.VITE_FRONTEND_FORGE_API_URL ||
-  "https://forge.butterfly-effect.dev";
+// Use window location para determinar FORGE_BASE_URL em runtime
+const FORGE_BASE_URL = window.location.origin;
+const API_KEY = import.meta.env.VITE_FRONTEND_FORGE_API_KEY || "";
 const MAPS_PROXY_URL = `${FORGE_BASE_URL}/v1/maps/proxy`;
 
 function loadMapScript() {
