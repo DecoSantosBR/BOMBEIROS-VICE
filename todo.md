@@ -1847,3 +1847,9 @@
 - [ ] Adicionar DISABLE_DISCORD_BOT=true no Railway
 - [ ] Fazer commit e push
 - [ ] Testar no Railway se container fica estável
+
+## Forçar Rebuild do Railway - Cache Buster
+- [x] Adicionar ARG CACHEBUST no Dockerfile
+- [ ] Fazer commit e push
+- [ ] Verificar se Railway faz rebuild completo
+- [ ] Confirmar que logs de debug aparecem
