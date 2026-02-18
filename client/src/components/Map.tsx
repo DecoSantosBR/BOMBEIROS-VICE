@@ -19,7 +19,7 @@ const FORGE_BASE_URL = window.location.origin;
 const API_KEY = import.meta.env.VITE_FRONTEND_FORGE_API_KEY;
 
 if (!API_KEY) {
-  console.error("❌ VITE_FRONTEND_FORGE_API_KEY is not defined");
+  throw new Error("❌ VITE_FRONTEND_FORGE_API_KEY is not defined");
 }
 
 const MAPS_PROXY_URL = `${FORGE_BASE_URL}/v1/maps/proxy`;

@@ -1692,3 +1692,8 @@
 - [ ] Corrigir erro "Invalid URL" no Railway que impede o site de funcionar
 - [x] Mover build do Vite para runtime para ter acesso às variáveis VITE_*
 - [x] Atualizar Dockerfile com ARG e ENV para passar variáveis VITE_* durante build
+
+## Correções Urgentes - Alterações do GitHub
+- [x] Corrigir index.html com estrutura HTML mínima (falta <html>, <head>, <body>, <div id="root">)
+- [x] Adicionar throw em Map.tsx para bloquear execução se API key estiver vazia
+- [x] Testar aplicação localmente após correções
