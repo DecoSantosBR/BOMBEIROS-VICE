@@ -1825,3 +1825,10 @@
 - [x] Limpar variável global em caso de erro
 - [ ] Fazer commit e push
 - [ ] Testar no Railway se container fica estável
+
+## Correção Discord Bot - Inicialização em Paralelo
+- [x] Mover initDiscordBot() para fora do callback do server.listen
+- [x] Inicializar Discord bot em paralelo (não bloquear servidor)
+- [x] Usar .then/.catch ao invés de await no callback
+- [ ] Fazer commit e push
+- [ ] Testar no Railway se container fica estável

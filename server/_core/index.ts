@@ -91,17 +91,19 @@ async function startServer() {
   console.log("ENV PORT =", process.env.PORT);
   console.log("Listening on port:", port);
 
-  server.listen(port, host, async () => {
+  server.listen(port, host, () => {
     console.log(`Server running on http://${host}:${port}/`);
-    // Initialize Discord bot
-    try {
-      await initDiscordBot();
+  });
+  
+  // Initialize Discord bot em paralelo (não bloquear servidor)
+  initDiscordBot()
+    .then(() => {
       console.log("✅ Discord bot initialized successfully");
-    } catch (error) {
+    })
+    .catch((error) => {
       console.error("❌ Discord bot initialization failed:", error);
       // Não deixar o erro matar o servidor
-    }
-  });
+    });
 }
 
 startServer().catch(console.error);
