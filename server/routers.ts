@@ -1045,59 +1045,76 @@ export const appRouter = router({
         auxiliarMatricula: z.string().optional(),
       }))
       .mutation(async ({ input, ctx }) => {
-        // Apenas instrutores e admins podem gerar certificados
-        if (ctx.user.role !== "instructor" && ctx.user.role !== "admin") {
-          throw new TRPCError({ code: "FORBIDDEN", message: "Apenas instrutores e administradores podem gerar certificados" });
-        }
-
-        const { generateCertificateImage, uploadCertificateToS3 } = await import("./certificates");
-        const { certificates } = await import("../drizzle/schema");
-        const dbInstance = await db.getDb();
-
-        console.log("[GenerateAndDownload] Generating certificate for:", input.studentName);
-
-        // Gerar imagem do certificado
-        const imageBuffer = await generateCertificateImage({
-          studentName: input.studentName,
-          studentId: input.studentId,
-          courseName: input.courseName,
-          instructorName: input.instructorName,
-          instructorRank: input.instructorRank,
-          auxiliar: input.auxiliar,
-          ID_auxiliar: input.auxiliarMatricula,
-          issuedAt: new Date(),
-        });
-
-        // Fazer upload para S3
-        const timestamp = Date.now();
-        const fileName = `${input.studentId}_${timestamp}.png`;
-        const certificateUrl = await uploadCertificateToS3(imageBuffer, fileName);
-
-        // Salvar no banco de dados
-        if (dbInstance) {
-          await dbInstance.insert(certificates).values({
+        try {
+          console.log("[CERTIFICATE] Starting generation", {
+            studentName: input.studentName,
+            studentId: input.studentId,
+            courseName: input.courseName,
+            userRole: ctx.user.role,
             userId: ctx.user.id,
-            discordId: null,
+          });
+
+          // Apenas instrutores e admins podem gerar certificados
+          if (ctx.user.role !== "instructor" && ctx.user.role !== "admin") {
+            console.error("[CERTIFICATE ERROR] Forbidden: User role is", ctx.user.role);
+            throw new TRPCError({ code: "FORBIDDEN", message: "Apenas instrutores e administradores podem gerar certificados" });
+          }
+
+          console.log("[CERTIFICATE] Importing modules...");
+          const { generateCertificateImage, uploadCertificateToS3 } = await import("./certificates");
+          const { certificates } = await import("../drizzle/schema");
+          const dbInstance = await db.getDb();
+
+          console.log("[CERTIFICATE] Generating image...");
+          const imageBuffer = await generateCertificateImage({
             studentName: input.studentName,
             studentId: input.studentId,
             courseName: input.courseName,
             instructorName: input.instructorName,
             instructorRank: input.instructorRank,
-            auxiliar: input.auxiliar || null,
-            ID_auxiliar: input.auxiliarMatricula || null,
-            issuedBy: ctx.user.id,
-            certificateUrl: certificateUrl,
+            auxiliar: input.auxiliar,
+            ID_auxiliar: input.auxiliarMatricula,
+            issuedAt: new Date(),
           });
+          console.log("[CERTIFICATE] Image generated, size:", imageBuffer.length, "bytes");
+
+          console.log("[CERTIFICATE] Uploading to S3...");
+          const timestamp = Date.now();
+          const fileName = `${input.studentId}_${timestamp}.png`;
+          const certificateUrl = await uploadCertificateToS3(imageBuffer, fileName);
+          console.log("[CERTIFICATE] Uploaded to S3:", certificateUrl);
+
+          console.log("[CERTIFICATE] Saving to database...");
+          if (dbInstance) {
+            await dbInstance.insert(certificates).values({
+              userId: ctx.user.id,
+              discordId: null,
+              studentName: input.studentName,
+              studentId: input.studentId,
+              courseName: input.courseName,
+              instructorName: input.instructorName,
+              instructorRank: input.instructorRank,
+              auxiliar: input.auxiliar || null,
+              ID_auxiliar: input.auxiliarMatricula || null,
+              issuedBy: ctx.user.id,
+              certificateUrl: certificateUrl,
+            });
+            console.log("[CERTIFICATE] Saved to database");
+          }
+
+          console.log("[CERTIFICATE] Success!");
+          return {
+            success: true,
+            message: "Certificado gerado com sucesso!",
+            certificateUrl,
+          };
+        } catch (error: any) {
+          console.error("[CERTIFICATE ERROR] Full error:", error);
+          console.error("[CERTIFICATE ERROR] Error name:", error?.name);
+          console.error("[CERTIFICATE ERROR] Error message:", error?.message);
+          console.error("[CERTIFICATE ERROR] Error stack:", error?.stack);
+          throw error;
         }
-
-        console.log("[GenerateAndDownload] Certificate generated:", certificateUrl);
-
-        // Retornar URL do certificado para download
-        return {
-          success: true,
-          message: "Certificado gerado com sucesso!",
-          certificateUrl,
-        };
       }),
   }),
 

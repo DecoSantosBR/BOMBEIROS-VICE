@@ -1899,3 +1899,8 @@
 ## Corrigir Script de Build para Incluir Bot Standalone
 - [x] Atualizar script build no package.json para compilar bot-standalone.ts
 - [x] Testar build localmente
+
+## Adicionar Logs Estruturados para Diagnóstico em Produção
+- [x] Adicionar try/catch detalhado na mutation generateAndDownload
+- [x] Adicionar logs de diagnóstico do Chromium (path, variáveis de ambiente)
+- [x] Logs implementados e prontos para diagnóstico em produção

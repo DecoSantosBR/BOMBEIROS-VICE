@@ -301,6 +301,14 @@ export async function generateCertificateImage(data: CertificateData): Promise<B
   // Gerar imagem usando Puppeteer + @sparticuz/chromium com retry automático
   console.log('[Certificates] Launching Puppeteer with @sparticuz/chromium (with retry)');
   
+  // Log de diagnóstico de ambiente
+  console.log('[Certificates] Environment check:', {
+    NODE_ENV: process.env.NODE_ENV,
+    PORT: process.env.PORT,
+    hasDatabase: !!process.env.RAILWAY_DATABASE_URL,
+    hasS3: !!process.env.AWS_ACCESS_KEY_ID,
+  });
+  
   return await withRetry(async () => {
     const executablePath = await chromium.executablePath();
     console.log('[Certificates] Chromium path:', executablePath);
