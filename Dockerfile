@@ -67,5 +67,5 @@ ENV NODE_ENV=production
 # Expor porta (Railway define automaticamente via variável PORT)
 EXPOSE 3000
 
-# Comando de inicialização: build primeiro (com variáveis de ambiente), depois start
-CMD ["sh", "-c", "pnpm run build && node dist/index.js"]
+# Comando de inicialização: usa script que faz build e depois start
+CMD ["./start.sh"]
