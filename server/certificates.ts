@@ -3,8 +3,6 @@ import { storagePut } from "./storage";
 import { withRetry } from "./utils/retry";
 import { ENV } from "./_core/env";
 import path from "path";
-import fs from "fs";
-import { execSync } from "child_process";
 
 /**
  * Interface para dados do certificado
@@ -310,49 +308,16 @@ export async function generateCertificateImage(data: CertificateData): Promise<B
   });
   
   return await withRetry(async () => {
-    // Resolver path do Chromium usando which (mais confiável)
-    function resolveChromiumPath(): string {
-      // Tentar variável de ambiente primeiro
-      if (process.env.PUPPETEER_EXECUTABLE_PATH) {
-        try {
-          fs.accessSync(process.env.PUPPETEER_EXECUTABLE_PATH);
-          console.log("[CERTIFICATE] ✅ Using env PUPPETEER_EXECUTABLE_PATH:", process.env.PUPPETEER_EXECUTABLE_PATH);
-          return process.env.PUPPETEER_EXECUTABLE_PATH;
-        } catch {}
-      }
-      
-      // Tentar descobrir via which chromium
-      try {
-        const path = execSync("which chromium", { encoding: "utf8" }).trim();
-        if (path) {
-          console.log("[CERTIFICATE] ✅ Found chromium at:", path);
-          return path;
-        }
-      } catch {}
-      
-      // Tentar descobrir via which chromium-browser
-      try {
-        const path = execSync("which chromium-browser", { encoding: "utf8" }).trim();
-        if (path) {
-          console.log("[CERTIFICATE] ✅ Found chromium-browser at:", path);
-          return path;
-        }
-      } catch {}
-      
-      // Fallback para Debian 12 comum
-      const fallback = "/usr/lib/chromium/chromium";
-      console.log("[CERTIFICATE] ⚠️ Using fallback path:", fallback);
-      return fallback;
-    }
-    
-    const executablePath = resolveChromiumPath();
+    // Debian 12 (node:22-slim) path fixo
+    console.log("[CERTIFICATE] Using Chromium at: /usr/bin/chromium");
     
     const browser = await puppeteer.launch({
-      executablePath,
+      executablePath: "/usr/bin/chromium",
       args: [
         '--no-sandbox',
         '--disable-setuid-sandbox',
         '--disable-dev-shm-usage',
+        '--disable-gpu',
       ],
       headless: true,
     });
