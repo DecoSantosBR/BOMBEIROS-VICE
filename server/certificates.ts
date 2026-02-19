@@ -1,4 +1,4 @@
-import puppeteer from "puppeteer-core"
+import puppeteer from "puppeteer-core";
 import { storagePut } from "./storage";
 import { withRetry } from "./utils/retry";
 import { ENV } from "./_core/env";
@@ -311,8 +311,9 @@ export async function generateCertificateImage(data: CertificateData): Promise<B
     console.log("[CERTIFICATE] Launching Chromium via Puppeteer official image");
     
     const browser = await puppeteer.launch({
+      executablePath: '/usr/bin/chromium',
       headless: true,
-      args: ['--no-sandbox'],
+      args: ['--no-sandbox', '--disable-setuid-sandbox'],
     });
 
     try {
