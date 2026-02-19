@@ -1934,4 +1934,9 @@
 ## Remover Dockerfile para Forçar Uso do Nixpacks
 - [x] Verificar se existe Dockerfile na raiz
 - [x] Remover Dockerfile (manter apenas Dockerfile.bot)
-- [ ] Fazer push e redeploy no Railway
+- [x] Fazer push e redeploy no Railway
+
+## Remover Builder do railway.json para Permitir Detecção Automática
+- [ ] Remover campo "builder" do railway.json
+- [ ] Fazer push e aguardar deploy automático
+- [ ] Verificar se Railway detecta Nixpacks automaticamente
