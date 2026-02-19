@@ -311,6 +311,7 @@ export async function generateCertificateImage(data: CertificateData): Promise<B
     console.log("[CERTIFICATE] Launching Chromium via Puppeteer official image");
     
     const browser = await puppeteer.launch({
+  executablePath: process.env.PUPPETEER_EXECUTABLE_PATH,
   headless: "new",
   args: ["--no-sandbox", "--disable-setuid-sandbox"],
     });
