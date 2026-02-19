@@ -1,5 +1,5 @@
 import puppeteer from "puppeteer-core";
-// import chromium from "@sparticuz/chromium"; // Removido: usando Chromium do sistema
+import chromium from "@sparticuz/chromium";
 import { storagePut } from "./storage";
 import { withRetry } from "./utils/retry";
 import { ENV } from "./_core/env";
@@ -310,24 +310,14 @@ export async function generateCertificateImage(data: CertificateData): Promise<B
   });
   
   return await withRetry(async () => {
-    // Usar Chromium do sistema via PATH (Nixpacks coloca no PATH automaticamente)
-    const executablePath = process.env.PUPPETEER_EXECUTABLE_PATH || 'chromium';
+    const executablePath = await chromium.executablePath();
     console.log('[Certificates] Chromium path:', executablePath);
-    
-    // Debug: descobrir path real do Chromium
-    try {
-      const { execSync } = require('child_process');
-      const whichChromium = execSync('which chromium', { encoding: 'utf-8' }).trim();
-      console.log('[Certificates] Real Chromium path (which):', whichChromium);
-    } catch (e) {
-      console.error('[Certificates] which chromium failed:', e);
-    }
     
     // Debug: verificar dependências do Chromium
     try {
       const { execSync } = require('child_process');
       console.log('=== LDD CHROMIUM OUTPUT ===');
-      const lddOutput = execSync(`ldd ${executablePath}`, { encoding: 'utf-8' });
+      const lddOutput = execSync('ldd /tmp/chromium', { encoding: 'utf-8' });
       console.log(lddOutput);
       console.log('=== END LDD OUTPUT ===');
     } catch (e) {
@@ -336,9 +326,12 @@ export async function generateCertificateImage(data: CertificateData): Promise<B
     
     const browser = await puppeteer.launch({
       args: [
+        ...chromium.args,
         '--no-sandbox',
         '--disable-setuid-sandbox',
         '--disable-dev-shm-usage',
+        '--single-process',
+        '--no-zygote',
       ],
       executablePath,
       headless: true,
