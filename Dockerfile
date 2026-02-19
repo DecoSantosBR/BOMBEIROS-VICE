@@ -1,6 +1,9 @@
 # Use Node.js 22 base image
 FROM node:22-slim
 
+# Enable corepack (respects packageManager field)
+RUN corepack enable
+
 # Install Chromium and all required dependencies for Puppeteer
 RUN apt-get update && apt-get install -y \
     chromium \
@@ -34,30 +37,25 @@ RUN apt-get update && apt-get install -y \
     xdg-utils \
     && rm -rf /var/lib/apt/lists/*
 
-# Install pnpm globally
-RUN npm install -g pnpm@9
-
-# Set working directory
 WORKDIR /app
 
-# Copy package files
+# Copy only dependency files first (better cache)
 COPY package.json pnpm-lock.yaml ./
 
-# Install dependencies
+# Install dependencies using correct pnpm version
 RUN pnpm install --frozen-lockfile
 
-# Copy source code
+# Copy rest of project
 COPY . .
 
-# Build the application
+# Build
 RUN pnpm run build
 
-# Set environment variable for Puppeteer to use system Chromium
+# Puppeteer config
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
 ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium
 
-# Expose port (Railway will set PORT env var)
 EXPOSE 3000
 
-# Start command
-CMD ["pnpm", "run", "start"]
+CMD
+
