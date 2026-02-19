@@ -1,23 +1,28 @@
-# Imagem oficial com Chromium pronto
 FROM ghcr.io/puppeteer/puppeteer:latest
+
+USER root
 
 ENV NODE_ENV=production
 
 WORKDIR /app
 
-# Copia apenas dependências primeiro (cache melhor)
+# Instala pnpm
+RUN npm install -g pnpm@10.15.1
+
+# Copia dependências
 COPY package.json pnpm-lock.yaml ./
 
-# Ativa corepack e instala deps
-RUN corepack enable \
- && corepack prepare pnpm@10.15.1 --activate \
- && pnpm install --frozen-lockfile
+# Instala dependências
+RUN pnpm install --frozen-lockfile
 
-# Copia o resto do projeto
+# Copia resto do projeto
 COPY . .
 
 # Build
 RUN pnpm run build
+
+# Volta para usuário seguro
+USER pptruser
 
 EXPOSE 3000
 
