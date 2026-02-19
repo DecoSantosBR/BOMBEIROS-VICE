@@ -308,11 +308,10 @@ export async function generateCertificateImage(data: CertificateData): Promise<B
   });
   
   return await withRetry(async () => {
-    // Debian 12 (node:22-slim) path fixo
-    console.log("[CERTIFICATE] Using Chromium at: /usr/bin/chromium");
+    console.log("[CERTIFICATE] Launching Chromium via channel: chrome");
     
     const browser = await puppeteer.launch({
-      executablePath: "/usr/bin/chromium",
+      channel: "chrome",
       args: [
         '--no-sandbox',
         '--disable-setuid-sandbox',
