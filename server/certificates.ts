@@ -310,9 +310,18 @@ export async function generateCertificateImage(data: CertificateData): Promise<B
   });
   
   return await withRetry(async () => {
-    // Usar Chromium instalado pelo Dockerfile
-    const executablePath = process.env.PUPPETEER_EXECUTABLE_PATH || '/usr/bin/chromium';
+    // Usar Chromium do sistema via PATH (Nixpacks coloca no PATH automaticamente)
+    const executablePath = process.env.PUPPETEER_EXECUTABLE_PATH || 'chromium';
     console.log('[Certificates] Chromium path:', executablePath);
+    
+    // Debug: descobrir path real do Chromium
+    try {
+      const { execSync } = require('child_process');
+      const whichChromium = execSync('which chromium', { encoding: 'utf-8' }).trim();
+      console.log('[Certificates] Real Chromium path (which):', whichChromium);
+    } catch (e) {
+      console.error('[Certificates] which chromium failed:', e);
+    }
     
     // Debug: verificar dependências do Chromium
     try {

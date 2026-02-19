@@ -1960,6 +1960,15 @@
 - [x] Verificar se executablePath está definido corretamente (/usr/bin/chromium)
 - [x] Confirmar que --no-sandbox está nas flags do Puppeteer
 - [x] Remover @sparticuz/chromium que baixava binário para /tmp/chromium
+- [x] Atualizar packageManager para pnpm@10.15.1
+- [x] Sincronizar pnpm-lock.yaml com pnpm install
 - [x] Fazer commit e push das alterações
 - [ ] Redeploy no Railway com Clear Cache
 - [ ] Testar geração de certificados em produção
+
+## Corrigir executablePath do Chromium para Nixpacks
+- [ ] Alterar executablePath de "/usr/bin/chromium" para "chromium"
+- [ ] Adicionar variável PUPPETEER_EXECUTABLE_PATH=chromium no Railway
+- [ ] Fazer commit e push
+- [ ] Redeploy com Clear Cache
+- [ ] Testar geração de certificados
