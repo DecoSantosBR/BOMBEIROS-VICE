@@ -1913,3 +1913,7 @@
 - [x] Verificar .dockerignore e configuração de build
 - [x] Reescrever start.js usando ES modules para compatibilidade
 - [x] Garantir que start.js seja copiado para o container
+
+## Atualizar Dockerfile.bot para Usar start.js
+- [x] Copiar start.js no Dockerfile.bot
+- [x] Atualizar CMD para usar start.js

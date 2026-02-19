@@ -19,6 +19,7 @@ RUN corepack enable \
 COPY drizzle ./drizzle
 COPY server ./server
 COPY shared ./shared
+COPY start.js ./start.js
 
 # Build do TypeScript (apenas bot)
 RUN pnpm run build:bot
@@ -27,5 +28,5 @@ RUN pnpm run build:bot
 # Mas vamos expor uma porta dummy para o Railway não reclamar
 EXPOSE 3001
 
-# Start do bot
-CMD ["node", "dist/bot-standalone.js"]
+# Start do bot (usando start.js que detecta SERVICE_TYPE)
+CMD ["node", "start.js"]
