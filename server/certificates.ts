@@ -311,10 +311,12 @@ export async function generateCertificateImage(data: CertificateData): Promise<B
   
   return await withRetry(async () => {
     // Detectar path do Chromium automaticamente
+    // Compatível com Debian 11, Debian 12 e variações
     const possiblePaths = [
       process.env.PUPPETEER_EXECUTABLE_PATH,
       "/usr/bin/chromium",
       "/usr/bin/chromium-browser",
+      "/usr/lib/chromium/chromium", // Debian 12 (node:22-slim)
     ].filter(Boolean) as string[];
     
     const executablePath = possiblePaths.find(p => existsSync(p));
@@ -324,7 +326,7 @@ export async function generateCertificateImage(data: CertificateData): Promise<B
       throw new Error("Chromium not found in container. Install chromium package.");
     }
     
-    console.log('[CERTIFICATE] Using Chromium at:', executablePath);
+    console.log('[CERTIFICATE] ✅ Using Chromium at:', executablePath);
     
     const browser = await puppeteer.launch({
       executablePath,
