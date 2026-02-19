@@ -6,14 +6,17 @@ ENV NODE_ENV=production
 
 WORKDIR /app
 
-# Instala pnpm como root
+# Instala pnpm
 RUN npm install -g pnpm@10.15.1
 
-# Copia arquivos de dependência
+# Copia dependências
 COPY package.json pnpm-lock.yaml ./
 
 # Instala dependências
 RUN pnpm install --frozen-lockfile
+
+# 🔥 Instala o Chrome que o Puppeteer precisa
+RUN npx puppeteer browsers install chrome
 
 # Copia resto do projeto
 COPY . .
