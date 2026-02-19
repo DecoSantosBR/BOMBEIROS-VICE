@@ -119,9 +119,6 @@
   },
   "packageManager": "pnpm@10.15.1",
   "pnpm": {
-    "overrides": {
-      "tailwindcss>nanoid": "3.3.7"
-    },
     "onlyBuiltDependencies": [
       "canvas"
     ]
