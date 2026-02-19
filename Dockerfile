@@ -1,10 +1,11 @@
 # Use Node.js 22 base image
 FROM node:22-slim
 
-# Enable corepack (respects packageManager field)
-RUN corepack enable
+# Enable corepack and FORCE correct pnpm version
+RUN corepack enable \
+ && corepack prepare pnpm@10.15.1 --activate
 
-# Install Chromium and all required dependencies for Puppeteer
+# Install Chromium and required dependencies for Puppeteer
 RUN apt-get update && apt-get install -y \
     chromium \
     chromium-sandbox \
@@ -39,23 +40,23 @@ RUN apt-get update && apt-get install -y \
 
 WORKDIR /app
 
-# Copy only dependency files first (better cache)
+# Copy only dependency files first (better Docker cache usage)
 COPY package.json pnpm-lock.yaml ./
 
-# Install dependencies using correct pnpm version
+# Install dependencies (frozen will now work)
 RUN pnpm install --frozen-lockfile
 
 # Copy rest of project
 COPY . .
 
-# Build
+# Build application
 RUN pnpm run build
 
-# Puppeteer config
+# Puppeteer configuration
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
 ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium
 
 EXPOSE 3000
 
-CMD
+CMD ["pnpm", "run", "start"]
 
