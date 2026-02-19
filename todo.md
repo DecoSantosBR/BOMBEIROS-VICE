@@ -1930,3 +1930,8 @@
 ## Adicionar Logs de Debug no Frontend
 - [x] Adicionar console.log no GenerateCertificateButton para diagnosticar
 - [x] Logs adicionados em todas as etapas do handleGenerateCertificate
+
+## Remover Dockerfile para Forçar Uso do Nixpacks
+- [x] Verificar se existe Dockerfile na raiz
+- [x] Remover Dockerfile (manter apenas Dockerfile.bot)
+- [ ] Fazer push e redeploy no Railway
