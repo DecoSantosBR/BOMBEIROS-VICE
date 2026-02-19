@@ -1,0 +1,30 @@
+# Dockerfile para Discord Bot Standalone
+FROM node:20-slim
+
+ENV DEBIAN_FRONTEND=noninteractive
+ENV NODE_ENV=production
+
+WORKDIR /app
+
+# 🔥 Força versão correta do pnpm
+RUN corepack enable \
+ && corepack prepare pnpm@10.15.1 --activate
+
+# Copiar arquivos de dependências
+COPY package.json pnpm-lock.yaml ./
+
+# Instalar dependências
+RUN pnpm install --frozen-lockfile
+
+# Copiar código fonte
+COPY drizzle ./drizzle
+COPY server ./server
+COPY shared ./shared
+COPY start.js ./start.js
+
+# Build apenas do bot
+RUN pnpm run build:bot
+
+EXPOSE 3001
+
+CMD ["node", "start.js"]
