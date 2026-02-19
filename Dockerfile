@@ -1,13 +1,15 @@
 FROM ghcr.io/puppeteer/puppeteer:latest
 
+USER root
+
 ENV NODE_ENV=production
 
 WORKDIR /app
 
-# Instala pnpm globalmente (sem corepack)
+# Instala pnpm como root
 RUN npm install -g pnpm@10.15.1
 
-# Copia apenas arquivos de dependência primeiro (melhor cache)
+# Copia arquivos de dependência
 COPY package.json pnpm-lock.yaml ./
 
 # Instala dependências
@@ -18,6 +20,9 @@ COPY . .
 
 # Build
 RUN pnpm run build
+
+# Volta para usuário seguro
+USER pptruser
 
 EXPOSE 3000
 
