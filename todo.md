@@ -1967,8 +1967,9 @@
 - [ ] Testar geração de certificados em produção
 
 ## Corrigir executablePath do Chromium para Nixpacks
-- [ ] Alterar executablePath de "/usr/bin/chromium" para "chromium"
-- [ ] Adicionar variável PUPPETEER_EXECUTABLE_PATH=chromium no Railway
-- [ ] Fazer commit e push
+- [x] Alterar executablePath de "/usr/bin/chromium" para "chromium"
+- [x] Adicionar log 'which chromium' para debug
+- [x] Fazer commit e push
+- [ ] Adicionar variável PUPPETEER_EXECUTABLE_PATH=chromium no Railway (opcional)
 - [ ] Redeploy com Clear Cache
 - [ ] Testar geração de certificados
