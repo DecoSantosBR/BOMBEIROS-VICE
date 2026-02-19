@@ -1,5 +1,4 @@
 import puppeteer from "puppeteer-core";
-import chromium from "@sparticuz/chromium";
 import { storagePut } from "./storage";
 import { withRetry } from "./utils/retry";
 import { ENV } from "./_core/env";
@@ -310,30 +309,16 @@ export async function generateCertificateImage(data: CertificateData): Promise<B
   });
   
   return await withRetry(async () => {
-    const executablePath = await chromium.executablePath();
-    console.log('[Certificates] Chromium path:', executablePath);
-    
-    // Debug: verificar dependências do Chromium
-    try {
-      const { execSync } = require('child_process');
-      console.log('=== LDD CHROMIUM OUTPUT ===');
-      const lddOutput = execSync('ldd /tmp/chromium', { encoding: 'utf-8' });
-      console.log(lddOutput);
-      console.log('=== END LDD OUTPUT ===');
-    } catch (e) {
-      console.error('ldd failed:', e);
-    }
+    const executablePath = process.env.PUPPETEER_EXECUTABLE_PATH || '/usr/bin/chromium';
+    console.log('[CERTIFICATE] Chromium path:', executablePath);
     
     const browser = await puppeteer.launch({
+      executablePath,
       args: [
-        ...chromium.args,
         '--no-sandbox',
         '--disable-setuid-sandbox',
         '--disable-dev-shm-usage',
-        '--single-process',
-        '--no-zygote',
       ],
-      executablePath,
       headless: true,
     });
 
