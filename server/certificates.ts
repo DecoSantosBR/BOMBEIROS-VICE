@@ -3,7 +3,6 @@ import { storagePut } from "./storage";
 import { withRetry } from "./utils/retry";
 import { ENV } from "./_core/env";
 import path from "path";
-import { execSync } from "child_process";
 
 /**
  * Interface para dados do certificado
@@ -309,31 +308,10 @@ export async function generateCertificateImage(data: CertificateData): Promise<B
   });
   
   return await withRetry(async () => {
-    // Resolver path do Chromium via sistema operacional
-    function getChromiumPath(): string {
-      try {
-        const path = execSync("which chromium", { encoding: "utf8" }).trim();
-        if (path) {
-          console.log("[CERTIFICATE] Found chromium at:", path);
-          return path;
-        }
-      } catch {}
-      
-      try {
-        const path = execSync("which chromium-browser", { encoding: "utf8" }).trim();
-        if (path) {
-          console.log("[CERTIFICATE] Found chromium-browser at:", path);
-          return path;
-        }
-      } catch {}
-      
-      throw new Error("Chromium binary not found in PATH");
-    }
-    
-    const executablePath = getChromiumPath();
+    console.log("[CERTIFICATE] Using Chromium at /usr/bin/chromium");
     
     const browser = await puppeteer.launch({
-      executablePath,
+      executablePath: "/usr/bin/chromium",
       args: [
         '--no-sandbox',
         '--disable-setuid-sandbox',

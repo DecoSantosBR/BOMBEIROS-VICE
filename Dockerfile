@@ -1,5 +1,5 @@
-# Use Node.js 22 base image
-FROM node:22-slim
+# Use Node.js 22 base image (bookworm for full Chromium support)
+FROM node:22-bookworm
 
 # Enable corepack and FORCE correct pnpm version
 RUN corepack enable \
