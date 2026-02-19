@@ -1945,5 +1945,20 @@
 - [x] Remover railway.json completamente
 - [x] Verificar se há Dockerfile.bot sendo detectado incorretamente
 - [x] Criar Dockerfile com dependências do Nixpacks para serviço web
-- [ ] Fazer commit e push
+- [x] Fazer commit e push
 - [ ] Testar deploy no Railway
+
+## Corrigir Bibliotecas do Chromium no Dockerfile
+- [ ] Atualizar Dockerfile com pacote libnspr4 correto
+- [ ] Adicionar todas as bibliotecas necessárias do Chromium
+- [ ] Testar localmente se possível
+- [ ] Fazer upload manual do Dockerfile atualizado no GitHub
+- [ ] Aguardar deploy e testar geração de certificados
+
+## Checklist Final de Otimização do Puppeteer
+- [ ] Trocar puppeteer para puppeteer-core no package.json
+- [ ] Verificar se executablePath está definido corretamente
+- [ ] Confirmar que --no-sandbox está nas flags do Puppeteer
+- [ ] Fazer commit e push das alterações
+- [ ] Redeploy no Railway com Clear Cache
+- [ ] Testar geração de certificados em produção

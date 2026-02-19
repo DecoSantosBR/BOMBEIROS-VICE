@@ -1,5 +1,5 @@
 import puppeteer from "puppeteer-core";
-import chromium from "@sparticuz/chromium";
+// import chromium from "@sparticuz/chromium"; // Removido: usando Chromium do sistema
 import { storagePut } from "./storage";
 import { withRetry } from "./utils/retry";
 import { ENV } from "./_core/env";
@@ -310,14 +310,15 @@ export async function generateCertificateImage(data: CertificateData): Promise<B
   });
   
   return await withRetry(async () => {
-    const executablePath = await chromium.executablePath();
+    // Usar Chromium instalado pelo Dockerfile
+    const executablePath = process.env.PUPPETEER_EXECUTABLE_PATH || '/usr/bin/chromium';
     console.log('[Certificates] Chromium path:', executablePath);
     
     // Debug: verificar dependências do Chromium
     try {
       const { execSync } = require('child_process');
       console.log('=== LDD CHROMIUM OUTPUT ===');
-      const lddOutput = execSync('ldd /tmp/chromium', { encoding: 'utf-8' });
+      const lddOutput = execSync(`ldd ${executablePath}`, { encoding: 'utf-8' });
       console.log(lddOutput);
       console.log('=== END LDD OUTPUT ===');
     } catch (e) {
@@ -326,12 +327,12 @@ export async function generateCertificateImage(data: CertificateData): Promise<B
     
     const browser = await puppeteer.launch({
       args: [
-        ...chromium.args,
         '--no-sandbox',
         '--disable-setuid-sandbox',
         '--disable-dev-shm-usage',
-        '--single-process',
-        '--no-zygote',
+        '--disable-gpu',
+        '--disable-software-rasterizer',
+        '--disable-dev-shm-usage',
       ],
       executablePath,
       headless: true,
