@@ -1908,3 +1908,8 @@
 ## Criar Script de Start Inteligente para Múltiplos Serviços
 - [x] Criar script start.js que detecta SERVICE_TYPE e roda o serviço correto
 - [x] Atualizar railway.json para usar o script
+
+## Corrigir Erro start.js Não Encontrado no Railway
+- [x] Verificar .dockerignore e configuração de build
+- [x] Reescrever start.js usando ES modules para compatibilidade
+- [x] Garantir que start.js seja copiado para o container

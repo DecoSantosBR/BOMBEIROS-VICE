@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 /**
- * Script de start inteligente para Railway
+ * Script de start inteligente para Railway (ES Module)
  * Detecta qual serviço rodar baseado na variável de ambiente SERVICE_TYPE
  * 
  * Uso:
@@ -9,8 +9,12 @@
  * - Serviço Bot: SERVICE_TYPE=bot node start.js
  */
 
-const { spawn } = require('child_process');
-const path = require('path');
+import { spawn } from 'child_process';
+import { fileURLToPath } from 'url';
+import { dirname, join } from 'path';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 const SERVICE_TYPE = process.env.SERVICE_TYPE || 'web';
 
@@ -25,10 +29,10 @@ console.log('='.repeat(60));
 let scriptPath;
 
 if (SERVICE_TYPE === 'bot') {
-  scriptPath = path.join(__dirname, 'dist', 'bot-standalone.js');
+  scriptPath = join(__dirname, 'dist', 'bot-standalone.js');
   console.log('🤖 Starting Discord Bot...');
 } else {
-  scriptPath = path.join(__dirname, 'dist', 'index.js');
+  scriptPath = join(__dirname, 'dist', 'index.js');
   console.log('🌐 Starting Web Server...');
 }
 
