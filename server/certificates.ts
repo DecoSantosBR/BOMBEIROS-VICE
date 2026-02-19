@@ -1,4 +1,4 @@
-import puppeteer from "puppeteer";
+import puppeteer from "puppeteer-core"
 import { storagePut } from "./storage";
 import { withRetry } from "./utils/retry";
 import { ENV } from "./_core/env";
