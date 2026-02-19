@@ -38,6 +38,11 @@ RUN apt-get update && apt-get install -y \
     xdg-utils \
     && rm -rf /var/lib/apt/lists/*
 
+# Debug: Find Chromium binary location
+RUN which chromium || true
+RUN which chromium-browser || true
+RUN ls -l /usr/bin | grep chrom
+
 WORKDIR /app
 
 # Copy only dependency files first (better Docker cache usage)

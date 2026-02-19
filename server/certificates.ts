@@ -4,6 +4,7 @@ import { withRetry } from "./utils/retry";
 import { ENV } from "./_core/env";
 import path from "path";
 import fs from "fs";
+import { existsSync } from "fs";
 
 /**
  * Interface para dados do certificado
@@ -309,8 +310,21 @@ export async function generateCertificateImage(data: CertificateData): Promise<B
   });
   
   return await withRetry(async () => {
-    const executablePath = process.env.PUPPETEER_EXECUTABLE_PATH || '/usr/bin/chromium';
-    console.log('[CERTIFICATE] Chromium path:', executablePath);
+    // Detectar path do Chromium automaticamente
+    const possiblePaths = [
+      process.env.PUPPETEER_EXECUTABLE_PATH,
+      "/usr/bin/chromium",
+      "/usr/bin/chromium-browser",
+    ].filter(Boolean) as string[];
+    
+    const executablePath = possiblePaths.find(p => existsSync(p));
+    
+    if (!executablePath) {
+      console.error('[CERTIFICATE] Chromium not found. Tried paths:', possiblePaths);
+      throw new Error("Chromium not found in container. Install chromium package.");
+    }
+    
+    console.log('[CERTIFICATE] Using Chromium at:', executablePath);
     
     const browser = await puppeteer.launch({
       executablePath,
