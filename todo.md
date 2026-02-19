@@ -1917,3 +1917,7 @@
 ## Atualizar Dockerfile.bot para Usar start.js
 - [x] Copiar start.js no Dockerfile.bot
 - [x] Atualizar CMD para usar start.js
+
+## Corrigir Build e Start do Serviço WEB
+- [x] Corrigir script start no package.json para usar import() dinâmico
+- [x] Remover startCommand do railway.json para usar configuração do nixpacks.toml
