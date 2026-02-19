@@ -4,6 +4,7 @@ import { withRetry } from "./utils/retry";
 import { ENV } from "./_core/env";
 import path from "path";
 import fs from "fs";
+import { execSync } from "child_process";
 
 /**
  * Interface para dados do certificado
@@ -309,26 +310,39 @@ export async function generateCertificateImage(data: CertificateData): Promise<B
   });
   
   return await withRetry(async () => {
-    // Resolver path do Chromium com fallback para PATH
+    // Resolver path do Chromium usando which (mais confiável)
     function resolveChromiumPath(): string {
-      const possiblePaths = [
-        process.env.PUPPETEER_EXECUTABLE_PATH,
-        "/usr/bin/chromium",
-        "/usr/bin/chromium-browser",
-        "/usr/lib/chromium/chromium",
-      ].filter(Boolean) as string[];
-      
-      for (const path of possiblePaths) {
+      // Tentar variável de ambiente primeiro
+      if (process.env.PUPPETEER_EXECUTABLE_PATH) {
         try {
-          fs.accessSync(path);
-          console.log("[CERTIFICATE] ✅ Chromium found at:", path);
-          return path;
+          fs.accessSync(process.env.PUPPETEER_EXECUTABLE_PATH);
+          console.log("[CERTIFICATE] ✅ Using env PUPPETEER_EXECUTABLE_PATH:", process.env.PUPPETEER_EXECUTABLE_PATH);
+          return process.env.PUPPETEER_EXECUTABLE_PATH;
         } catch {}
       }
       
-      // Fallback absoluto - deixa o sistema resolver via PATH
-      console.log("[CERTIFICATE] ⚠️ Falling back to 'chromium' in PATH");
-      return "chromium";
+      // Tentar descobrir via which chromium
+      try {
+        const path = execSync("which chromium", { encoding: "utf8" }).trim();
+        if (path) {
+          console.log("[CERTIFICATE] ✅ Found chromium at:", path);
+          return path;
+        }
+      } catch {}
+      
+      // Tentar descobrir via which chromium-browser
+      try {
+        const path = execSync("which chromium-browser", { encoding: "utf8" }).trim();
+        if (path) {
+          console.log("[CERTIFICATE] ✅ Found chromium-browser at:", path);
+          return path;
+        }
+      } catch {}
+      
+      // Fallback para Debian 12 comum
+      const fallback = "/usr/lib/chromium/chromium";
+      console.log("[CERTIFICATE] ⚠️ Using fallback path:", fallback);
+      return fallback;
     }
     
     const executablePath = resolveChromiumPath();
