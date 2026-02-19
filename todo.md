@@ -1956,9 +1956,10 @@
 - [ ] Aguardar deploy e testar geração de certificados
 
 ## Checklist Final de Otimização do Puppeteer
-- [ ] Trocar puppeteer para puppeteer-core no package.json
-- [ ] Verificar se executablePath está definido corretamente
-- [ ] Confirmar que --no-sandbox está nas flags do Puppeteer
-- [ ] Fazer commit e push das alterações
+- [x] Trocar puppeteer para puppeteer-core no package.json
+- [x] Verificar se executablePath está definido corretamente (/usr/bin/chromium)
+- [x] Confirmar que --no-sandbox está nas flags do Puppeteer
+- [x] Remover @sparticuz/chromium que baixava binário para /tmp/chromium
+- [x] Fazer commit e push das alterações
 - [ ] Redeploy no Railway com Clear Cache
 - [ ] Testar geração de certificados em produção
