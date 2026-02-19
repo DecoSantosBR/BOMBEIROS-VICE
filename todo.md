@@ -1921,3 +1921,12 @@
 ## Corrigir Build e Start do Serviço WEB
 - [x] Corrigir script start no package.json para usar import() dinâmico
 - [x] Remover startCommand do railway.json para usar configuração do nixpacks.toml
+
+## Corrigir Build do Frontend (Vite) no Railway
+- [ ] Verificar configuração do vite.config.ts (outDir)
+- [ ] Garantir que vite build gera arquivos em server/_core/public
+- [ ] Testar build localmente
+
+## Adicionar Logs de Debug no Frontend
+- [x] Adicionar console.log no GenerateCertificateButton para diagnosticar
+- [x] Logs adicionados em todas as etapas do handleGenerateCertificate

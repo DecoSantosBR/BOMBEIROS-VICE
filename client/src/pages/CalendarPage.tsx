@@ -808,16 +808,23 @@ function GenerateCertificateButton({ enrollment, eventTitle }: { enrollment: any
   });
 
   const handleGenerateCertificate = () => {
+    console.log("[FRONTEND] Botão Emitir Certificado clicado");
+    console.log("[FRONTEND] Enrollment data:", enrollment.user);
+    console.log("[FRONTEND] Current user:", currentUser);
+
     if (!enrollment.user?.name || !enrollment.user?.studentId) {
+      console.error("[FRONTEND] Dados do aluno incompletos");
       toast.error("Dados do aluno incompletos");
       return;
     }
 
     if (!currentUser?.name || !currentUser?.rank) {
+      console.error("[FRONTEND] Dados do instrutor incompletos");
       toast.error("Dados do instrutor incompletos");
       return;
     }
 
+    console.log("[FRONTEND] Chamando mutation generateAndDownload...");
     setIsGenerating(true);
     generateCertificate.mutate({
       studentName: enrollment.user.name,
