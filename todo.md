@@ -1937,6 +1937,13 @@
 - [x] Fazer push e redeploy no Railway
 
 ## Remover Builder do railway.json para Permitir Detecção Automática
-- [ ] Remover campo "builder" do railway.json
-- [ ] Fazer push e aguardar deploy automático
+- [x] Remover campo "builder" do railway.json
+- [x] Fazer push e aguardar deploy automático
 - [ ] Verificar se Railway detecta Nixpacks automaticamente
+
+## Investigar e Corrigir Detecção de Builder no Railway
+- [x] Remover railway.json completamente
+- [x] Verificar se há Dockerfile.bot sendo detectado incorretamente
+- [x] Criar Dockerfile com dependências do Nixpacks para serviço web
+- [ ] Fazer commit e push
+- [ ] Testar deploy no Railway
