@@ -38,10 +38,11 @@ RUN apt-get update && apt-get install -y \
     xdg-utils \
     && rm -rf /var/lib/apt/lists/*
 
-# Debug: Find Chromium binary location
+# Debug: Find Chromium binary location (TEMPORARY)
 RUN which chromium || true
 RUN which chromium-browser || true
-RUN ls -l /usr/bin | grep chrom
+RUN ls -la /usr/bin | grep chrom || true
+RUN ls -la /usr/lib/chromium || true
 
 WORKDIR /app
 
