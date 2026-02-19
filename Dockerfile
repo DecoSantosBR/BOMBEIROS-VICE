@@ -8,7 +8,6 @@ RUN corepack enable \
 # Install Chromium and required dependencies for Puppeteer
 RUN apt-get update && apt-get install -y \
     chromium \
-    chromium-driver \
     chromium-sandbox \
     fonts-liberation \
     libasound2 \
@@ -39,15 +38,8 @@ RUN apt-get update && apt-get install -y \
     xdg-utils \
     && rm -rf /var/lib/apt/lists/*
 
-# Debug: Find Chromium binary location (TEMPORARY)
-RUN echo "=== Searching for Chromium binaries ==="
-RUN which chromium || true
-RUN which chromium-browser || true
-RUN ls -la /usr/bin | grep chrom || true
-RUN ls -la /usr/lib/chromium 2>/dev/null || true
-RUN find /usr -name chromium -type f 2>/dev/null || true
-RUN find /usr -name chromium-browser -type f 2>/dev/null || true
-RUN echo "=== End of Chromium search ==="
+# Verify Chromium installation
+RUN chromium --version
 
 WORKDIR /app
 
