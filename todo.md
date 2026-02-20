@@ -1937,4 +1937,6 @@
 - [ ] Fazer push e redeploy no Railway
 
 ## Fase Atual: Debug OAuth Railway
-- [ ] Adicionar logs de debug no callback OAuth para investigar NEXTAUTH_SECRET vazio
+- [x] Adicionar logs de debug no callback OAuth para investigar NEXTAUTH_SECRET vazio
+- [x] Corrigir env.ts para usar NEXTAUTH_SECRET ao invés de JWT_SECRET
+- [x] Adicionar validação fail-fast para NEXTAUTH_SECRET
