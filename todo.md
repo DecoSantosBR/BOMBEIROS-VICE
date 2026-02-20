@@ -1934,9 +1934,16 @@
 ## Remover Dockerfile para Forçar Uso do Nixpacks
 - [x] Verificar se existe Dockerfile na raiz
 - [x] Remover Dockerfile (manter apenas Dockerfile.bot)
-- [ ] Fazer push e redeploy no Railway
+- [x] Fazer push e redeploy no Railway
 
-## Fase Atual: Debug OAuth Railway
+## Fase Atual: Deploy e Testes Finais
+- [x] Trocar evento Discord 'ready' por 'clientReady'
+- [x] Push de todas correções para GitHub
+- [ ] Fazer publish no Manus com código atualizado
+- [ ] Testar login pelo Discord no Manus
+- [ ] Testar geração de certificado no Manus
+
+## Fase Anterior: Debug OAuth Railway
 - [x] Adicionar logs de debug no callback OAuth para investigar NEXTAUTH_SECRET vazio
 - [x] Corrigir env.ts para usar NEXTAUTH_SECRET ao invés de JWT_SECRET
 - [x] Adicionar validação fail-fast para NEXTAUTH_SECRET
