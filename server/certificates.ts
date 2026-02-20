@@ -3,6 +3,7 @@ import { storagePut } from "./storage";
 import { withRetry } from "./utils/retry";
 import { ENV } from "./_core/env";
 import path from "path";
+import { execSync } from "node:child_process";
 
 /**
  * Interface para dados do certificado
@@ -309,6 +310,24 @@ export async function generateCertificateImage(data: CertificateData): Promise<B
   
   return await withRetry(async () => {
     console.log("[CERTIFICATE] Launching Chromium via Puppeteer official image");
+    
+    console.log("=== DEBUG CHROME ===");
+    try {
+      console.log("which chromium:", execSync("which chromium").toString());
+    } catch (e) {
+      console.log("chromium not found");
+    }
+    try {
+      console.log("which chromium-browser:", execSync("which chromium-browser").toString());
+    } catch (e) {
+      console.log("chromium-browser not found");
+    }
+    try {
+      console.log("which google-chrome:", execSync("which google-chrome").toString());
+    } catch (e) {
+      console.log("google-chrome not found");
+    }
+    console.log("=== END DEBUG ===");
     
     const browser = await puppeteer.launch({
       executablePath: "/usr/bin/chromium",
