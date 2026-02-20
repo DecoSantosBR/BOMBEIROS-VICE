@@ -1952,5 +1952,12 @@
 - [x] Certificado gerado com sucesso (fontes, logo, layout)
 - [x] Identificar quais textos precisam ser reposicionados (todos +60px)
 - [x] Ajustar coordenadas no certificates.ts
-- [ ] Testar novo certificado gerado
-- [ ] Salvar checkpoint final
+- [x] Testar novo certificado gerado
+- [x] Salvar checkpoint final
+
+## Limpeza e Ajustes de Cursos
+- [x] Identificar cursos de teste no banco de dados (4 cursos "Curso de Teste para Certificado")
+- [x] Remover 4 cards de cursos de teste (IDs: test-course-cert-*)
+- [x] Renomear curso "Formação de Oficiais" para "Unidade Resgate" com valor R$ 300.000
+- [ ] Verificar alterações na interface
+- [ ] Salvar checkpoint

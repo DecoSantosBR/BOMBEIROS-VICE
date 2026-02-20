@@ -1,0 +1,16 @@
+{
+  "query": "SELECT id, nome, descricao, imageUrl FROM courses WHERE imageUrl LIKE '%Curso%Teste%' OR descricao LIKE '%teste%' OR nome LIKE '%Test%';",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 44TTARZqZm4zxSK.9ce58a8ab24b --database mpF46NADk5NFevEEQ9e39Y --execute SELECT id, nome, descricao, imageUrl FROM courses WHERE imageUrl LIKE '%Curso%Teste%' OR descricao LIKE '%teste%' OR nome LIKE '%Test%';",
+  "rows": [
+    {
+      "id": "de82e289-986f-41e4-a37a-91480f9b0b96",
+      "nome": "TAF",
+      "descricao": "Teste de Aptidão Física",
+      "imageUrl": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663187653950/VdQPQZDJyeHrpBIi.jfif"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\tnome\tdescricao\timageUrl\nde82e289-986f-41e4-a37a-91480f9b0b96\tTAF\tTeste de Aptidão Física\thttps://files.manuscdn.com/user_upload_by_module/session_file/310519663187653950/VdQPQZDJyeHrpBIi.jfif\n",
+  "stderr": "",
+  "execution_time_ms": 359
+}

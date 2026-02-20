@@ -1,0 +1,88 @@
+{
+  "query": "SELECT id, nome, descricao, imageUrl FROM courses ORDER BY nome;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 44TTARZqZm4zxSK.9ce58a8ab24b --database mpF46NADk5NFevEEQ9e39Y --execute SELECT id, nome, descricao, imageUrl FROM courses ORDER BY nome;",
+  "rows": [
+    {
+      "id": "b44bb5a7-05b6-4835-9ca0-2c1484e92ea3",
+      "nome": "Aerovidas",
+      "descricao": "Curso de Aerovidas",
+      "imageUrl": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663187653950/NVRPPaBNLCrIdSnp.jfif"
+    },
+    {
+      "id": "a28d3c01-8ba9-4cce-af72-34afee87e5cb",
+      "nome": "Águia Avançado",
+      "descricao": "Curso Águia Avançado",
+      "imageUrl": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663187653950/DaxsEueLupkVNVUU.avif"
+    },
+    {
+      "id": "2dfb39ab-7a4a-410b-be59-586d62bc8fa0",
+      "nome": "Instrutor Águia",
+      "descricao": "Curso de Instrutor Águia",
+      "imageUrl": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663187653950/SvcwGRBnNbnNGfKH.jpg"
+    },
+    {
+      "id": "fab4abf5-3f3e-46af-9b57-e04d438ea904",
+      "nome": "Instrutor MOB",
+      "descricao": "Curso de Instrutor MOB",
+      "imageUrl": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663187653950/ioowrRznySRVFjZu.jpg"
+    },
+    {
+      "id": "bafe7d35-c5a9-4463-9664-1be3456bc3dd",
+      "nome": "Mergulho",
+      "descricao": "Curso de Mergulho",
+      "imageUrl": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663187653950/UkWGMHHmoppDRNmr.jpg"
+    },
+    {
+      "id": "fdc8685f-d9b6-45b0-8932-3b9c96cf1fcf",
+      "nome": "MOB",
+      "descricao": "Curso de Operações Básicas",
+      "imageUrl": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663187653950/MIMOdIBfZwjIabfa.png"
+    },
+    {
+      "id": "6f1ff74b-2dad-4126-83e2-38db3af01fa8",
+      "nome": "Modulação e Conduta",
+      "descricao": "Curso de Modulação e Conduta",
+      "imageUrl": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663187653950/DljeINXyuArxlMxW.jpeg"
+    },
+    {
+      "id": "789fbd9e-4da9-40d2-ba35-b368cd708d74",
+      "nome": "Paraquedismo",
+      "descricao": "Curso de Paraquedismo",
+      "imageUrl": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663187653950/WGfuYcibrhaLZwAI.jpg"
+    },
+    {
+      "id": "9b69103c-81bc-45ea-89e2-e9d98f880320",
+      "nome": "Paraquedismo Avançado",
+      "descricao": "Curso de Paraquedismo Avançado",
+      "imageUrl": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663187653950/aqFKHIpUmPopwrHO.jpg"
+    },
+    {
+      "id": "0810343b-7691-4950-bd49-1280218ba4d4",
+      "nome": "Resgate Montanha",
+      "descricao": "Curso de Resgate em Montanha",
+      "imageUrl": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663187653950/wIlDUllYiSXZEPrN.jpg"
+    },
+    {
+      "id": "12b8409a-e7be-4237-83be-1ee303f94564",
+      "nome": "Resgate Montanha Avançado",
+      "descricao": "Curso de Resgate em Montanha Avançado",
+      "imageUrl": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663187653950/LLGPGOEHOOtEVbqR.jpg"
+    },
+    {
+      "id": "de82e289-986f-41e4-a37a-91480f9b0b96",
+      "nome": "TAF",
+      "descricao": "Teste de Aptidão Física",
+      "imageUrl": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663187653950/VdQPQZDJyeHrpBIi.jfif"
+    },
+    {
+      "id": "bca19a55-ff80-43eb-91a4-ff7270028527",
+      "nome": "Unidade Resgate",
+      "descricao": "Curso de Unidade Resgate - Maverick",
+      "imageUrl": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663187653950/TREJdxhAQINqlQlY.jpeg"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\tnome\tdescricao\timageUrl\nb44bb5a7-05b6-4835-9ca0-2c1484e92ea3\tAerovidas\tCurso de Aerovidas\thttps://files.manuscdn.com/user_upload_by_module/session_file/310519663187653950/NVRPPaBNLCrIdSnp.jfif\na28d3c01-8ba9-4cce-af72-34afee87e5cb\tÁguia Avançado\tCurso Águia Avançado\thttps://files.manuscdn.com/user_upload_by_module/session_file/310519663187653950/DaxsEueLupkVNVUU.avif\n2dfb39ab-7a4a-410b-be59-586d62bc8fa0\tInstrutor Águia\tCurso de Instrutor Águia\thttps://files.manuscdn.com/user_upload_by_module/session_file/310519663187653950/SvcwGRBnNbnNGfKH.jpg\nfab4abf5-3f3e-46af-9b57-e04d438ea904\tInstrutor MOB\tCurso de Instrutor MOB\thttps://files.manuscdn.com/user_upload_by_module/session_file/310519663187653950/ioowrRznySRVFjZu.jpg\nbafe7d35-c5a9-4463-9664-1be3456bc3dd\tMergulho\tCurso de Mergulho\thttps://files.manuscdn.com/user_upload_by_module/session_file/310519663187653950/UkWGMHHmoppDRNmr.jpg\nfdc8685f-d9b6-45b0-8932-3b9c96cf1fcf\tMOB\tCurso de Operações Básicas\thttps://files.manuscdn.com/user_upload_by_module/session_file/310519663187653950/MIMOdIBfZwjIabfa.png\n6f1ff74b-2dad-4126-83e2-38db3af01fa8\tModulação e Conduta\tCurso de Modulação e Conduta\thttps://files.manuscdn.com/user_upload_by_module/session_file/310519663187653950/DljeINXyuArxlMxW.jpeg\n789fbd9e-4da9-40d2-ba35-b368cd708d74\tParaquedismo\tCurso de Paraquedismo\thttps://files.manuscdn.com/user_upload_by_module/session_file/310519663187653950/WGfuYcibrhaLZwAI.jpg\n9b69103c-81bc-45ea-89e2-e9d98f880320\tParaquedismo Avançado\tCurso de Paraquedismo Avançado\thttps://files.manuscdn.com/user_upload_by_module/session_file/310519663187653950/aqFKHIpUmPopwrHO.jpg\n0810343b-7691-4950-bd49-1280218ba4d4\tResgate Montanha\tCurso de Resgate em Montanha\thttps://files.manuscdn.com/user_upload_by_module/session_file/310519663187653950/wIlDUllYiSXZEPrN.jpg\n12b8409a-e7be-4237-83be-1ee303f94564\tResgate Montanha Avançado\tCurso de Resgate em Montanha Avançado\thttps://files.manuscdn.com/user_upload_by_module/session_file/310519663187653950/LLGPGOEHOOtEVbqR.jpg\nde82e289-986f-41e4-a37a-91480f9b0b96\tTAF\tTeste de Aptidão Física\thttps://files.manuscdn.com/user_upload_by_module/session_file/310519663187653950/VdQPQZDJyeHrpBIi.jfif\nbca19a55-ff80-43eb-91a4-ff7270028527\tUnidade Resgate\tCurso de Unidade Resgate - Maverick\thttps://files.manuscdn.com/user_upload_by_module/session_file/310519663187653950/TREJdxhAQINqlQlY.jpeg\n",
+  "stderr": "",
+  "execution_time_ms": 347
+}

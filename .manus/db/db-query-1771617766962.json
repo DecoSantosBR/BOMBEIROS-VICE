@@ -1,0 +1,13 @@
+{
+  "query": "SELECT COUNT(*) as total FROM courses;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 44TTARZqZm4zxSK.9ce58a8ab24b --database mpF46NADk5NFevEEQ9e39Y --execute SELECT COUNT(*) as total FROM courses;",
+  "rows": [
+    {
+      "total": "13"
+    }
+  ],
+  "messages": [],
+  "stdout": "total\n13\n",
+  "stderr": "",
+  "execution_time_ms": 350
+}

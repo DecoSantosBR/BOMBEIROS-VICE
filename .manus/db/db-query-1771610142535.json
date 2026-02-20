@@ -1,0 +1,140 @@
+{
+  "query": "SELECT * FROM courses ORDER BY createdAt DESC LIMIT 15;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 44TTARZqZm4zxSK.9ce58a8ab24b --database mpF46NADk5NFevEEQ9e39Y --execute SELECT * FROM courses ORDER BY createdAt DESC LIMIT 15;",
+  "rows": [
+    {
+      "id": "12b8409a-e7be-4237-83be-1ee303f94564",
+      "nome": "Resgate Montanha Avançado",
+      "descricao": "Curso de Resgate em Montanha Avançado",
+      "valor": "500000",
+      "requisitos": "Resgate Montanha",
+      "imageUrl": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663187653950/LLGPGOEHOOtEVbqR.jpg",
+      "createdAt": "2026-02-14 22:30:30",
+      "updatedAt": "2026-02-14 22:30:30"
+    },
+    {
+      "id": "2dfb39ab-7a4a-410b-be59-586d62bc8fa0",
+      "nome": "Instrutor Águia",
+      "descricao": "Curso de Instrutor Águia",
+      "valor": "600000",
+      "requisitos": "Águia Avançado",
+      "imageUrl": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663187653950/SvcwGRBnNbnNGfKH.jpg",
+      "createdAt": "2026-02-14 22:30:30",
+      "updatedAt": "2026-02-14 22:30:30"
+    },
+    {
+      "id": "6f1ff74b-2dad-4126-83e2-38db3af01fa8",
+      "nome": "Modulação e Conduta",
+      "descricao": "Curso de Modulação e Conduta",
+      "valor": "0",
+      "requisitos": "Nenhum",
+      "imageUrl": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663187653950/DljeINXyuArxlMxW.jpeg",
+      "createdAt": "2026-02-14 22:30:30",
+      "updatedAt": "2026-02-14 22:30:30"
+    },
+    {
+      "id": "789fbd9e-4da9-40d2-ba35-b368cd708d74",
+      "nome": "Paraquedismo",
+      "descricao": "Curso de Paraquedismo",
+      "valor": "250000",
+      "requisitos": "MOB",
+      "imageUrl": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663187653950/WGfuYcibrhaLZwAI.jpg",
+      "createdAt": "2026-02-14 22:30:30",
+      "updatedAt": "2026-02-14 22:30:30"
+    },
+    {
+      "id": "9b69103c-81bc-45ea-89e2-e9d98f880320",
+      "nome": "Paraquedismo Avançado",
+      "descricao": "Curso de Paraquedismo Avançado",
+      "valor": "500000",
+      "requisitos": "Paraquedismo",
+      "imageUrl": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663187653950/aqFKHIpUmPopwrHO.jpg",
+      "createdAt": "2026-02-14 22:30:30",
+      "updatedAt": "2026-02-14 22:30:30"
+    },
+    {
+      "id": "a28d3c01-8ba9-4cce-af72-34afee87e5cb",
+      "nome": "Águia Avançado",
+      "descricao": "Curso Águia Avançado",
+      "valor": "400000",
+      "requisitos": "Aerovidas",
+      "imageUrl": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663187653950/DaxsEueLupkVNVUU.avif",
+      "createdAt": "2026-02-14 22:30:30",
+      "updatedAt": "2026-02-14 22:30:30"
+    },
+    {
+      "id": "b44bb5a7-05b6-4835-9ca0-2c1484e92ea3",
+      "nome": "Aerovidas",
+      "descricao": "Curso de Aerovidas",
+      "valor": "300000",
+      "requisitos": "MOB",
+      "imageUrl": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663187653950/NVRPPaBNLCrIdSnp.jfif",
+      "createdAt": "2026-02-14 22:30:30",
+      "updatedAt": "2026-02-14 22:30:30"
+    },
+    {
+      "id": "bafe7d35-c5a9-4463-9664-1be3456bc3dd",
+      "nome": "Mergulho",
+      "descricao": "Curso de Mergulho",
+      "valor": "0",
+      "requisitos": "MOB",
+      "imageUrl": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663187653950/UkWGMHHmoppDRNmr.jpg",
+      "createdAt": "2026-02-14 22:30:30",
+      "updatedAt": "2026-02-14 22:30:30"
+    },
+    {
+      "id": "bca19a55-ff80-43eb-91a4-ff7270028527",
+      "nome": "Unidade Resgate",
+      "descricao": "Curso de Unidade Resgate - Maverick",
+      "valor": "300000",
+      "requisitos": "MOB",
+      "imageUrl": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663187653950/TREJdxhAQINqlQlY.jpeg",
+      "createdAt": "2026-02-14 22:30:30",
+      "updatedAt": "2026-02-14 22:30:30"
+    },
+    {
+      "id": "de82e289-986f-41e4-a37a-91480f9b0b96",
+      "nome": "TAF",
+      "descricao": "Teste de Aptidão Física",
+      "valor": "0",
+      "requisitos": "Nenhum",
+      "imageUrl": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663187653950/VdQPQZDJyeHrpBIi.jfif",
+      "createdAt": "2026-02-14 22:30:30",
+      "updatedAt": "2026-02-14 22:30:30"
+    },
+    {
+      "id": "fab4abf5-3f3e-46af-9b57-e04d438ea904",
+      "nome": "Instrutor MOB",
+      "descricao": "Curso de Instrutor MOB",
+      "valor": "600000",
+      "requisitos": "MOB",
+      "imageUrl": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663187653950/ioowrRznySRVFjZu.jpg",
+      "createdAt": "2026-02-14 22:30:30",
+      "updatedAt": "2026-02-14 22:30:30"
+    },
+    {
+      "id": "fdc8685f-d9b6-45b0-8932-3b9c96cf1fcf",
+      "nome": "MOB",
+      "descricao": "Curso de Operações Básicas",
+      "valor": "200000",
+      "requisitos": "TAF, Modulação e Conduta",
+      "imageUrl": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663187653950/MIMOdIBfZwjIabfa.png",
+      "createdAt": "2026-02-14 22:30:30",
+      "updatedAt": "2026-02-14 22:30:30"
+    },
+    {
+      "id": "0810343b-7691-4950-bd49-1280218ba4d4",
+      "nome": "Resgate Montanha",
+      "descricao": "Curso de Resgate em Montanha",
+      "valor": "300000",
+      "requisitos": "MOB",
+      "imageUrl": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663187653950/wIlDUllYiSXZEPrN.jpg",
+      "createdAt": "2026-02-14 22:30:30",
+      "updatedAt": "2026-02-14 22:30:30"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\tnome\tdescricao\tvalor\trequisitos\timageUrl\tcreatedAt\tupdatedAt\n12b8409a-e7be-4237-83be-1ee303f94564\tResgate Montanha Avançado\tCurso de Resgate em Montanha Avançado\t500000\tResgate Montanha\thttps://files.manuscdn.com/user_upload_by_module/session_file/310519663187653950/LLGPGOEHOOtEVbqR.jpg\t2026-02-14 22:30:30\t2026-02-14 22:30:30\n2dfb39ab-7a4a-410b-be59-586d62bc8fa0\tInstrutor Águia\tCurso de Instrutor Águia\t600000\tÁguia Avançado\thttps://files.manuscdn.com/user_upload_by_module/session_file/310519663187653950/SvcwGRBnNbnNGfKH.jpg\t2026-02-14 22:30:30\t2026-02-14 22:30:30\n6f1ff74b-2dad-4126-83e2-38db3af01fa8\tModulação e Conduta\tCurso de Modulação e Conduta\t0\tNenhum\thttps://files.manuscdn.com/user_upload_by_module/session_file/310519663187653950/DljeINXyuArxlMxW.jpeg\t2026-02-14 22:30:30\t2026-02-14 22:30:30\n789fbd9e-4da9-40d2-ba35-b368cd708d74\tParaquedismo\tCurso de Paraquedismo\t250000\tMOB\thttps://files.manuscdn.com/user_upload_by_module/session_file/310519663187653950/WGfuYcibrhaLZwAI.jpg\t2026-02-14 22:30:30\t2026-02-14 22:30:30\n9b69103c-81bc-45ea-89e2-e9d98f880320\tParaquedismo Avançado\tCurso de Paraquedismo Avançado\t500000\tParaquedismo\thttps://files.manuscdn.com/user_upload_by_module/session_file/310519663187653950/aqFKHIpUmPopwrHO.jpg\t2026-02-14 22:30:30\t2026-02-14 22:30:30\na28d3c01-8ba9-4cce-af72-34afee87e5cb\tÁguia Avançado\tCurso Águia Avançado\t400000\tAerovidas\thttps://files.manuscdn.com/user_upload_by_module/session_file/310519663187653950/DaxsEueLupkVNVUU.avif\t2026-02-14 22:30:30\t2026-02-14 22:30:30\nb44bb5a7-05b6-4835-9ca0-2c1484e92ea3\tAerovidas\tCurso de Aerovidas\t300000\tMOB\thttps://files.manuscdn.com/user_upload_by_module/session_file/310519663187653950/NVRPPaBNLCrIdSnp.jfif\t2026-02-14 22:30:30\t2026-02-14 22:30:30\nbafe7d35-c5a9-4463-9664-1be3456bc3dd\tMergulho\tCurso de Mergulho\t0\tMOB\thttps://files.manuscdn.com/user_upload_by_module/session_file/310519663187653950/UkWGMHHmoppDRNmr.jpg\t2026-02-14 22:30:30\t2026-02-14 22:30:30\nbca19a55-ff80-43eb-91a4-ff7270028527\tUnidade Resgate\tCurso de Unidade Resgate - Maverick\t300000\tMOB\thttps://files.manuscdn.com/user_upload_by_module/session_file/310519663187653950/TREJdxhAQINqlQlY.jpeg\t2026-02-14 22:30:30\t2026-02-14 22:30:30\nde82e289-986f-41e4-a37a-91480f9b0b96\tTAF\tTeste de Aptidão Física\t0\tNenhum\thttps://files.manuscdn.com/user_upload_by_module/session_file/310519663187653950/VdQPQZDJyeHrpBIi.jfif\t2026-02-14 22:30:30\t2026-02-14 22:30:30\nfab4abf5-3f3e-46af-9b57-e04d438ea904\tInstrutor MOB\tCurso de Instrutor MOB\t600000\tMOB\thttps://files.manuscdn.com/user_upload_by_module/session_file/310519663187653950/ioowrRznySRVFjZu.jpg\t2026-02-14 22:30:30\t2026-02-14 22:30:30\nfdc8685f-d9b6-45b0-8932-3b9c96cf1fcf\tMOB\tCurso de Operações Básicas\t200000\tTAF, Modulação e Conduta\thttps://files.manuscdn.com/user_upload_by_module/session_file/310519663187653950/MIMOdIBfZwjIabfa.png\t2026-02-14 22:30:30\t2026-02-14 22:30:30\n0810343b-7691-4950-bd49-1280218ba4d4\tResgate Montanha\tCurso de Resgate em Montanha\t300000\tMOB\thttps://files.manuscdn.com/user_upload_by_module/session_file/310519663187653950/wIlDUllYiSXZEPrN.jpg\t2026-02-14 22:30:30\t2026-02-14 22:30:30\n",
+  "stderr": "",
+  "execution_time_ms": 357
+}
