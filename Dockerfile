@@ -1,4 +1,4 @@
-# Force rebuild: 2026-02-20-00:10-nixpkgs
+# Force rebuild: 2026-02-20-00:15-autodetect
 FROM node:22-slim
 
 ENV NODE_ENV=production

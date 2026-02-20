@@ -308,10 +308,9 @@ export async function generateCertificateImage(data: CertificateData): Promise<B
   });
   
   return await withRetry(async () => {
-    console.log("[CERTIFICATE] Launching Chromium from Nix PATH");
+    console.log("[CERTIFICATE] Launching Chromium via Nix PATH (auto-detect)");
     
     const browser = await puppeteer.launch({
-      executablePath: "chromium",
       headless: true,
       args: ["--no-sandbox", "--disable-setuid-sandbox"],
     });
