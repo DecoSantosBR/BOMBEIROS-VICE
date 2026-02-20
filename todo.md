@@ -1935,3 +1935,6 @@
 - [x] Verificar se existe Dockerfile na raiz
 - [x] Remover Dockerfile (manter apenas Dockerfile.bot)
 - [ ] Fazer push e redeploy no Railway
+
+## Fase Atual: Debug OAuth Railway
+- [ ] Adicionar logs de debug no callback OAuth para investigar NEXTAUTH_SECRET vazio

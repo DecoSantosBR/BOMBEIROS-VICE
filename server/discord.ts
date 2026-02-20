@@ -133,6 +133,9 @@ export async function handleDiscordCallback(req: Request, res: Response) {
 
   try {
     console.log("[Discord OAuth] Iniciando callback...");
+    console.log("NEXTAUTH_SECRET length:", process.env.NEXTAUTH_SECRET?.length);
+    console.log("JWT_SECRET length:", process.env.JWT_SECRET?.length);
+    console.log("SERVICE_TYPE:", process.env.SERVICE_TYPE);
     console.log("[Discord OAuth] Code recebido:", code.substring(0, 10) + "...");
     
     // Trocar código por access token
