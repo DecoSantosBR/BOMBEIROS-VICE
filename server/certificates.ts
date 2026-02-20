@@ -18,7 +18,6 @@ try {
     { path: path.join(__dirname, "assets/fonts/LiberationSerif-Italic.ttf"), family: "Liberation Serif" },
     { path: path.join(__dirname, "assets/fonts/LiberationSerif-BoldItalic.ttf"), family: "Liberation Serif" },
     { path: path.join(__dirname, "assets/fonts/MisstralPersonalUse.ttf"), family: "Mistral" },
-    { path: path.join(__dirname, "assets/fonts/optimistral-graff.otf"), family: "Optimistral" },
   ];
   
   for (const config of fontConfigs) {
@@ -50,7 +49,6 @@ export interface CertificateData {
 // Cache de assets (carregados uma vez)
 const assetsCache = {
   templatePromise: null as Promise<any> | null,
-  logoPromise: null as Promise<any> | null,
 };
 
 /**
@@ -60,9 +58,8 @@ async function generateCertificateImage(data: CertificateData): Promise<Buffer> 
   console.log("[Certificates] Generating certificate with Canvas...");
   console.log("[Certificates] Data:", JSON.stringify(data));
 
-  // Template e logo (assets locais com cache)
+  // Template (asset local com cache)
   const templatePath = path.join(__dirname, "assets/templates/certificate-template.png");
-  const logoPath = path.join(__dirname, "assets/templates/cbm-logo.png");
   
   try {
     // Carregar template (com cache)
@@ -73,27 +70,12 @@ async function generateCertificateImage(data: CertificateData): Promise<Buffer> 
     const template = await assetsCache.templatePromise;
     console.log("[Certificates] Template loaded:", template.width, "x", template.height);
 
-    // Carregar logo (com cache)
-    if (!assetsCache.logoPromise) {
-      console.log("[Certificates] Loading logo from:", logoPath);
-      assetsCache.logoPromise = loadImage(logoPath);
-    }
-    const logo = await assetsCache.logoPromise;
-    console.log("[Certificates] Logo dimensions:", logo.width, "x", logo.height);
-
     // Criar canvas
     const canvas = createCanvas(template.width, template.height);
     const ctx = canvas.getContext("2d");
     
-    // Desenhar template de fundo
+    // Desenhar template de fundo (já contém o logo)
     ctx.drawImage(template, 0, 0);
-    
-    // Posicionar logo no topo central (ajustar tamanho para 120x120)
-    const logoSize = 120;
-    const logoX = (canvas.width / 2) - (logoSize / 2);
-    const logoY = 20;
-    ctx.drawImage(logo, logoX, logoY, logoSize, logoSize);
-    console.log("[Certificates] Logo added at position:", logoX, logoY);
     
     // Configurar estilo do texto
     ctx.fillStyle = "#8B0000"; // Vermelho escuro/maroon
@@ -124,7 +106,7 @@ async function generateCertificateImage(data: CertificateData): Promise<Buffer> 
     ctx.fillText(data.courseName, canvas.width / 2, 395);
 
     // Nome do instrutor (assinatura manuscrita)
-    ctx.font = "36px 'Optimistral', cursive";
+    ctx.font = "36px 'Mistral', cursive";
     ctx.fillText(data.instructorName, canvas.width / 2, 495);
 
     // Cargo do instrutor
