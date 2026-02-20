@@ -18,6 +18,7 @@ try {
     { path: path.join(__dirname, "assets/fonts/LiberationSerif-Italic.ttf"), family: "Liberation Serif" },
     { path: path.join(__dirname, "assets/fonts/LiberationSerif-BoldItalic.ttf"), family: "Liberation Serif" },
     { path: path.join(__dirname, "assets/fonts/MisstralPersonalUse.ttf"), family: "Mistral" },
+    { path: path.join(__dirname, "assets/fonts/optimistral-graff.otf"), family: "Optimistral" },
   ];
   
   for (const config of fontConfigs) {
@@ -106,7 +107,7 @@ async function generateCertificateImage(data: CertificateData): Promise<Buffer> 
     ctx.fillText(data.courseName, canvas.width / 2, 395);
 
     // Nome do instrutor (assinatura manuscrita)
-    ctx.font = "36px 'Mistral', cursive";
+    ctx.font = "36px 'Optimistral', cursive";
     ctx.fillText(data.instructorName, canvas.width / 2, 495);
 
     // Cargo do instrutor
