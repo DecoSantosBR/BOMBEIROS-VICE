@@ -83,35 +83,35 @@ export async function generateCertificateImage(data: CertificateData): Promise<B
 
     // Título "CERTIFICADO"
     ctx.font = "bold 70px 'DejaVu Serif', 'Liberation Serif', Georgia, serif";
-    ctx.fillText("CERTIFICADO", canvas.width / 2, 150);
+    ctx.fillText("CERTIFICADO", canvas.width / 2, 210);
 
     // Subtítulo "Certificamos que"
     ctx.font = "20px 'DejaVu Serif', 'Liberation Serif', Georgia, serif";
-    ctx.fillText("Certificamos que", canvas.width / 2, 210);
+    ctx.fillText("Certificamos que", canvas.width / 2, 270);
 
     // Nome do aluno (destaque)
     ctx.font = "bold 62px 'DejaVu Serif', 'Liberation Serif', Georgia, serif";
-    ctx.fillText(data.studentName, canvas.width / 2, 265);
+    ctx.fillText(data.studentName, canvas.width / 2, 325);
 
     // Matrícula do aluno
     ctx.font = "19px 'DejaVu Serif', 'Liberation Serif', Georgia, serif";
-    ctx.fillText(`Matrícula: ${data.studentId}`, canvas.width / 2, 300);
+    ctx.fillText(`Matrícula: ${data.studentId}`, canvas.width / 2, 360);
 
     // Texto "Concluiu com êxito o curso de"
     ctx.font = "20px 'DejaVu Serif', 'Liberation Serif', Georgia, serif";
-    ctx.fillText("Concluiu com êxito o curso de", canvas.width / 2, 350);
+    ctx.fillText("Concluiu com êxito o curso de", canvas.width / 2, 410);
 
     // Nome do curso (destaque)
     ctx.font = "bold 48px 'DejaVu Serif', 'Liberation Serif', Georgia, serif";
-    ctx.fillText(data.courseName, canvas.width / 2, 395);
+    ctx.fillText(data.courseName, canvas.width / 2, 455);
 
     // Nome do instrutor (assinatura manuscrita)
     ctx.font = "36px 'Optimistral', cursive";
-    ctx.fillText(data.instructorName, canvas.width / 2, 495);
+    ctx.fillText(data.instructorName, canvas.width / 2, 555);
 
     // Cargo do instrutor
     ctx.font = "18px 'DejaVu Serif', 'Liberation Serif', Georgia, serif";
-    ctx.fillText(data.instructorRank, canvas.width / 2, 525);
+    ctx.fillText(data.instructorRank, canvas.width / 2, 585);
 
     // Converter para buffer PNG
     const buffer = canvas.toBuffer("image/png");

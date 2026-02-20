@@ -1947,3 +1947,10 @@
 - [x] Adicionar logs de debug no callback OAuth para investigar NEXTAUTH_SECRET vazio
 - [x] Corrigir env.ts para usar NEXTAUTH_SECRET ao invés de JWT_SECRET
 - [x] Adicionar validação fail-fast para NEXTAUTH_SECRET
+
+## Ajustes de Posicionamento no Certificado
+- [x] Certificado gerado com sucesso (fontes, logo, layout)
+- [x] Identificar quais textos precisam ser reposicionados (todos +60px)
+- [x] Ajustar coordenadas no certificates.ts
+- [ ] Testar novo certificado gerado
+- [ ] Salvar checkpoint final
