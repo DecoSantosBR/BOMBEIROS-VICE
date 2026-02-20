@@ -1,14 +1,12 @@
-# Force rebuild: 2026-02-19-23:45-chromium
-FROM ghcr.io/puppeteer/puppeteer:23.11.1
-
-USER root
+# Force rebuild: 2026-02-20-00:02-sparticuz
+FROM node:22-slim
 
 ENV NODE_ENV=production
 
 WORKDIR /app
 
 # Instala pnpm
-RUN npm install -g pnpm@10.15.1
+RUN corepack enable && corepack prepare pnpm@10.15.1 --activate
 
 # Copia dependências
 COPY package.json pnpm-lock.yaml ./
@@ -21,9 +19,6 @@ COPY . .
 
 # Build
 RUN pnpm run build
-
-# Volta para usuário seguro
-USER pptruser
 
 EXPOSE 3000
 
