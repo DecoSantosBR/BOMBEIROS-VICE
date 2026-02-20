@@ -47,6 +47,12 @@ export interface CertificateData {
   instructorRank: string;
 }
 
+// Cache de assets (carregados uma vez)
+const assetsCache = {
+  templatePromise: null as Promise<any> | null,
+  logoPromise: null as Promise<any> | null,
+};
+
 /**
  * Gera imagem do certificado usando Canvas
  */
@@ -54,15 +60,26 @@ async function generateCertificateImage(data: CertificateData): Promise<Buffer> 
   console.log("[Certificates] Generating certificate with Canvas...");
   console.log("[Certificates] Data:", JSON.stringify(data));
 
-  // Template e logo (assets locais)
+  // Template e logo (assets locais com cache)
   const templatePath = path.join(__dirname, "assets/templates/certificate-template.png");
   const logoPath = path.join(__dirname, "assets/templates/cbm-logo.png");
   
   try {
-    // Carregar template
-    console.log("[Certificates] Loading template from:", templatePath);
-    const template = await loadImage(templatePath);
+    // Carregar template (com cache)
+    if (!assetsCache.templatePromise) {
+      console.log("[Certificates] Loading template from:", templatePath);
+      assetsCache.templatePromise = loadImage(templatePath);
+    }
+    const template = await assetsCache.templatePromise;
     console.log("[Certificates] Template loaded:", template.width, "x", template.height);
+
+    // Carregar logo (com cache)
+    if (!assetsCache.logoPromise) {
+      console.log("[Certificates] Loading logo from:", logoPath);
+      assetsCache.logoPromise = loadImage(logoPath);
+    }
+    const logo = await assetsCache.logoPromise;
+    console.log("[Certificates] Logo dimensions:", logo.width, "x", logo.height);
 
     // Criar canvas
     const canvas = createCanvas(template.width, template.height);
@@ -70,10 +87,6 @@ async function generateCertificateImage(data: CertificateData): Promise<Buffer> 
     
     // Desenhar template de fundo
     ctx.drawImage(template, 0, 0);
-    
-    // Carregar e desenhar logo do CBM (transparente - local)
-    console.log("[Certificates] Loading logo from:", logoPath);
-    const logo = await loadImage(logoPath);
     
     // Posicionar logo no topo central (ajustar tamanho para 120x120)
     const logoSize = 120;
