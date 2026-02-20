@@ -1,33 +1,5 @@
 [phases.setup]
-nixPkgs = [
-  "nodejs_22",
-  "pnpm-9.x",
-  # Chromium dependencies for Puppeteer
-  "chromium",
-  "nss",
-  "nspr",
-  "atk",
-  "cups",
-  "libdrm",
-  "gtk3",
-  "pango",
-  "cairo",
-  "xorg.libX11",
-  "xorg.libXcomposite",
-  "xorg.libXdamage",
-  "xorg.libXext",
-  "xorg.libXfixes",
-  "xorg.libXrandr",
-  "xorg.libxcb",
-  "mesa",
-  "expat",
-  "alsa-lib",
-  "dbus",
-  "at-spi2-atk",
-  "at-spi2-core",
-  "libxkbcommon",
-  "libxshmfence"
-]
+nixPkgs = ["nodejs_22", "pnpm-9.x"]
 
 [phases.install]
 cmds = ["pnpm install --frozen-lockfile"]
