@@ -1959,5 +1959,5 @@
 - [x] Identificar cursos de teste no banco de dados (4 cursos "Curso de Teste para Certificado")
 - [x] Remover 4 cards de cursos de teste (IDs: test-course-cert-*)
 - [x] Renomear curso "Formação de Oficiais" para "Unidade Resgate" com valor R$ 300.000
-- [ ] Verificar alterações na interface
+- [x] Verificar alterações na interface
 - [ ] Salvar checkpoint
