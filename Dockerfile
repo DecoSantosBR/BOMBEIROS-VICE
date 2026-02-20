@@ -1,4 +1,4 @@
-# Force rebuild: 2026-02-20-00:02-sparticuz
+# Force rebuild: 2026-02-20-00:10-nixpkgs
 FROM node:22-slim
 
 ENV NODE_ENV=production

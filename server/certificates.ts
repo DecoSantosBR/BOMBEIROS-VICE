@@ -1,5 +1,4 @@
 import puppeteer from "puppeteer-core";
-import chromium from "@sparticuz/chromium";
 import { storagePut } from "./storage";
 import { withRetry } from "./utils/retry";
 import { ENV } from "./_core/env";
@@ -309,12 +308,12 @@ export async function generateCertificateImage(data: CertificateData): Promise<B
   });
   
   return await withRetry(async () => {
-    console.log("[CERTIFICATE] Launching Chromium via @sparticuz/chromium");
+    console.log("[CERTIFICATE] Launching Chromium from Nix PATH");
     
     const browser = await puppeteer.launch({
-      args: chromium.args,
-      executablePath: await chromium.executablePath(),
+      executablePath: "chromium",
       headless: true,
+      args: ["--no-sandbox", "--disable-setuid-sandbox"],
     });
 
     try {
