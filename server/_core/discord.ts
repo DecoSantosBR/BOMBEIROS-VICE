@@ -72,8 +72,8 @@ export async function initDiscordBot() {
       ],
     });
 
-    client.on("ready", async () => {
-      console.log(`[Discord] Bot logged in as ${client?.user?.tag}`);
+    client.once("clientReady", async (readyClient) => {
+      console.log(`[Discord] Bot logged in as ${readyClient.user.tag}`);
       
       // Registrar comandos DEPOIS do login, em background
       try {
