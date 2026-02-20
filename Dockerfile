@@ -1,3 +1,4 @@
+# Force rebuild: 2026-02-19-22:52
 FROM ghcr.io/puppeteer/puppeteer:latest
 
 USER root
