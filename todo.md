@@ -1960,4 +1960,13 @@
 - [x] Remover 4 cards de cursos de teste (IDs: test-course-cert-*)
 - [x] Renomear curso "Formação de Oficiais" para "Unidade Resgate" com valor R$ 300.000
 - [x] Verificar alterações na interface
+- [x] Salvar checkpoint
+
+## Atualização Curso Unidade Resgate (ID específico)
+- [x] Upload da imagem da caminhonete para S3 (https://files.manuscdn.com/user_upload_by_module/session_file/310519663187653950/cpNDZoJjvfORxKRw.png)
+- [x] Atualizar curso ID 823167dd-0af6-11f1-8a0b-a2aaf12cabbd
+- [x] Alterar nome para "Unidade Resgate"
+- [x] Alterar valor para "R$ 300.000"
+- [x] Associar nova imagem ao curso
+- [ ] Verificar alterações na interface
 - [ ] Salvar checkpoint
