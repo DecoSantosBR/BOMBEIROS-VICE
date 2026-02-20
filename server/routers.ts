@@ -10,6 +10,7 @@ import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import { NOT_ADMIN_ERR_MSG } from "@shared/const";
 import { TRPCError } from "@trpc/server";
+import { generateCertificateImage, uploadCertificateToS3 } from "./certificates";
 
 export const appRouter = router({
     // if you need to use socket.io, read and register route in server/_core/index.ts, all api should start with '/api/' so that the gateway can route correctly
@@ -1061,7 +1062,6 @@ export const appRouter = router({
           }
 
           console.log("[CERTIFICATE] Importing modules...");
-          const { generateCertificateImage, uploadCertificateToS3 } = await import("./certificates");
           const { certificates } = await import("../drizzle/schema");
           const dbInstance = await db.getDb();
 
