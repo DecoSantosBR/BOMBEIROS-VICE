@@ -70,6 +70,18 @@ async function generateCertificateImage(data: CertificateData): Promise<Buffer> 
     // Desenhar template de fundo
     ctx.drawImage(template, 0, 0);
     
+    // Carregar e desenhar logo do CBM (transparente - CDN)
+    const logoUrl = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663187653950/NZYyfsXTVzZhvhxf.png";
+    console.log("[Certificates] Loading logo from CDN:", logoUrl);
+    const logo = await loadImage(logoUrl);
+    
+    // Posicionar logo no topo central (ajustar tamanho para 120x120)
+    const logoSize = 120;
+    const logoX = (canvas.width / 2) - (logoSize / 2);
+    const logoY = 20;
+    ctx.drawImage(logo, logoX, logoY, logoSize, logoSize);
+    console.log("[Certificates] Logo added at position:", logoX, logoY);
+    
     // Configurar estilo do texto
     ctx.fillStyle = "#8B0000"; // Vermelho escuro/maroon
     ctx.textAlign = "center";
