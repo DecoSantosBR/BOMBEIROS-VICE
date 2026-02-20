@@ -1,5 +1,5 @@
-# Force rebuild: 2026-02-19-23:39-core
-FROM ghcr.io/puppeteer/puppeteer:latest
+# Force rebuild: 2026-02-19-23:45-chromium
+FROM ghcr.io/puppeteer/puppeteer:23.11.1
 
 USER root
 
