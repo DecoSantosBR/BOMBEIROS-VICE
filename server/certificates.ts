@@ -17,7 +17,6 @@ try {
     { path: path.join(__dirname, "assets/fonts/LiberationSerif-Bold.ttf"), family: "Liberation Serif" },
     { path: path.join(__dirname, "assets/fonts/LiberationSerif-Italic.ttf"), family: "Liberation Serif" },
     { path: path.join(__dirname, "assets/fonts/LiberationSerif-BoldItalic.ttf"), family: "Liberation Serif" },
-    { path: path.join(__dirname, "assets/fonts/MisstralPersonalUse.ttf"), family: "Mistral" },
     { path: path.join(__dirname, "assets/fonts/optimistral-graff.otf"), family: "Optimistral" },
   ];
   
