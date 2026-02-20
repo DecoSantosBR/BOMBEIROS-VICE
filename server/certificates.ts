@@ -13,10 +13,10 @@ const __dirname = dirname(__filename);
 
 try {
   const fontConfigs = [
-    { path: "/usr/share/fonts/truetype/liberation/LiberationSerif-Regular.ttf", family: "Liberation Serif" },
-    { path: "/usr/share/fonts/truetype/liberation/LiberationSerif-Bold.ttf", family: "Liberation Serif" },
-    { path: "/usr/share/fonts/truetype/liberation/LiberationSerif-Italic.ttf", family: "Liberation Serif" },
-    { path: "/usr/share/fonts/truetype/liberation/LiberationSerif-BoldItalic.ttf", family: "Liberation Serif" },
+    { path: path.join(__dirname, "assets/fonts/LiberationSerif-Regular.ttf"), family: "Liberation Serif" },
+    { path: path.join(__dirname, "assets/fonts/LiberationSerif-Bold.ttf"), family: "Liberation Serif" },
+    { path: path.join(__dirname, "assets/fonts/LiberationSerif-Italic.ttf"), family: "Liberation Serif" },
+    { path: path.join(__dirname, "assets/fonts/LiberationSerif-BoldItalic.ttf"), family: "Liberation Serif" },
     { path: path.join(__dirname, "assets/fonts/MisstralPersonalUse.ttf"), family: "Mistral" },
     { path: path.join(__dirname, "assets/fonts/optimistral-graff.otf"), family: "Optimistral" },
   ];
@@ -54,13 +54,14 @@ async function generateCertificateImage(data: CertificateData): Promise<Buffer> 
   console.log("[Certificates] Generating certificate with Canvas...");
   console.log("[Certificates] Data:", JSON.stringify(data));
 
-  // Template URL (CDN)
-  const templateUrl = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663187653950/DHBXbOcJsiCfHbTV.png";
+  // Template e logo (assets locais)
+  const templatePath = path.join(__dirname, "assets/templates/certificate-template.png");
+  const logoPath = path.join(__dirname, "assets/templates/cbm-logo.png");
   
   try {
     // Carregar template
-    console.log("[Certificates] Loading template from:", templateUrl);
-    const template = await loadImage(templateUrl);
+    console.log("[Certificates] Loading template from:", templatePath);
+    const template = await loadImage(templatePath);
     console.log("[Certificates] Template loaded:", template.width, "x", template.height);
 
     // Criar canvas
@@ -70,10 +71,9 @@ async function generateCertificateImage(data: CertificateData): Promise<Buffer> 
     // Desenhar template de fundo
     ctx.drawImage(template, 0, 0);
     
-    // Carregar e desenhar logo do CBM (transparente - CDN)
-    const logoUrl = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663187653950/NZYyfsXTVzZhvhxf.png";
-    console.log("[Certificates] Loading logo from CDN:", logoUrl);
-    const logo = await loadImage(logoUrl);
+    // Carregar e desenhar logo do CBM (transparente - local)
+    console.log("[Certificates] Loading logo from:", logoPath);
+    const logo = await loadImage(logoPath);
     
     // Posicionar logo no topo central (ajustar tamanho para 120x120)
     const logoSize = 120;
