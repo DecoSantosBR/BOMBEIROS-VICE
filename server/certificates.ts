@@ -54,7 +54,7 @@ const assetsCache = {
 /**
  * Gera imagem do certificado usando Canvas
  */
-async function generateCertificateImage(data: CertificateData): Promise<Buffer> {
+export async function generateCertificateImage(data: CertificateData): Promise<Buffer> {
   console.log("[Certificates] Generating certificate with Canvas...");
   console.log("[Certificates] Data:", JSON.stringify(data));
 
@@ -127,7 +127,7 @@ async function generateCertificateImage(data: CertificateData): Promise<Buffer> 
 /**
  * Upload do certificado para S3
  */
-async function uploadCertificateToS3(
+export async function uploadCertificateToS3(
   certificateBuffer: Buffer,
   fileName: string
 ): Promise<string> {
