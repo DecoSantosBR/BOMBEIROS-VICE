@@ -1968,5 +1968,5 @@
 - [x] Alterar nome para "Unidade Resgate"
 - [x] Alterar valor para "R$ 300.000"
 - [x] Associar nova imagem ao curso
-- [ ] Verificar alterações na interface
+- [x] Verificar alterações na interface
 - [ ] Salvar checkpoint
