@@ -1992,4 +1992,18 @@
 - [x] Permitir que Vite sirva a página inicial
 - [x] Reiniciar servidor
 - [x] Testar carregamento do frontend (HTML completo sendo servido)
+- [x] Salvar checkpoint
+
+## Correção: Redirecionamento após login Discord
+- [ ] Verificar configuração do Discord OAuth redirect URI
+- [ ] Corrigir para usar URL do ambiente de desenvolvimento
+- [ ] Testar login completo
+- [ ] Salvar checkpoint
+
+## Reversão: Desfazer ajustes detalhados de certificado
+- [x] Reverter código do certificado para versão com apenas +60px
+- [x] Remover linhas divisórias
+- [x] Remover letter-spacing
+- [x] Restaurar tamanhos de fonte originais
+- [x] Reiniciar servidor
 - [ ] Salvar checkpoint

@@ -81,53 +81,37 @@ export async function generateCertificateImage(data: CertificateData): Promise<B
     ctx.fillStyle = "#8B0000"; // Vermelho escuro/maroon
     ctx.textAlign = "center";
 
-    // Título "CERTIFICADO" - Ajustado: ↑25px (210-25=185), X=600px, letter-spacing
+    // Título "CERTIFICADO"
     ctx.font = "bold 70px 'DejaVu Serif', 'Liberation Serif', Georgia, serif";
-    ctx.letterSpacing = "12px"; // +10 a +15 spacing
-    ctx.fillText("CERTIFICADO", 600, 185);
-    ctx.letterSpacing = "0px"; // Reset
+    ctx.fillText("CERTIFICADO", canvas.width / 2, 210);
 
-    // Subtítulo "Certificamos que" - Ajustado: ↑10px (270-10=260), X=600px
+    // Subtítulo "Certificamos que"
     ctx.font = "20px 'DejaVu Serif', 'Liberation Serif', Georgia, serif";
-    ctx.fillText("Certificamos que", 600, 260);
+    ctx.fillText("Certificamos que", canvas.width / 2, 270);
 
-    // Nome do aluno (destaque) - Ajustado: ↓15px (325+15=340), X=600px, espaçamento 20px acima
+    // Nome do aluno (destaque)
     ctx.font = "bold 62px 'DejaVu Serif', 'Liberation Serif', Georgia, serif";
-    ctx.fillText(data.studentName, 600, 340);
+    ctx.fillText(data.studentName, canvas.width / 2, 325);
 
-    // Matrícula do aluno - Ajustado: ↓10px (360+10=370), X=600px, fonte -10% (19→17px)
-    ctx.font = "17px 'DejaVu Serif', 'Liberation Serif', Georgia, serif";
-    ctx.fillText(`Matrícula: ${data.studentId}`, 600, 370);
+    // Matrícula do aluno
+    ctx.font = "19px 'DejaVu Serif', 'Liberation Serif', Georgia, serif";
+    ctx.fillText(`Matrícula: ${data.studentId}`, canvas.width / 2, 360);
 
-    // Linha divisória superior - 30px abaixo da matrícula (370+30=400), X=100-1100px
-    ctx.strokeStyle = "#8B0000";
-    ctx.lineWidth = 1;
-    ctx.beginPath();
-    ctx.moveTo(100, 400);
-    ctx.lineTo(1100, 400);
-    ctx.stroke();
-    
-    // Texto "Concluiu com êxito o curso de" - Ajustado: ↓20px (410+20=430), X=600px
+    // Texto "Concluiu com êxito o curso de"
     ctx.font = "20px 'DejaVu Serif', 'Liberation Serif', Georgia, serif";
-    ctx.fillText("Concluiu com êxito o curso de", 600, 430);
+    ctx.fillText("Concluiu com êxito o curso de", canvas.width / 2, 410);
 
-    // Nome do curso (destaque) - Ajustado: ↓10px (455+10=465), X=600px, fonte +15% (48→55px)
-    ctx.font = "bold 55px 'DejaVu Serif', 'Liberation Serif', Georgia, serif";
-    ctx.fillText(data.courseName, 600, 465);
-    
-    // Linha divisória inferior - 30px abaixo do curso (465+30=495), X=100-1100px
-    ctx.beginPath();
-    ctx.moveTo(100, 495);
-    ctx.lineTo(1100, 495);
-    ctx.stroke();
+    // Nome do curso (destaque)
+    ctx.font = "bold 48px 'DejaVu Serif', 'Liberation Serif', Georgia, serif";
+    ctx.fillText(data.courseName, canvas.width / 2, 455);
 
-    // Nome do instrutor (assinatura manuscrita) - Ajustado: ↓20px (555+20=575), X=600px
+    // Nome do instrutor (assinatura manuscrita)
     ctx.font = "36px 'Optimistral', cursive";
-    ctx.fillText(data.instructorName, 600, 575);
+    ctx.fillText(data.instructorName, canvas.width / 2, 555);
 
-    // Cargo do instrutor - Ajustado: X=600px, 10px abaixo da assinatura (575+10=585)
+    // Cargo do instrutor
     ctx.font = "18px 'DejaVu Serif', 'Liberation Serif', Georgia, serif";
-    ctx.fillText(data.instructorRank, 600, 585);
+    ctx.fillText(data.instructorRank, canvas.width / 2, 585);
 
     // Converter para buffer PNG
     const buffer = canvas.toBuffer("image/png");
