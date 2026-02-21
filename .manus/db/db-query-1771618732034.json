@@ -1,0 +1,75 @@
+{
+  "query": "SELECT id, nome, valor FROM courses ORDER BY nome;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 44TTARZqZm4zxSK.9ce58a8ab24b --database mpF46NADk5NFevEEQ9e39Y --execute SELECT id, nome, valor FROM courses ORDER BY nome;",
+  "rows": [
+    {
+      "id": "b44bb5a7-05b6-4835-9ca0-2c1484e92ea3",
+      "nome": "Aerovidas",
+      "valor": "300000"
+    },
+    {
+      "id": "a28d3c01-8ba9-4cce-af72-34afee87e5cb",
+      "nome": "Águia Avançado",
+      "valor": "400000"
+    },
+    {
+      "id": "2dfb39ab-7a4a-410b-be59-586d62bc8fa0",
+      "nome": "Instrutor Águia",
+      "valor": "600000"
+    },
+    {
+      "id": "fab4abf5-3f3e-46af-9b57-e04d438ea904",
+      "nome": "Instrutor MOB",
+      "valor": "600000"
+    },
+    {
+      "id": "bafe7d35-c5a9-4463-9664-1be3456bc3dd",
+      "nome": "Mergulho",
+      "valor": "0"
+    },
+    {
+      "id": "fdc8685f-d9b6-45b0-8932-3b9c96cf1fcf",
+      "nome": "MOB",
+      "valor": "200000"
+    },
+    {
+      "id": "6f1ff74b-2dad-4126-83e2-38db3af01fa8",
+      "nome": "Modulação e Conduta",
+      "valor": "0"
+    },
+    {
+      "id": "789fbd9e-4da9-40d2-ba35-b368cd708d74",
+      "nome": "Paraquedismo",
+      "valor": "250000"
+    },
+    {
+      "id": "9b69103c-81bc-45ea-89e2-e9d98f880320",
+      "nome": "Paraquedismo Avançado",
+      "valor": "500000"
+    },
+    {
+      "id": "0810343b-7691-4950-bd49-1280218ba4d4",
+      "nome": "Resgate Montanha",
+      "valor": "300000"
+    },
+    {
+      "id": "12b8409a-e7be-4237-83be-1ee303f94564",
+      "nome": "Resgate Montanha Avançado",
+      "valor": "500000"
+    },
+    {
+      "id": "de82e289-986f-41e4-a37a-91480f9b0b96",
+      "nome": "TAF",
+      "valor": "0"
+    },
+    {
+      "id": "bca19a55-ff80-43eb-91a4-ff7270028527",
+      "nome": "Unidade Resgate",
+      "valor": "300000"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\tnome\tvalor\nb44bb5a7-05b6-4835-9ca0-2c1484e92ea3\tAerovidas\t300000\na28d3c01-8ba9-4cce-af72-34afee87e5cb\tÁguia Avançado\t400000\n2dfb39ab-7a4a-410b-be59-586d62bc8fa0\tInstrutor Águia\t600000\nfab4abf5-3f3e-46af-9b57-e04d438ea904\tInstrutor MOB\t600000\nbafe7d35-c5a9-4463-9664-1be3456bc3dd\tMergulho\t0\nfdc8685f-d9b6-45b0-8932-3b9c96cf1fcf\tMOB\t200000\n6f1ff74b-2dad-4126-83e2-38db3af01fa8\tModulação e Conduta\t0\n789fbd9e-4da9-40d2-ba35-b368cd708d74\tParaquedismo\t250000\n9b69103c-81bc-45ea-89e2-e9d98f880320\tParaquedismo Avançado\t500000\n0810343b-7691-4950-bd49-1280218ba4d4\tResgate Montanha\t300000\n12b8409a-e7be-4237-83be-1ee303f94564\tResgate Montanha Avançado\t500000\nde82e289-986f-41e4-a37a-91480f9b0b96\tTAF\t0\nbca19a55-ff80-43eb-91a4-ff7270028527\tUnidade Resgate\t300000\n",
+  "stderr": "",
+  "execution_time_ms": 378
+}

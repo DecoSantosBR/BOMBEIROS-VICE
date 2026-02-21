@@ -1,0 +1,15 @@
+{
+  "query": "SELECT id, nome, valor FROM courses WHERE nome LIKE '%Forma%' OR nome LIKE '%Unidade%';",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 44TTARZqZm4zxSK.9ce58a8ab24b --database mpF46NADk5NFevEEQ9e39Y --execute SELECT id, nome, valor FROM courses WHERE nome LIKE '%Forma%' OR nome LIKE '%Unidade%';",
+  "rows": [
+    {
+      "id": "bca19a55-ff80-43eb-91a4-ff7270028527",
+      "nome": "Unidade Resgate",
+      "valor": "300000"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\tnome\tvalor\nbca19a55-ff80-43eb-91a4-ff7270028527\tUnidade Resgate\t300000\n",
+  "stderr": "",
+  "execution_time_ms": 367
+}

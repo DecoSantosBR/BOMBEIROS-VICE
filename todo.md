@@ -1969,4 +1969,19 @@
 - [x] Alterar valor para "R$ 300.000"
 - [x] Associar nova imagem ao curso
 - [x] Verificar alterações na interface
+- [x] Salvar checkpoint
+
+## Ajustes Detalhados de Posicionamento do Certificado
+- [x] Ajustar título "CERTIFICADO" (↑25px, X=600px, letter-spacing +12px)
+- [x] Ajustar "Certificamos que" (↑10px, X=600px)
+- [x] Ajustar nome do aluno (↓15px, X=600px, espaçamentos)
+- [x] Ajustar matrícula (↓10px, X=600px, fonte 19→17px)
+- [x] Ajustar linha divisória superior (30px abaixo matrícula, X=100-1100px)
+- [x] Ajustar "Concluiu com êxito o curso de" (↓20px, X=600px)
+- [x] Ajustar nome do curso (↓10px, X=600px, fonte 48→55px)
+- [x] Ajustar linha divisória inferior (30px abaixo curso, X=100-1100px)
+- [x] Ajustar assinatura do instrutor (↓20px, X=600px)
+- [x] Ajustar cargo do instrutor (X=600px, 10px abaixo assinatura)
+- [x] Aplicar centralização X=600px em todos os elementos
+- [x] Testar geração de certificado (servidor reiniciado e pronto)
 - [ ] Salvar checkpoint
