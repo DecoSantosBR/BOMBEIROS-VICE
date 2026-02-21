@@ -1984,4 +1984,12 @@
 - [x] Ajustar cargo do instrutor (X=600px, 10px abaixo assinatura)
 - [x] Aplicar centralização X=600px em todos os elementos
 - [x] Testar geração de certificado (servidor reiniciado e pronto)
+- [x] Salvar checkpoint
+
+## Correção: Frontend não carregando (retorna apenas "OK")
+- [x] Remover rota GET / que retorna "OK"
+- [x] Manter apenas /health para healthcheck
+- [x] Permitir que Vite sirva a página inicial
+- [x] Reiniciar servidor
+- [x] Testar carregamento do frontend (HTML completo sendo servido)
 - [ ] Salvar checkpoint
