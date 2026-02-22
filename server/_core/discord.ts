@@ -69,6 +69,7 @@ export async function initDiscordBot() {
         GatewayIntentBits.GuildMessages,
         GatewayIntentBits.MessageContent,
         GatewayIntentBits.GuildMembers,
+        GatewayIntentBits.GuildPresences,
       ],
     });
 

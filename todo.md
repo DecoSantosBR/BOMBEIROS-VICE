@@ -2070,4 +2070,21 @@
 ## Substituição do Template do Certificado (Atualização)
 - [x] Substituir certificate-template.png em todos os 6 locais
 - [x] Reiniciar servidor
-- [ ] Salvar checkpoint
+- [x] Salvar checkpoint
+
+## Investigar Bot Discord Offline
+- [ ] Verificar logs do servidor para erros do bot
+- [ ] Verificar se o bot está inicializando corretamente
+- [ ] Verificar token do bot e configurações
+- [ ] Testar conexão do bot com Discord API
+- [ ] Corrigir problema identificado
+
+## Corrigir Problemas Críticos na Produção Railway
+- [x] Restart do deployment realizado
+- [x] Logs verificados - servidor iniciando corretamente
+- [x] Logs analisados - servidor Node.js funcionando na porta 8080
+- [x] Bot Discord fazendo login com sucesso nos logs
+- [x] Adicionar GuildPresences intent para bot aparecer online
+- [ ] Push para GitHub
+- [ ] Redeploy no Railway
+- [ ] Validar correções
