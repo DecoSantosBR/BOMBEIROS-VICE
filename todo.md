@@ -2101,5 +2101,13 @@
 - [x] Investigar validação de servidor no código
 - [x] Adicionar logs de debug detalhados
 - [x] Melhorar mensagem de erro com info de debug
-- [ ] Testar comando no servidor (aguardando deploy)
+- [x] Salvar checkpoint
+- [ ] Fazer deploy no Railway e testar
+
+## Corrigir Publicação de Certificados no Discord (/calendario)
+- [x] Investigar código do Gerador de Certificados (funcionando)
+- [x] Investigar código da Lista de Alunos Inscritos
+- [x] Identificar que ambos usam issueCertificate
+- [x] Adicionar logs detalhados de debug
+- [ ] Testar geração pela lista de alunos e analisar logs
 - [ ] Salvar checkpoint

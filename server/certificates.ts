@@ -151,10 +151,14 @@ async function sendCertificateToDiscord(
   data: CertificateData
 ): Promise<void> {
   console.log("[Certificates] Sending certificate to Discord...");
+  console.log("[Certificates] Certificate URL:", certificateUrl);
+  console.log("[Certificates] Student:", data.studentName, "-", data.studentId);
   
   const channelId = ENV.discordChannelCertificates;
+  console.log("[Certificates] Channel ID:", channelId);
+  
   if (!channelId) {
-    console.warn("[Certificates] Discord channel not configured");
+    console.warn("[Certificates] ❌ Discord channel not configured (DISCORD_CHANNEL_CERTIFICATES missing)");
     return;
   }
 
@@ -162,14 +166,25 @@ async function sendCertificateToDiscord(
     const { getDiscordClient } = await import("./_core/discord");
     const client = getDiscordClient();
     
+    console.log("[Certificates] Discord client status:", client ? '✅ Connected' : '❌ Not initialized');
+    
     if (!client) {
-      console.warn("[Certificates] Discord client not initialized");
+      console.warn("[Certificates] ❌ Discord client not initialized - bot may not be running");
       return;
     }
     
+    console.log("[Certificates] Fetching channel:", channelId);
     const channel = await client.channels.fetch(channelId);
+    
+    console.log("[Certificates] Channel fetched:", {
+      exists: !!channel,
+      isTextBased: channel?.isTextBased(),
+      isDMBased: channel?.isDMBased(),
+      type: channel?.type
+    });
+    
     if (!channel || !channel.isTextBased() || channel.isDMBased()) {
-      console.warn("[Certificates] Invalid channel");
+      console.warn("[Certificates] ❌ Invalid channel or channel not accessible");
       return;
     }
 
@@ -187,7 +202,8 @@ async function sendCertificateToDiscord(
     };
 
     await channel.send({ embeds: [embed] });
-    console.log("[Certificates] Certificate sent to Discord");
+    console.log("[Certificates] ✅ Certificate successfully sent to Discord!");
+    console.log("[Certificates] Message sent to channel:", channelId);
   } catch (error) {
     console.error("[Certificates] Error sending to Discord:", error);
   }

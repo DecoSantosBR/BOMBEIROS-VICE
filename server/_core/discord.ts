@@ -350,7 +350,20 @@ async function handleCommand(interaction: ChatInputCommandInteraction) {
           
           // Defer a resposta para evitar timeout (apenas se ainda não foi respondida)
           if (!interaction.replied && !interaction.deferred) {
-            await interaction.deferReply();
+            try {
+              console.log(`[Discord] /meuscertificados - Tentando deferReply...`);
+              await interaction.deferReply();
+              console.log(`[Discord] /meuscertificados - deferReply bem-sucedido`);
+            } catch (deferError) {
+              console.error(`[Discord] /meuscertificados - Erro no deferReply:`, deferError);
+              // Se falhar o defer, tentar responder diretamente
+              try {
+                await interaction.reply({ content: "❌ Erro ao processar comando. Tente novamente.", ephemeral: true });
+              } catch (replyError) {
+                console.error(`[Discord] /meuscertificados - Erro ao responder após falha no defer:`, replyError);
+              }
+              break;
+            }
           }
           
           // Capturar nickname do servidor Discord
