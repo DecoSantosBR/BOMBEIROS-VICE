@@ -362,8 +362,23 @@ async function handleCommand(interaction: ChatInputCommandInteraction) {
           
           // Buscar membro do servidor para obter nickname
           const guild = interaction.guild;
+          
+          console.log(`[Discord] /meuscertificados - Guild check:`, {
+            hasGuild: !!guild,
+            guildId: guild?.id,
+            expectedGuildId: process.env.DISCORD_SERVER_ID,
+            interactionType: interaction.type,
+            channelType: interaction.channel?.type
+          });
+          
           if (!guild) {
-            await interaction.editReply("❌ Este comando só pode ser usado dentro do servidor.");
+            await interaction.editReply(
+              "❌ Este comando só pode ser usado dentro do servidor.\n\n" +
+              "**Debug info:**\n" +
+              `- Guild presente: ${!!guild}\n` +
+              `- Tipo de canal: ${interaction.channel?.type}\n` +
+              `- Comando executado em: ${interaction.inGuild() ? 'Servidor' : 'DM/Outro'}`
+            );
             break;
           }
           

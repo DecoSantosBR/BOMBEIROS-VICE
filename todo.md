@@ -2085,6 +2085,21 @@
 - [x] Logs analisados - servidor Node.js funcionando na porta 8080
 - [x] Bot Discord fazendo login com sucesso nos logs
 - [x] Adicionar GuildPresences intent para bot aparecer online
-- [ ] Push para GitHub
+- [x] Push para GitHub (via checkpoint)
 - [ ] Redeploy no Railway
 - [ ] Validar correções
+
+## Investigar Erro de Autenticação (OK no site)
+- [x] Bot confirmado funcionando 100% (responde a comandos)
+- [ ] Investigar erro: "Session payload missing required fields"
+- [ ] Verificar código de autenticação/sessão
+- [ ] Identificar causa do "OK" na tela
+- [ ] Implementar correção
+- [ ] Testar em produção
+
+## Corrigir Comando /meuscertificados
+- [x] Investigar validação de servidor no código
+- [x] Adicionar logs de debug detalhados
+- [x] Melhorar mensagem de erro com info de debug
+- [ ] Testar comando no servidor (aguardando deploy)
+- [ ] Salvar checkpoint
