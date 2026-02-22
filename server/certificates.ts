@@ -83,7 +83,7 @@ export async function generateCertificateImage(data: CertificateData): Promise<B
 
     // Título "CERTIFICADO"
     ctx.font = "bold 70px 'DejaVu Serif', 'Liberation Serif', Georgia, serif";
-    ctx.fillText("CERTIFICADO", canvas.width / 2, 210);
+    ctx.fillText("CERTIFICADO", canvas.width / 2, 170);
 
     // Subtítulo "Certificamos que"
     ctx.font = "20px 'DejaVu Serif', 'Liberation Serif', Georgia, serif";

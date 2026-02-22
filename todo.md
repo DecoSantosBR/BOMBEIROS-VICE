@@ -2054,4 +2054,9 @@
 - [x] Nome do curso: mover 17px para baixo (455→472px)
 - [x] Assinatura do instrutor: mover 20px para baixo (555→575px)
 - [x] Reiniciar servidor
+- [x] Salvar checkpoint
+
+## Ajuste de Posição do Título CERTIFICADO
+- [x] Mover "CERTIFICADO" 40px para cima (210→170px)
+- [x] Reiniciar servidor
 - [ ] Salvar checkpoint
