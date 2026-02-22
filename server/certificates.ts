@@ -111,7 +111,7 @@ export async function generateCertificateImage(data: CertificateData): Promise<B
 
     // Cargo do instrutor
     ctx.font = "18px 'DejaVu Serif', 'Liberation Serif', Georgia, serif";
-    ctx.fillText(data.instructorRank, canvas.width / 2, 585);
+    ctx.fillText(data.instructorRank, canvas.width / 2, 615);
 
     // Converter para buffer PNG
     const buffer = canvas.toBuffer("image/png");
@@ -159,7 +159,13 @@ async function sendCertificateToDiscord(
   }
 
   try {
-    const { client } = await import("./discord");
+    const { getDiscordClient } = await import("./_core/discord");
+    const client = getDiscordClient();
+    
+    if (!client) {
+      console.warn("[Certificates] Discord client not initialized");
+      return;
+    }
     
     const channel = await client.channels.fetch(channelId);
     if (!channel || !channel.isTextBased() || channel.isDMBased()) {

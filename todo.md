@@ -2019,4 +2019,21 @@
 - [x] Atualizar DISCORD_BOT_TOKEN (novo token regenerado)
 - [x] Reiniciar servidor
 - [x] Verificar conexão do bot (conectado com sucesso ao servidor 1474716145729933394)
+- [x] Salvar checkpoint
+
+## Correção: Certificados não sendo publicados no Discord
+- [x] Verificar código de emissão de certificados
+- [x] Verificar integração com Discord (canal DISCORD_CHANNEL_CERTIFICATES)
+- [x] Identificar causa raiz (import incorreto do client Discord)
+- [x] Corrigir import do client Discord (usar getDiscordClient())
+- [x] Ajustar posição do cargo do instrutor (585→30px→615px)
+- [x] Reiniciar servidor (bot conectado com sucesso)
+- [ ] Testar notificação de certificado
+- [ ] Salvar checkpoint
+
+## Substituição de Imagem do Curso Unidade Resgate
+- [x] Upload da nova imagem da caminhonete para S3 (https://files.manuscdn.com/user_upload_by_module/session_file/310519663187653950/RKwvkEaHniqrdzUq.png)
+- [x] Buscar curso que usa a URL antiga (encontrado 1 curso)
+- [x] Atualizar URL da imagem no banco de dados
+- [x] Verificar atualização na interface (aguardando teste do usuário)
 - [ ] Salvar checkpoint
