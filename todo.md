@@ -2042,4 +2042,9 @@
 - [x] Localizar arquivo Recrutamento.tsx atual (client/src/pages/Recrutamento.tsx)
 - [x] Substituir pelo novo arquivo fornecido
 - [x] Reiniciar servidor
+- [x] Salvar checkpoint
+
+## Substituição de Imagem do Curso bca19a55-ff80-43eb-91a4-ff7270028527
+- [x] Verificar curso atual (curso encontrado)
+- [x] Atualizar imageUrl para URL da caminhonete (https://files.manuscdn.com/user_upload_by_module/session_file/310519663187653950/RKwvkEaHniqrdzUq.png)
 - [ ] Salvar checkpoint
