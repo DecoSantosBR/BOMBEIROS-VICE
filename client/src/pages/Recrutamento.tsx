@@ -273,7 +273,7 @@ submitMutation.mutate({
               {/* Pergunta 12 */}
               <div>
                 <Label htmlFor="multiplasOcorrencias" className="text-base font-semibold">
-                  12. O que você faria se estivesse a caminho de uma ocorrência e, cruzasse com uma vítima (de outro chamado) precisando de atendimento? *
+                  12. O que você faria se estivesse a caminho de uma ocorrência e, no meio do caminho, encontrasse uma vítima (de outro chamado) precisando de atendimento? *
                 </Label>
                 <Textarea
                   id="multiplasOcorrencias"

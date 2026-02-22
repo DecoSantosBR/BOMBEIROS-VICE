@@ -916,7 +916,7 @@
 - [ ] Identificar por que texto não está sendo renderizado
 - [ ] Corrigir problema no gerador
 - [ ] Testar e validar
-- [ ] Salvar checkpoint
+- [x] Salvar checkpoint
 
 ## Fase 124: Implementar Versionamento de Arquivos para Evitar Cache
 - [x] Adicionar hash único (UUID) ao nome dos certificados
@@ -1998,7 +1998,7 @@
 - [ ] Verificar configuração do Discord OAuth redirect URI
 - [ ] Corrigir para usar URL do ambiente de desenvolvimento
 - [ ] Testar login completo
-- [ ] Salvar checkpoint
+- [x] Salvar checkpoint
 
 ## Reversão: Desfazer ajustes detalhados de certificado
 - [x] Reverter código do certificado para versão com apenas +60px
@@ -2029,11 +2029,17 @@
 - [x] Ajustar posição do cargo do instrutor (585→30px→615px)
 - [x] Reiniciar servidor (bot conectado com sucesso)
 - [ ] Testar notificação de certificado
-- [ ] Salvar checkpoint
+- [x] Salvar checkpoint
 
 ## Substituição de Imagem do Curso Unidade Resgate
 - [x] Upload da nova imagem da caminhonete para S3 (https://files.manuscdn.com/user_upload_by_module/session_file/310519663187653950/RKwvkEaHniqrdzUq.png)
 - [x] Buscar curso que usa a URL antiga (encontrado 1 curso)
 - [x] Atualizar URL da imagem no banco de dados
 - [x] Verificar atualização na interface (aguardando teste do usuário)
+- [x] Salvar checkpoint
+
+## Substituição do arquivo Recrutamento.tsx
+- [x] Localizar arquivo Recrutamento.tsx atual (client/src/pages/Recrutamento.tsx)
+- [x] Substituir pelo novo arquivo fornecido
+- [x] Reiniciar servidor
 - [ ] Salvar checkpoint
