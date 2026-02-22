@@ -2104,10 +2104,13 @@
 - [x] Salvar checkpoint
 - [ ] Fazer deploy no Railway e testar
 
-## Corrigir Publicação de Certificados no Discord (/calendario)
+### Corrigir Publicação de Certificados no Discord em /calendario
 - [x] Investigar código do Gerador de Certificados (funcionando)
 - [x] Investigar código da Lista de Alunos Inscritos
-- [x] Identificar que ambos usam issueCertificate
 - [x] Adicionar logs detalhados de debug
-- [ ] Testar geração pela lista de alunos e analisar logs
+- [x] Testar: NENHUM log registrado ao gerar em /calendario
+- [x] Descobrir causa: Botão usava generateAndDownload (sem Discord)
+- [x] Trocar mutation para emitCertificate (com Discord)
+- [ ] Testar geração e publicação no Discord
+- [ ] Salvar checkpoint geração e verificação de logs
 - [ ] Salvar checkpoint

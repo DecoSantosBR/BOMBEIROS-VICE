@@ -603,10 +603,16 @@ export const appRouter = router({
         enrollmentId: z.number(),
       }))
       .mutation(async ({ input, ctx }) => {
+        console.log("[EmitCertificate] 🔥 ROTA CHAMADA - enrollmentId:", input.enrollmentId);
+        console.log("[EmitCertificate] User:", ctx.user.name, "- Role:", ctx.user.role);
+        
         // Apenas instrutores e admins podem emitir certificados
         if (ctx.user.role !== "instructor" && ctx.user.role !== "admin") {
+          console.log("[EmitCertificate] ❌ FORBIDDEN - User não é instrutor/admin");
           throw new TRPCError({ code: "FORBIDDEN", message: "Apenas instrutores e administradores podem emitir certificados" });
         }
+        
+        console.log("[EmitCertificate] ✅ Permissão OK - Iniciando geração...");
 
         // Buscar dados da inscrição
         const dbInstance = await db.getDb();

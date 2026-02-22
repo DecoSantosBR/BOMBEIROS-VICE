@@ -781,57 +781,39 @@ export default function CalendarPage() {
   );
 }
 
-// Componente para botão de gerar certificado com download automático
+// Componente para botão de gerar certificado (salva no banco e publica no Discord)
 function GenerateCertificateButton({ enrollment, eventTitle }: { enrollment: any; eventTitle: string }) {
   const { user: currentUser } = useAuth();
   const [isGenerating, setIsGenerating] = useState(false);
 
-  const generateCertificate = trpc.certificates.generateAndDownload.useMutation({
+  const emitCertificate = trpc.enrollments.emitCertificate.useMutation({
     onSuccess: (data) => {
-      if (data.success && data.certificateUrl) {
-        // Fazer download automático do certificado
-        const link = document.createElement('a');
-        link.href = data.certificateUrl;
-        link.download = `certificado-${enrollment.user?.studentId || 'aluno'}.png`;
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-        
-        toast.success("🎓 Certificado gerado e baixado com sucesso!");
-      }
+      toast.success("🎓 Certificado emitido e publicado no Discord com sucesso!");
       setIsGenerating(false);
+      // Recarregar a página para atualizar o status
+      window.location.reload();
     },
     onError: (error) => {
-      toast.error(error.message || "Erro ao gerar certificado");
+      toast.error(error.message || "Erro ao emitir certificado");
       setIsGenerating(false);
     },
   });
 
   const handleGenerateCertificate = () => {
     console.log("[FRONTEND] Botão Emitir Certificado clicado");
-    console.log("[FRONTEND] Enrollment data:", enrollment.user);
+    console.log("[FRONTEND] Enrollment ID:", enrollment.id);
     console.log("[FRONTEND] Current user:", currentUser);
 
-    if (!enrollment.user?.name || !enrollment.user?.studentId) {
-      console.error("[FRONTEND] Dados do aluno incompletos");
-      toast.error("Dados do aluno incompletos");
+    if (!enrollment.id) {
+      console.error("[FRONTEND] Enrollment ID não encontrado");
+      toast.error("Erro: ID da inscrição não encontrado");
       return;
     }
 
-    if (!currentUser?.name || !currentUser?.rank) {
-      console.error("[FRONTEND] Dados do instrutor incompletos");
-      toast.error("Dados do instrutor incompletos");
-      return;
-    }
-
-    console.log("[FRONTEND] Chamando mutation generateAndDownload...");
+    console.log("[FRONTEND] Chamando mutation emitCertificate...");
     setIsGenerating(true);
-    generateCertificate.mutate({
-      studentName: enrollment.user.name,
-      studentId: enrollment.user.studentId,
-      courseName: eventTitle,
-      instructorName: currentUser.name,
-      instructorRank: currentUser.rank,
+    emitCertificate.mutate({
+      enrollmentId: enrollment.id,
     });
   };
 
