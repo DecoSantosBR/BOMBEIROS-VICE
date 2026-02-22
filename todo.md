@@ -2065,4 +2065,9 @@
 - [x] Localizar arquivo certificate-template.png atual (2 locais encontrados)
 - [x] Substituir pelo novo template fornecido
 - [x] Reiniciar servidor
+- [x] Salvar checkpoint
+
+## Substituição do Template do Certificado (Atualização)
+- [x] Substituir certificate-template.png em todos os 6 locais
+- [x] Reiniciar servidor
 - [ ] Salvar checkpoint
