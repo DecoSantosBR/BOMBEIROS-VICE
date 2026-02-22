@@ -87,7 +87,7 @@ export async function generateCertificateImage(data: CertificateData): Promise<B
 
     // Subtítulo "Certificamos que"
     ctx.font = "20px 'DejaVu Serif', 'Liberation Serif', Georgia, serif";
-    ctx.fillText("Certificamos que", canvas.width / 2, 270);
+    ctx.fillText("Certificamos que", canvas.width / 2, 258);
 
     // Nome do aluno (destaque)
     ctx.font = "bold 62px 'DejaVu Serif', 'Liberation Serif', Georgia, serif";
@@ -103,11 +103,11 @@ export async function generateCertificateImage(data: CertificateData): Promise<B
 
     // Nome do curso (destaque)
     ctx.font = "bold 48px 'DejaVu Serif', 'Liberation Serif', Georgia, serif";
-    ctx.fillText(data.courseName, canvas.width / 2, 455);
+    ctx.fillText(data.courseName, canvas.width / 2, 472);
 
     // Nome do instrutor (assinatura manuscrita)
     ctx.font = "36px 'Optimistral', cursive";
-    ctx.fillText(data.instructorName, canvas.width / 2, 555);
+    ctx.fillText(data.instructorName, canvas.width / 2, 575);
 
     // Cargo do instrutor
     ctx.font = "18px 'DejaVu Serif', 'Liberation Serif', Georgia, serif";

@@ -2047,4 +2047,11 @@
 ## Substituição de Imagem do Curso bca19a55-ff80-43eb-91a4-ff7270028527
 - [x] Verificar curso atual (curso encontrado)
 - [x] Atualizar imageUrl para URL da caminhonete (https://files.manuscdn.com/user_upload_by_module/session_file/310519663187653950/RKwvkEaHniqrdzUq.png)
+- [x] Salvar checkpoint
+
+## Ajustes de Posicionamento no Certificado
+- [x] "Certificamos que": mover 12px para cima (270→258px)
+- [x] Nome do curso: mover 17px para baixo (455→472px)
+- [x] Assinatura do instrutor: mover 20px para baixo (555→575px)
+- [x] Reiniciar servidor
 - [ ] Salvar checkpoint
