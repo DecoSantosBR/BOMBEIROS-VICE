@@ -2006,4 +2006,17 @@
 - [x] Remover letter-spacing
 - [x] Restaurar tamanhos de fonte originais
 - [x] Reiniciar servidor
+- [x] Salvar checkpoint
+
+## Atualização: Variáveis Discord para novo servidor
+- [x] Atualizar DISCORD_SERVER_ID (1474716145729933394)
+- [x] Atualizar DISCORD_CHANNEL_CERTIFICATES (1474716148607090751)
+- [x] Atualizar DISCORD_CHANNEL_ENROLLMENTS (1474716148607090750)
+- [x] Atualizar DISCORD_CHANNEL_EVENTS (1474716148607090749)
+- [x] Atualizar DISCORD_WEBHOOK_APPROVED
+- [x] Atualizar DISCORD_WEBHOOK_RECRUITMENT
+- [x] Atualizar DISCORD_WEBHOOK_REJECTED
+- [x] Atualizar DISCORD_BOT_TOKEN (novo token regenerado)
+- [x] Reiniciar servidor
+- [x] Verificar conexão do bot (conectado com sucesso ao servidor 1474716145729933394)
 - [ ] Salvar checkpoint
