@@ -2059,4 +2059,10 @@
 ## Ajuste de Posição do Título CERTIFICADO
 - [x] Mover "CERTIFICADO" 40px para cima (210→170px)
 - [x] Reiniciar servidor
+- [x] Salvar checkpoint
+
+## Substituição do Template do Certificado
+- [x] Localizar arquivo certificate-template.png atual (2 locais encontrados)
+- [x] Substituir pelo novo template fornecido
+- [x] Reiniciar servidor
 - [ ] Salvar checkpoint
