@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { getLoginUrl } from "@/const";
 
 interface DiscordLoginButtonProps {
   variant?: "default" | "outline" | "secondary";
@@ -12,7 +13,7 @@ export function DiscordLoginButton({
   className = ""
 }: DiscordLoginButtonProps) {
   const handleDiscordLogin = () => {
-    window.location.href = "/api/auth/discord";
+    window.location.href = getLoginUrl();
   };
 
   return (

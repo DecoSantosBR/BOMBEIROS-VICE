@@ -2119,4 +2119,12 @@
 - [x] Adicionar campo 'auxiliar' ao tipo CertificateData
 - [x] Adicionar campos 'ID_auxiliar' e 'issuedAt' opcionais
 - [x] Verificar todos os locais que usam o campo auxiliar
+- [x] Salvar checkpoint
+
+## Desativar OAuth Discord (manter OAuth Manus)
+- [x] Investigar implementação atual do OAuth Discord
+- [x] Redirecionar botão 'Entrar com Discord' para OAuth Manus
+- [x] Comentar rotas /api/auth/discord no servidor
+- [x] Remover imports não utilizados
+- [x] Verificar TypeScript sem erros
 - [ ] Salvar checkpoint
