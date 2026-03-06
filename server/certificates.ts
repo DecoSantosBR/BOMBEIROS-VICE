@@ -44,6 +44,9 @@ export interface CertificateData {
   courseName: string;
   instructorName: string;
   instructorRank: string;
+  auxiliar?: string;
+  ID_auxiliar?: string;
+  issuedAt?: Date;
 }
 
 // Cache de assets (carregados uma vez)

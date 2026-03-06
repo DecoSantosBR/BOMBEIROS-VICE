@@ -2114,3 +2114,9 @@
 - [ ] Testar geração e publicação no Discord
 - [ ] Salvar checkpoint geração e verificação de logs
 - [ ] Salvar checkpoint
+
+## Corrigir Erros TypeScript - CertificateData
+- [x] Adicionar campo 'auxiliar' ao tipo CertificateData
+- [x] Adicionar campos 'ID_auxiliar' e 'issuedAt' opcionais
+- [x] Verificar todos os locais que usam o campo auxiliar
+- [ ] Salvar checkpoint
