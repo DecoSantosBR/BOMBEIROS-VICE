@@ -46,11 +46,11 @@ export default function Home() {
             <div className="flex items-center space-x-4">
               <img 
                 src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663187653950/VZqdIOMlfuNYVhdk.png" 
-                alt="CBM Vice City Logo" 
+                alt="CBM Pecado Logo" 
                 className="w-12 h-12 rounded-full"
               />
               <div>
-                <h1 className="text-2xl font-bold text-white">1º CBM Vice City</h1>
+                <h1 className="text-2xl font-bold text-white">1º CBM Pecado</h1>
                 <p className="text-red-100 text-sm">Corpo de Bombeiros Militar</p>
               </div>
             </div>
@@ -97,7 +97,7 @@ export default function Home() {
             <div>
               <h2 className="text-5xl font-bold mb-6">FORÇA & HONRA</h2>
               <p className="text-xl mb-4 text-red-100">
-                Sistema de certificação e registro do Corpo de Bombeiros Militar de Vice City.
+                Sistema de certificação e registro do Corpo de Bombeiros Militar de Pecado.
               </p>
               <p className="text-lg text-red-100">
                 Dedicação total à proteção e ao serviço da comunidade.
@@ -106,7 +106,7 @@ export default function Home() {
             <div className="flex justify-center">
               <img 
                 src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663187653950/VZqdIOMlfuNYVhdk.png" 
-                alt="CBM Vice City Logo" 
+                alt="CBM Pecado Logo" 
                 className="w-64 h-64 rounded-full shadow-2xl"
               />
             </div>
@@ -228,7 +228,7 @@ export default function Home() {
       <footer className="bg-red-950 text-white py-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <p className="text-red-200">
-            © 2026 1º CBM Vice City - Corpo de Bombeiros Militar
+            © 2026 1º CBM Pecado - Corpo de Bombeiros Militar
           </p>
           <p className="text-red-300 text-sm mt-2">
             FORÇA & HONRA

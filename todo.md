@@ -2127,4 +2127,10 @@
 - [x] Comentar rotas /api/auth/discord no servidor
 - [x] Remover imports não utilizados
 - [x] Verificar TypeScript sem erros
-- [ ] Salvar checkpoint
+- [x] Salvar checkpoint
+
+## Substituir "Vice City" por "Pecado" no site
+- [x] Localizar todas as ocorrências no frontend
+- [x] Substituir nos arquivos .tsx e .ts
+- [x] Verificar TypeScript sem erros
+- [ ] Salvar checkpoint e push para GitHub

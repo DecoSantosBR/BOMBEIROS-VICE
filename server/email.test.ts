@@ -12,8 +12,8 @@ describe("Email System", () => {
 
     const result = await sendEmail({
       to: emailUser,
-      subject: "Teste - CBM Vice City",
-      html: "<p>Este é um email de teste do sistema CBM Vice City. Se você recebeu esta mensagem, as credenciais estão configuradas corretamente!</p>",
+      subject: "Teste - CBM Pecado",
+      html: "<p>Este é um email de teste do sistema CBM Pecado. Se você recebeu esta mensagem, as credenciais estão configuradas corretamente!</p>",
     });
 
     expect(result).toBe(true);

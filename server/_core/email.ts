@@ -42,7 +42,7 @@ export async function sendEmail({ to, subject, html, text }: SendEmailParams): P
     const emailUser = process.env.EMAIL_USER;
 
     await transport.sendMail({
-      from: `"CBM Vice City" <${emailUser}>`,
+      from: `"CBM Pecado" <${emailUser}>`,
       to,
       subject,
       text: text || html.replace(/<[^>]*>/g, ""), // Fallback to stripped HTML if no text provided
@@ -104,7 +104,7 @@ export function getEnrollmentApprovedEmailTemplate(params: {
             <p><strong>Força & Honra!</strong></p>
           </div>
           <div class="footer">
-            <p>1º CBM Vice City - Corpo de Bombeiros Militar</p>
+            <p>1º CBM Pecado - Corpo de Bombeiros Militar</p>
             <p>Este é um email automático, não responda.</p>
           </div>
         </div>
@@ -160,7 +160,7 @@ export function getEnrollmentRejectedEmailTemplate(params: {
             <p>Você pode se inscrever em outras turmas disponíveis no sistema de agendamento.</p>
           </div>
           <div class="footer">
-            <p>1º CBM Vice City - Corpo de Bombeiros Militar</p>
+            <p>1º CBM Pecado - Corpo de Bombeiros Militar</p>
             <p>Este é um email automático, não responda.</p>
           </div>
         </div>

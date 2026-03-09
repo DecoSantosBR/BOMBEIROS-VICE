@@ -59,11 +59,11 @@ export default function CompleteProfile() {
         <div style={{ textAlign: "center", marginBottom: "32px" }}>
           <img 
             src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663187653950/5hDWGdmvPPDJMmU8.png" 
-            alt="CBM Vice City" 
+            alt="CBM Pecado" 
             style={{ width: "80px", height: "80px", margin: "0 auto 16px" }}
           />
           <h1 style={{ fontSize: "28px", fontWeight: "bold", color: "#7f1d1d", marginBottom: "8px" }}>
-            Bem-vindo ao CBM Vice City
+            Bem-vindo ao CBM Pecado
           </h1>
           <p style={{ color: "#666", fontSize: "14px" }}>
             Complete seu perfil para continuar

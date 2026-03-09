@@ -100,7 +100,7 @@ router.post("/api/recruitment/submit", async (req, res) => {
                 description: `**${nome}** enviou uma solicitação de recrutamento.`,
                 fields: [
                   { name: "👤 Nome", value: nome, inline: true },
-                  { name: "🆔 ID Vice City", value: idViceCity, inline: true },
+                  { name: "🆔 ID Pecado", value: idViceCity, inline: true },
                   { name: "📱 Telefone", value: telefone, inline: true },
                   { name: "🎂 Idade", value: idade, inline: true },
                   { name: "💬 Discord", value: `<@${discordId}>`, inline: true },

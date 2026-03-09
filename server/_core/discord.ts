@@ -1056,8 +1056,8 @@ async function handleRecruitmentApproval(interaction: any, customId: string) {
           .setTitle("✅ Recrutamento Aprovado")
           .setDescription(`**${application.nome}** foi aprovado no recrutamento!`)
 .addFields(
-            { name: "👤 1. Nome completo do personagem em Vice City", value: application.nome, inline: false },
-            { name: "🆔 2. ID do Vice City (matrícula)", value: application.id_vice_city, inline: true },
+            { name: "👤 1. Nome completo do personagem em Pecado", value: application.nome, inline: false },
+            { name: "🆔 2. ID do Pecado (matrícula)", value: application.id_vice_city, inline: true },
             { name: "📱 3. Telefone", value: application.telefone, inline: true },
             { name: "🎂 4. Idade", value: application.idade, inline: true },
             { name: "💬 5. Discord", value: application.discord_id === "MANUAL_ENTRY" ? "Não informado (entrada manual)" : `<@${application.discord_id}>`, inline: false },
@@ -1155,8 +1155,8 @@ async function handleRecruitmentRejection(interaction: any, customId: string) {
           .setTitle("❌ Recrutamento Reprovado")
           .setDescription(`**${application.nome}** foi reprovado no recrutamento.`)
 .addFields(
-            { name: "👤 1. Nome completo do personagem em Vice City", value: application.nome, inline: false },
-            { name: "🆔 2. ID do Vice City (matrícula)", value: application.id_vice_city, inline: true },
+            { name: "👤 1. Nome completo do personagem em Pecado", value: application.nome, inline: false },
+            { name: "🆔 2. ID do Pecado (matrícula)", value: application.id_vice_city, inline: true },
             { name: "📱 3. Telefone", value: application.telefone, inline: true },
             { name: "🎂 4. Idade", value: application.idade, inline: true },
             { name: "💬 5. Discord", value: application.discord_id === "MANUAL_ENTRY" ? "Não informado (entrada manual)" : `<@${application.discord_id}>`, inline: false },

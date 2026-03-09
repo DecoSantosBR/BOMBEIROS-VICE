@@ -1175,8 +1175,8 @@ export const appRouter = router({
                 .setTitle("📋 Nova Solicitação de Recrutamento")
                 .setDescription(`**${input.nome}** enviou uma solicitação de recrutamento.`)
 .addFields(
-                  { name: "👤 1. Nome completo do personagem em Vice City", value: input.nome, inline: false },
-                  { name: "🆔 2. ID do Vice City (matrícula)", value: input.idViceCity, inline: true },
+                  { name: "👤 1. Nome completo do personagem em Pecado", value: input.nome, inline: false },
+                  { name: "🆔 2. ID do Pecado (matrícula)", value: input.idViceCity, inline: true },
                   { name: "📱 3. Telefone", value: input.telefone, inline: true },
                   { name: "🎂 4. Idade", value: input.idade, inline: true },
                   { name: "💬 5. Discord", value: input.discordId === "MANUAL_ENTRY" ? "Não informado (entrada manual)" : `<@${input.discordId}>`, inline: false },

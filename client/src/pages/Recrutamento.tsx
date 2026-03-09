@@ -82,7 +82,7 @@ submitMutation.mutate({
           <CardHeader className="bg-red-700 text-white">
             <CardTitle className="text-2xl">Formulário de Recrutamento</CardTitle>
             <CardDescription className="text-gray-100">
-              1º CBM Vice City - Corpo de Bombeiros Militar
+              1º CBM Pecado - Corpo de Bombeiros Militar
             </CardDescription>
           </CardHeader>
           <CardContent className="pt-6">
@@ -90,7 +90,7 @@ submitMutation.mutate({
               {/* Pergunta 1 */}
               <div>
                 <Label htmlFor="nome" className="text-base font-semibold">
-                  1. Nome completo do personagem em Vice City *
+                  1. Nome completo do personagem em Pecado *
                 </Label>
                 <Input
                   id="nome"
@@ -121,7 +121,7 @@ submitMutation.mutate({
               {/* Pergunta 3 */}
               <div>
                 <Label htmlFor="idViceCity" className="text-base font-semibold">
-                  3. ID no Vice City *
+                  3. ID no Pecado *
                 </Label>
                 <Input
                   id="idViceCity"
