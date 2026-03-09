@@ -2133,4 +2133,19 @@
 - [x] Localizar todas as ocorrências no frontend
 - [x] Substituir nos arquivos .tsx e .ts
 - [x] Verificar TypeScript sem erros
-- [ ] Salvar checkpoint e push para GitHub
+- [x] Salvar checkpoint e push para GitHub
+
+## Atualizar Variáveis de Ambiente Discord
+- [x] Atualizar DISCORD_APPLICATION_ID
+- [x] Atualizar DISCORD_BOT_TOKEN
+- [x] Atualizar DISCORD_CHANNEL_CERTIFICATES
+- [x] Atualizar DISCORD_CHANNEL_ENROLLMENTS
+- [x] Atualizar DISCORD_CHANNEL_EVENTS
+- [x] Atualizar DISCORD_CLIENT_ID
+- [x] Atualizar DISCORD_CLIENT_SECRET
+- [x] Atualizar DISCORD_REDIRECT_URI
+- [x] Atualizar DISCORD_SERVER_ID
+- [x] Atualizar DISCORD_WEBHOOK_APPROVED
+- [x] Atualizar DISCORD_WEBHOOK_RECRUITMENT
+- [x] Atualizar DISCORD_WEBHOOK_REJECTED
+- [x] Bot validado: logado como CBM Pecado#8271
