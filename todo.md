@@ -2149,3 +2149,9 @@
 - [x] Atualizar DISCORD_WEBHOOK_RECRUITMENT
 - [x] Atualizar DISCORD_WEBHOOK_REJECTED
 - [x] Bot validado: logado como CBM Pecado#8271
+
+## Reativar OAuth Discord
+- [x] Restaurar rotas /api/auth/discord no servidor
+- [x] Restaurar botão de login para usar OAuth Discord
+- [x] Verificar TypeScript sem erros
+- [ ] Salvar checkpoint e push para GitHub

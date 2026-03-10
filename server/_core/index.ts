@@ -10,7 +10,7 @@ import { createContext } from "./context";
 import { serveStatic, setupVite } from "./vite";
 import uploadImageRouter from "../uploadImage";
 import uploadFileRouter from "../uploadFile";
-// import { initiateDiscordOAuth, handleDiscordCallback } from "../discord"; // Discord OAuth desativado
+import { initiateDiscordOAuth, handleDiscordCallback } from "../discord";
 import { initDiscordBot } from "./discord";
 
 function isPortAvailable(port: number): Promise<boolean> {
@@ -58,9 +58,9 @@ async function startServer() {
   
   // OAuth callback under /api/oauth/callback
   registerOAuthRoutes(app);
-  // Discord OAuth routes desativadas - usando OAuth Manus
-  // app.get("/api/auth/discord", initiateDiscordOAuth);
-  // app.get("/api/auth/discord/callback", handleDiscordCallback);
+  // Discord OAuth routes
+  app.get("/api/auth/discord", initiateDiscordOAuth);
+  app.get("/api/auth/discord/callback", handleDiscordCallback);
   // Image upload endpoint
   app.use("/api", uploadImageRouter);
   // File upload endpoint
